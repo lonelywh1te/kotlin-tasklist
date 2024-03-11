@@ -1,9 +1,9 @@
-package ru.lonelywh1te.kotlin_tasklist
+package ru.lonelywh1te.kotlin_tasklist.presentation.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -41,10 +41,6 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
-        }
-
-        binding.btnCreateTask.setOnClickListener {
-            startActivity(Intent(this@MainActivity, CreateTaskActivity::class.java))
         }
     }
 
