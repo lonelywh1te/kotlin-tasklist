@@ -12,11 +12,18 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.view.MainActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.TaskActivity
 
 
-class TaskAdapter(private val taskList: List<Task>): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
+class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
+    private var taskList: List<Task> = listOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.task_item, parent, false)
 
         return ViewHolder(view)
+    }
+
+    fun updateTaskList(list: List<Task>) {
+        taskList = list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

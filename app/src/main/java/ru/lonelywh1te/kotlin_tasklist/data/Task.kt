@@ -1,8 +1,14 @@
 package ru.lonelywh1te.kotlin_tasklist.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "task_table")
 data class Task(
     var title: String,
     var description: String,
     var isFavourite: Boolean = false,
-    val isCompleted: Boolean = false,
+    var isCompleted: Boolean = false,
+
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )

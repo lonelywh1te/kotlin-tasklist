@@ -3,8 +3,10 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityMainBinding
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -15,10 +17,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         binding.navBottomMenu.selectedItemId = R.id.nav_tasks
-
+        setFragment(taskListFragment)
+        
         binding.navBottomMenu.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_favourive  -> {
