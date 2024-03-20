@@ -46,6 +46,7 @@ class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, TaskActivity::class.java)
+                intent.putExtra("task_id", task.id)
                 intent.putExtra("task_title", task.title)
                 intent.putExtra("task_desc", task.description)
                 intent.putExtra("task_isFavourite", task.isFavourite)

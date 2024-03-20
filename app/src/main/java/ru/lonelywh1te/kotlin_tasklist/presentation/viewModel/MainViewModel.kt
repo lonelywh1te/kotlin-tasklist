@@ -14,16 +14,13 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val taskDao = MainDatabase.getDatabase(application).TaskDao()
 
     fun getTaskList(): List<Task> {
-        if (taskList.value == null){
-            refreshTasks()
-        }
+        if (taskList.value == null) refreshTasks()
 
         return if (taskList.value.isNullOrEmpty()) emptyList() else taskList.value!!
     }
 
     fun refreshTasks() {
         viewModelScope.launch {
-            Log.println(Log.DEBUG, "view_model", "taskDao return: ${taskDao.getAllTasks()}")
             taskList.postValue(taskDao.getAllTasks())
         }
     }
@@ -35,9 +32,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun deleteTask(task: Task) {
+    fun deleteTask(id: Int) {
         viewModelScope.launch {
-            taskDao.deleteTask(task)
+            taskDao.deleteTask(id)
             refreshTasks()
         }
     }

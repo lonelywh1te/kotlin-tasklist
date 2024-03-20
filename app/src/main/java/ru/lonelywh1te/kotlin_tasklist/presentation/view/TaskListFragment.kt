@@ -23,8 +23,6 @@ class TaskListFragment : Fragment() {
         binding = FragmentTaskListBinding.inflate(layoutInflater, container, false)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        viewModel.refreshTasks()
-
         val adapter = TaskAdapter()
 
         recycler = binding.rvTaskList
@@ -34,7 +32,14 @@ class TaskListFragment : Fragment() {
         }
 
         viewModel.taskList.observe(viewLifecycleOwner) {
-            adapter.updateTaskList(viewModel.getTaskList())
+            val currentList = viewModel.getTaskList()
+            adapter.updateTaskList(currentList)
+
+            binding.tvIsEmptyList.visibility = if (currentList.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
 
         Log.println(Log.DEBUG, "fragment", "CREATED")

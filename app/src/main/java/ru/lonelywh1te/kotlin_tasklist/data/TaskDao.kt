@@ -11,8 +11,8 @@ interface TaskDao {
     @Insert
     suspend fun addTask(task: Task)
 
-    @Delete
-    suspend fun deleteTask(task: Task)
+    @Query("DELETE FROM task_table WHERE id=:id")
+    suspend fun deleteTask(id: Int)
 
     @Query("SELECT * FROM task_table")
     suspend fun getAllTasks(): List<Task>
