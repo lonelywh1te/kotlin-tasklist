@@ -8,6 +8,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTaskList"
         android:layout_width="match_parent"
+        tools:listitem="@layout/task_item"
         android:layout_height="match_parent"/>
 
 </LinearLayout>

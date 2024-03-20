@@ -9,7 +9,6 @@ import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private var favouriteListFragment = FavouriteListFragment()
     private var taskListFragment = TaskListFragment()
     private var settingsFragment = SettingsFragment()
 
@@ -22,8 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.navBottomMenu.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.nav_favourive -> {
-                    setFragment(favouriteListFragment)
+                R.id.nav_favourive  -> {
+                    setFragment(taskListFragment)
                     true
                 }
 

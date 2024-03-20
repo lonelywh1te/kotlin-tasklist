@@ -19,10 +19,10 @@ class TaskListFragment : Fragment() {
         binding = FragmentTaskListBinding.inflate(layoutInflater, container, false)
 
         // TODO: delete
-        val taskList = mutableListOf(
-            Task("Test Task 1", "nothing"),
-            Task("Test Task 2", "nothing"),
-            Task("Test Task 3 ", "nothing"),
+        val taskList = listOf(
+            Task("Спать", "Описание какое то"),
+            Task("Купить хлеб", "Че то еще надо сделать"),
+            Task("Научиться сальто", "а мимир", true),
         )
 
         val adapter = TaskAdapter(taskList)
