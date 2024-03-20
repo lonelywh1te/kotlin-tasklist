@@ -16,11 +16,11 @@ class TaskActivity : AppCompatActivity() {
 
         val extras = intent.extras
 
-        val task_title = extras?.getString("task_title")
-        val task_description = extras?.getString("task_desc")
-        val task_isFavourite = extras?.getBoolean("task_isFavourite")
+        val taskTitle = extras?.getString("task_title")
+        val taskDescription = extras?.getString("task_desc")
+        val taskIsFavourite = extras?.getBoolean("task_isFavourite")
 
-        setTaskData(task_title, task_description, task_isFavourite)
+        setTaskData(taskTitle, taskDescription, taskIsFavourite)
     }
 
     private fun setTaskData(title: String?, desc: String?, isFavourite: Boolean?) {
@@ -29,8 +29,7 @@ class TaskActivity : AppCompatActivity() {
 
         binding.tvIsFavouriteStatus.visibility = if (isFavourite != null && isFavourite) {
             View.VISIBLE
-        }
-        else {
+        } else {
             View.GONE
         }
     }

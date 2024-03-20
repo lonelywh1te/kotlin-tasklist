@@ -21,7 +21,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         return if (taskList.value.isNullOrEmpty()) emptyList() else taskList.value!!
     }
 
-    private fun refreshTasks() {
+    fun refreshTasks() {
         viewModelScope.launch {
             Log.println(Log.DEBUG, "view_model", "taskDao return: ${taskDao.getAllTasks()}")
             taskList.postValue(taskDao.getAllTasks())

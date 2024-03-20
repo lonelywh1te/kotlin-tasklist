@@ -23,10 +23,7 @@ class TaskListFragment : Fragment() {
         binding = FragmentTaskListBinding.inflate(layoutInflater, container, false)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        // TODO: delete
-        val taskList = viewModel.getTaskList()
-
-
+        viewModel.refreshTasks()
 
         val adapter = TaskAdapter()
 
@@ -40,6 +37,17 @@ class TaskListFragment : Fragment() {
             adapter.updateTaskList(viewModel.getTaskList())
         }
 
+        Log.println(Log.DEBUG, "fragment", "CREATED")
         return binding.root
+    }
+
+    override fun onPause() {
+        Log.println(Log.DEBUG, "fragment", "PAUSED")
+        super.onPause()
+    }
+    override fun onResume() {
+        Log.println(Log.DEBUG, "fragment", "RESUMED")
+        viewModel.refreshTasks()
+        super.onResume()
     }
 }

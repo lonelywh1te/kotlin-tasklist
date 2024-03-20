@@ -1,5 +1,6 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.navBottomMenu.selectedItemId = R.id.nav_tasks
         setFragment(taskListFragment)
-        
+
         binding.navBottomMenu.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_favourive  -> {
@@ -44,6 +45,10 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
+        }
+
+        binding.btnCreateTask.setOnClickListener {
+            startActivity(Intent(this, CreateTaskActivity::class.java))
         }
     }
 

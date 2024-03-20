@@ -7,7 +7,7 @@
     tools:context=".presentation.view.CreateTaskActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvCreateActivityTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New task"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfTaskTitle"
+        android:id="@+id/titleInputlayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:hint="Task title"
@@ -31,16 +31,17 @@
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateActivityTitle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfTaskDescription"
+        android:id="@+id/descInputlayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="15dp"
@@ -50,9 +51,10 @@
         android:layout_marginEnd="15dp"
         android:hint="Task description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfTaskTitle">
+        app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTaskDescription"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top" />
@@ -68,7 +70,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tfTaskDescription">
+        app:layout_constraintTop_toBottomOf="@+id/descInputlayout">
 
         <TextView
             android:layout_width="match_parent"
@@ -78,6 +80,7 @@
             android:text="add to favourite" />
 
         <CheckBox
+            android:id="@+id/cbIsFavourive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
