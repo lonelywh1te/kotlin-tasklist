@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface TaskDao {
@@ -13,7 +14,8 @@ interface TaskDao {
 
     @Query("DELETE FROM task_table WHERE id=:id")
     suspend fun deleteTask(id: Int)
-
+    @Update
+    suspend fun updateTask(task: Task)
     @Query("SELECT * FROM task_table")
     suspend fun getAllTasks(): List<Task>
 

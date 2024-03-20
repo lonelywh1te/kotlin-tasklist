@@ -38,4 +38,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             refreshTasks()
         }
     }
+
+    fun updateTask(task: Task) {
+        viewModelScope.launch {
+            taskDao.updateTask(task)
+            refreshTasks()
+        }
+    }
 }
