@@ -35,9 +35,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun deleteTask(id: Int) {
+    fun deleteTask(task: Task) {
         viewModelScope.launch {
-            taskDao.deleteTask(id)
+            taskDao.deleteTask(task)
             getAllTasks()
         }
     }

@@ -47,17 +47,9 @@ class FavouriteTaskListFragment : Fragment() {
                 View.GONE
             }
         }
-
-        Log.println(Log.DEBUG, "fragment", "CREATED") // TODO: delete
-    }
-
-    override fun onPause() {
-        Log.println(Log.DEBUG, "fragment", "PAUSED") // TODO: delete
-        super.onPause()
     }
 
     override fun onResume() {
-        Log.println(Log.DEBUG, "fragment", "RESUMED") // TODO: delete
         viewModel.getFavouriteTasks()
         super.onResume()
     }

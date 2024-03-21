@@ -47,16 +47,9 @@ class TaskListFragment : Fragment() {
                 View.GONE
             }
         }
-
-        Log.println(Log.DEBUG, "fragment", "CREATED")
     }
 
-    override fun onPause() {
-        Log.println(Log.DEBUG, "fragment", "PAUSED")
-        super.onPause()
-    }
     override fun onResume() {
-        Log.println(Log.DEBUG, "fragment", "RESUMED")
         viewModel.getAllTasks()
         super.onResume()
     }

@@ -27,9 +27,7 @@ class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int {
-        return taskList.size
-    }
+    override fun getItemCount() = taskList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val task = taskList[position]
@@ -46,10 +44,7 @@ class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, TaskActivity::class.java)
-                intent.putExtra("task_id", task.id)
-                intent.putExtra("task_title", task.title)
-                intent.putExtra("task_desc", task.description)
-                intent.putExtra("task_isFavourite", task.isFavourite)
+                intent.putExtra("task", task)
 
                 binding.root.context.startActivity(intent);
             }

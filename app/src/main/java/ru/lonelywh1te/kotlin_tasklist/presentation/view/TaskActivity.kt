@@ -1,8 +1,11 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.view
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.Task
@@ -12,86 +15,71 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 class TaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskBinding
     private lateinit var viewModel: MainViewModel
+    private lateinit var task: Task
 
     private var editMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskBinding.inflate(layoutInflater)
+        task = intent.extras?.getSerializable("task") as Task
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         setContentView(binding.root)
-
-        val extras = intent.extras
-
-        var taskTitle = extras?.getString("task_title")
-        var taskDescription = extras?.getString("task_desc")
-        var taskIsFavourite = extras?.getBoolean("task_isFavourite")
-        val taskId = extras?.getInt("task_id")
-
-        setTaskData(taskTitle, taskDescription, taskIsFavourite)
+        setTaskData()
 
         binding.btnDeleteTask.setOnClickListener {
-            if (taskId != null) deleteTask(taskId)
+            deleteTask()
         }
 
         binding.btnEditTask.setOnClickListener {
-            changeTaskMode()
+            changeActivityMode()
 
-            binding.inputTaskTitle.setText(taskTitle)
-            binding.inputTaskDescription.setText(taskDescription)
-            if (taskIsFavourite != null) {
-                binding.cbIsFavourive.isChecked = taskIsFavourite as Boolean
-            }
+            binding.inputTaskTitle.setText(task.title)
+            binding.inputTaskDescription.setText(task.description)
+            binding.cbIsFavourive.isChecked = task.isFavourite
         }
 
         binding.btnRestoreTaskChanges.setOnClickListener {
-            changeTaskMode()
+            changeActivityMode()
         }
 
         binding.btnSaveTaskChanges.setOnClickListener {
-            taskTitle = binding.inputTaskTitle.text.toString()
-            taskDescription = binding.inputTaskDescription.text.toString()
-            taskIsFavourite = binding.cbIsFavourive.isChecked
+            val newTaskTitle = binding.inputTaskTitle.text.toString()
+            val newTaskDescription = binding.inputTaskDescription.text.toString()
+            val newFavouriteState = binding.cbIsFavourive.isChecked
 
-            setTaskData(taskTitle, taskDescription, taskIsFavourite)
-            updateTask(taskId!!, taskTitle!!, taskDescription!!, taskIsFavourite!!)
-            changeTaskMode()
+            updateTask(newTaskTitle, newTaskDescription, newFavouriteState)
+            setTaskData()
+            changeActivityMode()
         }
     }
 
-    private fun setTaskData(title: String?, desc: String?, isFavourite: Boolean?) {
-        binding.tvTaskTitle.text = title
-        binding.tvTaskDescription.text = desc
+    private fun setTaskData() {
+        binding.tvTaskTitle.text = task.title
+        binding.tvTaskDescription.text = task.description
 
-        binding.tvIsFavouriteStatus.visibility = if (isFavourite != null && isFavourite) {
+        binding.tvIsFavouriteStatus.visibility = if (task.isFavourite) {
             View.VISIBLE
         } else {
             View.GONE
         }
     }
 
-    private fun changeTaskMode() {
+    private fun changeActivityMode() {
         editMode = !editMode
 
-        when(editMode) {
-            false -> {
-                binding.editTaskLayout.visibility = View.GONE
-                binding.readTaskLayout.visibility = View.VISIBLE
-            }
-
-            true -> {
-                binding.readTaskLayout.visibility = View.GONE
-                binding.editTaskLayout.visibility = View.VISIBLE
-            }
-        }
-    }
-    private fun updateTask(id: Int, title: String, desc: String, isFavourite: Boolean) {
-        viewModel.updateTask(Task(title, desc, isFavourite, id = id))
+        binding.editTaskLayout.visibility = if (editMode) View.VISIBLE else View.GONE
+        binding.readTaskLayout.visibility = if (editMode) View.GONE else View.VISIBLE
     }
 
-    private fun deleteTask(id: Int) {
-        viewModel.deleteTask(id)
+    private fun updateTask(title: String, description: String, isFavourite: Boolean) {
+        task = Task(title, description, isFavourite, id = task.id)
+        viewModel.updateTask(task)
+    }
+
+    private fun deleteTask() {
+        viewModel.deleteTask(task)
         finish()
     }
 }
