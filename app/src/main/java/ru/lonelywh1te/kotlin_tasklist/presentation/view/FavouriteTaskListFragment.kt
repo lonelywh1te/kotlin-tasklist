@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentTaskListBinding
-import ru.lonelywh1te.kotlin_tasklist.data.Task
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
-class TaskListFragment : Fragment() {
+class FavouriteTaskListFragment : Fragment() {
     private lateinit var binding: FragmentTaskListBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var recycler: RecyclerView
@@ -22,6 +22,7 @@ class TaskListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentTaskListBinding.inflate(layoutInflater, container, false)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
         return binding.root
     }
 
@@ -37,7 +38,6 @@ class TaskListFragment : Fragment() {
         }
 
         viewModel.taskList.observe(viewLifecycleOwner) {
-            Log.println(Log.DEBUG, "fragment", "UPDATED: r${viewModel.taskList.value}")
             val currentList = viewModel.getTaskList()
             adapter.updateTaskList(currentList)
 
@@ -48,16 +48,17 @@ class TaskListFragment : Fragment() {
             }
         }
 
-        Log.println(Log.DEBUG, "fragment", "CREATED")
+        Log.println(Log.DEBUG, "fragment", "CREATED") // TODO: delete
     }
 
     override fun onPause() {
-        Log.println(Log.DEBUG, "fragment", "PAUSED")
+        Log.println(Log.DEBUG, "fragment", "PAUSED") // TODO: delete
         super.onPause()
     }
+
     override fun onResume() {
-        Log.println(Log.DEBUG, "fragment", "RESUMED")
-        viewModel.getAllTasks()
+        Log.println(Log.DEBUG, "fragment", "RESUMED") // TODO: delete
+        viewModel.getFavouriteTasks()
         super.onResume()
     }
 }

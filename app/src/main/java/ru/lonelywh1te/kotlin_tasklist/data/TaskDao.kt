@@ -19,4 +19,7 @@ interface TaskDao {
     @Query("SELECT * FROM task_table")
     suspend fun getAllTasks(): List<Task>
 
+    @Query("SELECT * FROM task_table WHERE isFavourite=1")
+    suspend fun getFavouriteTasks(): List<Task>
+
 }

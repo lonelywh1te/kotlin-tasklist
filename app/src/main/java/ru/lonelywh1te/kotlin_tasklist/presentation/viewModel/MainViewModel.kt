@@ -1,7 +1,6 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,35 +13,39 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val taskDao = MainDatabase.getDatabase(application).TaskDao()
 
     fun getTaskList(): List<Task> {
-        if (taskList.value == null) refreshTasks()
-
         return if (taskList.value.isNullOrEmpty()) emptyList() else taskList.value!!
     }
 
-    fun refreshTasks() {
+    fun getAllTasks() {
         viewModelScope.launch {
             taskList.postValue(taskDao.getAllTasks())
+        }
+    }
+
+    fun getFavouriteTasks() {
+        viewModelScope.launch {
+            taskList.postValue(taskDao.getFavouriteTasks())
         }
     }
 
     fun addTask(task: Task) {
         viewModelScope.launch {
             taskDao.addTask(task)
-            refreshTasks()
+            getAllTasks()
         }
     }
 
     fun deleteTask(id: Int) {
         viewModelScope.launch {
             taskDao.deleteTask(id)
-            refreshTasks()
+            getAllTasks()
         }
     }
 
     fun updateTask(task: Task) {
         viewModelScope.launch {
             taskDao.updateTask(task)
-            refreshTasks()
+            getAllTasks()
         }
     }
 }
