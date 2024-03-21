@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.Task
@@ -22,9 +23,29 @@ class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
         return ViewHolder(view)
     }
 
+    class TaskCallback(private val oldList: List<Task>, private val newList: List<Task>): DiffUtil.Callback() {
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val oldTask = oldList[oldItemPosition]
+            val newTask = newList[newItemPosition]
+            return oldTask.id == newTask.id && oldTask.title == newTask.title && oldTask.isCompleted == newTask.isCompleted
+        }
+
+    }
     fun updateTaskList(list: List<Task>) {
+        val diffCallback = TaskCallback(taskList, list)
+        val diffTasks = DiffUtil.calculateDiff(diffCallback)
+
         taskList = list
-        notifyDataSetChanged()
+        
+        diffTasks.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount() = taskList.size
