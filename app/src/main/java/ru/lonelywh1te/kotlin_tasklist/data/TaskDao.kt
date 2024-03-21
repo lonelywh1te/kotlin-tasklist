@@ -14,12 +14,17 @@ interface TaskDao {
 
     @Delete
     suspend fun deleteTask(task: Task)
+
     @Update
     suspend fun updateTask(task: Task)
-    @Query("SELECT * FROM task_table")
+
+    @Query("SELECT * FROM task_table ORDER BY isCompleted ASC")
     suspend fun getAllTasks(): List<Task>
 
     @Query("SELECT * FROM task_table WHERE isFavourite=1")
     suspend fun getFavouriteTasks(): List<Task>
+
+    @Query("UPDATE task_table SET isCompleted = :isCompleted WHERE id=:id")
+    suspend fun changeTaskCompletion(id: Int, isCompleted: Boolean)
 
 }

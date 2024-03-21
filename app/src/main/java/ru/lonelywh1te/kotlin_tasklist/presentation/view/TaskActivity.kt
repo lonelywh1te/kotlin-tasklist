@@ -74,7 +74,7 @@ class TaskActivity : AppCompatActivity() {
     }
 
     private fun updateTask(title: String, description: String, isFavourite: Boolean) {
-        task = Task(title, description, isFavourite, id = task.id)
+        task = Task(title, description, isFavourite, id = task.id, isCompleted = task.isCompleted)
         viewModel.updateTask(task)
     }
 

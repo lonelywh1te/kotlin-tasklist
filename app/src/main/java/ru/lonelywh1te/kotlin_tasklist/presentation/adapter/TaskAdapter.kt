@@ -1,7 +1,7 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
-import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskItemBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.MainActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.TaskActivity
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
+interface TaskClickListener {
+    fun onTaskClicked(task: Task)
+    fun onTaskCheckboxClicked(id: Int, isCompleted: Boolean)
+}
 
-class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
+class TaskAdapter(private val taskClickListener: TaskClickListener) : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
     private var taskList: List<Task> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,37 +43,41 @@ class TaskAdapter(): RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
         }
 
     }
+
     fun updateTaskList(list: List<Task>) {
         val diffCallback = TaskCallback(taskList, list)
         val diffTasks = DiffUtil.calculateDiff(diffCallback)
 
         taskList = list
-        
+
         diffTasks.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount() = taskList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val binding = TaskItemBinding.bind(holder.itemView)
         val task = taskList[position]
+
+        binding.root.setOnClickListener {
+            taskClickListener.onTaskClicked(task)
+        }
+
+        binding.cbCompleteTask.setOnCheckedChangeListener { _, isChecked ->
+            taskClickListener.onTaskCheckboxClicked(task.id, isChecked)
+        }
 
         holder.bind(task)
     }
 
-    class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+    inner class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = TaskItemBinding.bind(item)
 
         fun bind(task: Task) {
+            Log.println(Log.DEBUG, "TaskAdapter", "${task.id} | ${task.isCompleted}")
             binding.tvTaskTitle.text = task.title
             binding.cbCompleteTask.isChecked = task.isCompleted
-
-            binding.root.setOnClickListener {
-                val intent = Intent(binding.root.context, TaskActivity::class.java)
-                intent.putExtra("task", task)
-
-                binding.root.context.startActivity(intent);
-            }
+            binding.taskCard.alpha =  if (task.isCompleted) 0.3f else 1.0f
         }
-
     }
 }

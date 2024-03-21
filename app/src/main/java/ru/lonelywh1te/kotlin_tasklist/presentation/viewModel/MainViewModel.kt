@@ -48,4 +48,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             getAllTasks()
         }
     }
+
+    fun changeTaskCompletion(id: Int, isCompleted: Boolean) {
+        viewModelScope.launch {
+            taskDao.changeTaskCompletion(id, isCompleted)
+            getAllTasks()
+        }
+    }
 }
