@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
@@ -33,16 +34,19 @@ class MainActivity : AppCompatActivity() {
 
             when(it.itemId) {
                 R.id.nav_favourive  -> {
+                    binding.btnCreateTask.visibility = View.GONE
                     setFragment(favouriteTaskListFragment)
                     true
                 }
 
                 R.id.nav_tasks -> {
+                    binding.btnCreateTask.visibility = View.VISIBLE
                     setFragment(taskListFragment)
                     true
                 }
 
                 R.id.nav_settings -> {
+                    binding.btnCreateTask.visibility = View.GONE
                     setFragment(settingsFragment)
                     true
                 }
