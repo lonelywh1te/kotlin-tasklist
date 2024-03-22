@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">kotlin-tasklist</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="listIsEmpty">Cписок пуст</string>
+    <string name="hideCompletedTasks">Скрыть выполненные задачи</string>
+    <string name="darkTheme">Тёмная тема</string>
+    <string name="language">Язык</string>
+    <string name="isFavourite">Избранное</string>
+    <string name="newTask">Новая задача</string>
+    <string name="taskTitle">Заголовок</string>
+    <string name="taskDescription">Описание</string>
+    <string name="addToFavourite">Добавить в избранное</string>
+    <string name="settings">Настройки</string>
+    <string name="tasks">Задачи</string>
 </resources>

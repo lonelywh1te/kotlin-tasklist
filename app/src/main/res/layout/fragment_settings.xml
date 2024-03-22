@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="hide completed tasks" />
+                android:text="@string/hideCompletedTasks" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="dark theme" />
+                android:text="@string/darkTheme" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="language" />
+                android:text="@string/language" />
 
             <Spinner
                 android:layout_width="wrap_content"
