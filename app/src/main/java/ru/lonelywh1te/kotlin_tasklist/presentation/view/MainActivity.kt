@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
 
-    private var taskListFragment = TaskListFragment()
-    private var favouriteTaskListFragment = FavouriteTaskListFragment()
+    private var taskListFragment = TaskListFragment(false)
+    private var favouriteTaskListFragment = TaskListFragment(true)
     private var settingsFragment = SettingsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {

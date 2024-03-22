@@ -1,6 +1,5 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskItemBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.TaskActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
 interface TaskClickListener {
     fun onTaskClicked(task: Task)
@@ -63,14 +60,14 @@ class TaskAdapter(private val taskClickListener: TaskClickListener) : RecyclerVi
             taskClickListener.onTaskClicked(task)
         }
 
-        binding.cbCompleteTask.setOnCheckedChangeListener { _, isChecked ->
-            taskClickListener.onTaskCheckboxClicked(task.id, isChecked)
+        binding.cbCompleteTask.setOnClickListener {
+            taskClickListener.onTaskCheckboxClicked(task.id, !task.isCompleted)
         }
 
         holder.bind(task)
     }
 
-    inner class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+    class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = TaskItemBinding.bind(item)
 
         fun bind(task: Task) {

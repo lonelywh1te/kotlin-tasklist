@@ -18,7 +18,7 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
-class TaskListFragment : Fragment(), TaskClickListener {
+class TaskListFragment(private val isFavouriteTaskList: Boolean) : Fragment(), TaskClickListener {
     private lateinit var binding: FragmentTaskListBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var recycler: RecyclerView
@@ -54,7 +54,12 @@ class TaskListFragment : Fragment(), TaskClickListener {
     }
 
     override fun onResume() {
-        viewModel.getAllTasks()
+        if (isFavouriteTaskList){
+            viewModel.getFavouriteTasks()
+        } else {
+            viewModel.getAllTasks()
+        }
+
         super.onResume()
     }
 
@@ -66,6 +71,7 @@ class TaskListFragment : Fragment(), TaskClickListener {
     }
 
     override fun onTaskCheckboxClicked(id: Int, isCompleted: Boolean) {
+        viewModel.isFavouriteTaskList = isFavouriteTaskList
         viewModel.changeTaskCompletion(id, isCompleted)
     }
 }

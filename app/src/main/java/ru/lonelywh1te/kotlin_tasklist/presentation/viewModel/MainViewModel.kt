@@ -1,6 +1,7 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import ru.lonelywh1te.kotlin_tasklist.data.Task
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
     val taskList = MutableLiveData<List<Task>>()
+    var isFavouriteTaskList = false
     private val taskDao = MainDatabase.getDatabase(application).TaskDao()
 
     fun getTaskList(): List<Task> {
@@ -18,7 +20,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun getAllTasks() {
         viewModelScope.launch {
-            taskList.postValue(taskDao.getAllTasks())
+            if (isFavouriteTaskList) getFavouriteTasks()
+            else taskList.postValue(taskDao.getAllTasks())
         }
     }
 
