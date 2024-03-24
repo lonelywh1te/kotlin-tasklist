@@ -1,6 +1,7 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -44,9 +45,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun getAllTasks(taskGroupId: Int) {
+    fun getAllTasks(taskGroupId: Int?) {
         viewModelScope.launch {
             taskList.postValue(taskDao.getAllTasks(taskGroupId))
+            Log.println(Log.DEBUG, "VIEW_MODEL", "${taskDao.getAllTasks(taskGroupId)} | $taskGroupId")
         }
     }
 
@@ -77,10 +79,12 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun changeTaskCompletion(id: Int, isCompleted: Boolean) {
+    fun changeTaskCompletion(task: Task, isCompleted: Boolean) {
         viewModelScope.launch {
-            taskDao.changeTaskCompletion(id, isCompleted)
-            getAllTasks()
+            taskDao.changeTaskCompletion(task.id, isCompleted)
+
+            if (task.taskGroupId == null) getAllTasks()
+            else getAllTasks(task.taskGroupId)
         }
     }
 

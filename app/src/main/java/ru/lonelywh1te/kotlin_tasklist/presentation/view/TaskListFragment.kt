@@ -83,8 +83,8 @@ class TaskListFragment(private val isFavouriteTaskList: Boolean) : Fragment(), T
         binding.root.context.startActivity(intent);
     }
 
-    override fun onTaskCheckboxClicked(id: Int, isCompleted: Boolean) {
+    override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
         viewModel.isFavouriteTaskList = isFavouriteTaskList
-        viewModel.changeTaskCompletion(id, isCompleted)
+        viewModel.changeTaskCompletion(task, isCompleted)
     }
 }

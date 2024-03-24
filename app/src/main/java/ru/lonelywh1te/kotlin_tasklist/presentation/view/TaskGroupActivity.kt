@@ -79,7 +79,7 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
         binding.root.context.startActivity(intent);
     }
 
-    override fun onTaskCheckboxClicked(id: Int, isCompleted: Boolean) {
-        viewModel.changeTaskCompletion(id, isCompleted)
+    override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
+        viewModel.changeTaskCompletion(task, isCompleted)
     }
 }
