@@ -44,6 +44,12 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun getAllTasks(taskGroupId: Int) {
+        viewModelScope.launch {
+            taskList.postValue(taskDao.getAllTasks(taskGroupId))
+        }
+    }
+
     fun getFavouriteTasks() {
         viewModelScope.launch {
             taskList.postValue(taskDao.getFavouriteTasks())

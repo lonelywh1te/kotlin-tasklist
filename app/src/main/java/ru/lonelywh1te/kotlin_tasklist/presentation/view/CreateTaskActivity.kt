@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
+import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
@@ -16,6 +17,8 @@ class CreateTaskActivity : AppCompatActivity() {
         binding = ActivityCreateTaskBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
+        val taskGroupId = intent.extras?.getInt("taskGroupId")
+
         setContentView(binding.root)
 
         binding.btnAddTask.setOnClickListener {
@@ -23,12 +26,12 @@ class CreateTaskActivity : AppCompatActivity() {
             val description = binding.inputTaskDescription.text.toString()
             val isFavourite = binding.cbIsFavourive.isChecked
 
-            createTask(title, description, isFavourite)
+            createTask(title, description, isFavourite, taskGroupId)
         }
     }
 
-    private fun createTask(title: String, description: String, isFavourite: Boolean) {
-        viewModel.addTask(Task(title, description, isFavourite))
+    private fun createTask(title: String, description: String, isFavourite: Boolean, taskGroupId: Int?) {
+        viewModel.addTask(Task(title, description, isFavourite, taskGroupId = taskGroupId))
         finish()
     }
 }
