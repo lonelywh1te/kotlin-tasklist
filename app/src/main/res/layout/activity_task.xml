@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.TaskActivity">
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/readTaskLayout"
         android:visibility="visible"

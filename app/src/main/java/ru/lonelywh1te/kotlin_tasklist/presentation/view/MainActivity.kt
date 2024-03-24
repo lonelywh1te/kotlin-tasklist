@@ -60,6 +60,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnCreateTask.setOnClickListener {
             startActivity(Intent(this, CreateTaskActivity::class.java))
         }
+
+        binding.btnCreateTaskGroup.setOnClickListener {
+            startActivity(Intent(this, CreateTaskGroupActivity::class.java))
+        }
     }
 
     private fun setFragment(fragment: Fragment) {

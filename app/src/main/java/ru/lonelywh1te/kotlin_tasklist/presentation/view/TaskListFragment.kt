@@ -9,10 +9,13 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.CompoundButton.OnCheckedChangeListener
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.lonelywh1te.kotlin_tasklist.data.Task
+import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
+import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentTaskListBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskClickListener
@@ -40,12 +43,22 @@ class TaskListFragment(private val isFavouriteTaskList: Boolean) : Fragment(), T
             this.adapter = adapter
         }
 
-        viewModel.taskList.observe(viewLifecycleOwner) {
-            Log.println(Log.DEBUG, "fragment", "UPDATED: r${viewModel.taskList.value}")
-            val currentList = viewModel.getTaskList()
-            adapter.updateTaskList(currentList)
+        val mediatorLiveData = MediatorLiveData<Pair<List<Task>, List<TaskGroup>>>()
 
-            binding.tvIsEmptyList.visibility = if (currentList.isEmpty()) {
+        mediatorLiveData.addSource(viewModel.taskList) { taskList ->
+            val taskGroupList = viewModel.getTaskGroupList()
+            mediatorLiveData.value = Pair(taskList, taskGroupList)
+        }
+
+        mediatorLiveData.addSource(viewModel.taskGroupList) { taskGroupList ->
+            val taskList = viewModel.getTaskList()
+            mediatorLiveData.value = Pair(taskList, taskGroupList)
+        }
+
+        mediatorLiveData.observe(viewLifecycleOwner) { (taskList, taskListGroup) ->
+            adapter.updateTaskList(taskList, taskListGroup)
+
+            binding.tvIsEmptyList.visibility = if (viewModel.getTaskList().isEmpty()) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -57,7 +70,7 @@ class TaskListFragment(private val isFavouriteTaskList: Boolean) : Fragment(), T
         if (isFavouriteTaskList){
             viewModel.getFavouriteTasks()
         } else {
-            viewModel.getAllTasks()
+            viewModel.getAllItems()
         }
 
         super.onResume()

@@ -3,8 +3,7 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import ru.lonelywh1te.kotlin_tasklist.R
-import ru.lonelywh1te.kotlin_tasklist.data.Task
+import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 

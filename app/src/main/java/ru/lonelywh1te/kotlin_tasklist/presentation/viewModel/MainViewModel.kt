@@ -1,27 +1,46 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.lonelywh1te.kotlin_tasklist.data.MainDatabase
-import ru.lonelywh1te.kotlin_tasklist.data.Task
+import ru.lonelywh1te.kotlin_tasklist.data.TaskItem
+import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
+import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
     val taskList = MutableLiveData<List<Task>>()
+    val taskGroupList = MutableLiveData<List<TaskGroup>>()
+
     var isFavouriteTaskList = false
-    private val taskDao = MainDatabase.getDatabase(application).TaskDao()
+
+    private val db = MainDatabase.getDatabase(application)
+    private val taskDao = db.TaskDao()
+    private val taskGroupDao = db.TaskGroupDao()
 
     fun getTaskList(): List<Task> {
-        return if (taskList.value.isNullOrEmpty()) emptyList() else taskList.value!!
+        return taskList.value.orEmpty()
+    }
+
+    fun getTaskGroupList(): List<TaskGroup> {
+        return taskGroupList.value.orEmpty()
+    }
+
+    fun getAllItems() {
+        getAllTasks()
+        getAllTaskGroups()
     }
 
     fun getAllTasks() {
         viewModelScope.launch {
-            if (isFavouriteTaskList) getFavouriteTasks()
-            else taskList.postValue(taskDao.getAllTasks())
+            if (isFavouriteTaskList) {
+                getFavouriteTasks()
+            }
+            else {
+                taskList.postValue(taskDao.getAllTasks())
+            }
         }
     }
 
@@ -56,6 +75,24 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             taskDao.changeTaskCompletion(id, isCompleted)
             getAllTasks()
+        }
+    }
+
+    fun addTaskGroup(taskGroup: TaskGroup) {
+        viewModelScope.launch {
+            taskGroupDao.addTaskGroup(taskGroup)
+        }
+    }
+
+    fun getAllTaskGroups() {
+        viewModelScope.launch {
+            taskGroupList.postValue(taskGroupDao.getAllTaskGroups())
+        }
+    }
+
+    fun deleteTaskGroup(taskGroup: TaskGroup) {
+        viewModelScope.launch {
+            taskGroupDao.deleteTaskGroup(taskGroup)
         }
     }
 }
