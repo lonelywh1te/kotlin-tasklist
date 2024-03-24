@@ -18,7 +18,7 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.view.TaskGroupActivity
 
 interface TaskClickListener {
     fun onTaskClicked(task: Task)
-    fun onTaskCheckboxClicked(id: Int, isCompleted: Boolean)
+    fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean)
 }
 
 class TaskAdapter(private val taskClickListener: TaskClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -114,7 +114,7 @@ class TaskAdapter(private val taskClickListener: TaskClickListener) : RecyclerVi
                 }
 
                 binding.cbCompleteTask.setOnClickListener {
-                    taskClickListener.onTaskCheckboxClicked(item.id, !item.isCompleted)
+                    taskClickListener.onTaskCheckboxClicked(item, !item.isCompleted)
                 }
 
                 holder.bind(item)

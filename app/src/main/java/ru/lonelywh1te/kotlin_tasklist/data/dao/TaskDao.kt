@@ -19,11 +19,11 @@ interface TaskDao {
     @Update
     suspend fun updateTask(task: Task)
 
-    @Query("SELECT * FROM task_table ORDER BY isCompleted ASC")
+    @Query("SELECT * FROM task_table WHERE taskGroupId IS NULL ORDER BY isCompleted ASC")
     suspend fun getAllTasks(): List<Task>
 
-    @Query("SELECT * FROM task_table WHERE taskGroupId=:taskGroupId")
-    suspend fun getAllTasks(taskGroupId: Int): List<Task>
+    @Query("SELECT * FROM task_table WHERE taskGroupId=:taskGroupId ORDER BY isCompleted ASC")
+    suspend fun getAllTasks(taskGroupId: Int?): List<Task>
 
     @Query("SELECT * FROM task_table WHERE isFavourite=1 ORDER BY isCompleted ASC")
     suspend fun getFavouriteTasks(): List<Task>
