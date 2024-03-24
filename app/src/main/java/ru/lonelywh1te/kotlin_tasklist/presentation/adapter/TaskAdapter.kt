@@ -22,7 +22,30 @@ interface TaskClickListener {
 }
 
 class TaskAdapter(private val taskClickListener: TaskClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var taskItems = mutableListOf<TaskItem>()
+    private var taskItems = listOf<TaskItem>()
+    fun updateTaskList(taskList: List<Task>, taskGroup: List<TaskGroup>) {
+        val newTaskItems = mutableListOf<TaskItem>()
+        newTaskItems.addAll(taskGroup)
+        newTaskItems.addAll(taskList)
+
+        setTaskItems(newTaskItems)
+    }
+
+    fun updateTaskList(taskList: List<Task>) {
+        val newTaskItems = mutableListOf<TaskItem>()
+        newTaskItems.addAll(taskList)
+
+        setTaskItems(newTaskItems)
+    }
+
+    private fun setTaskItems(newTaskItems: List<TaskItem>) {
+        val diffCallback = TaskCallback(taskItems, newTaskItems)
+        val diffTasks = DiffUtil.calculateDiff(diffCallback)
+
+        taskItems = newTaskItems
+
+        diffTasks.dispatchUpdatesTo(this)
+    }
 
     override fun getItemViewType(position: Int): Int {
         return when (taskItems[position]) {
@@ -71,19 +94,6 @@ class TaskAdapter(private val taskClickListener: TaskClickListener) : RecyclerVi
 
             return false
         }
-    }
-
-    fun updateTaskList(taskList: List<Task>, taskGroup: List<TaskGroup>) {
-        val newTaskItems = mutableListOf<TaskItem>()
-        newTaskItems.addAll(taskGroup)
-        newTaskItems.addAll(taskList)
-
-        val diffCallback = TaskCallback(taskItems, newTaskItems)
-        val diffTasks = DiffUtil.calculateDiff(diffCallback)
-
-        taskItems = newTaskItems
-
-        diffTasks.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int {
