@@ -68,6 +68,11 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
     }
 
     private fun deleteTaskGroup() {
+        for (task in viewModel.getTaskList()) {
+            task.taskGroupId = null
+            viewModel.updateTask(task)
+        }
+
         viewModel.deleteTaskGroup(taskGroup)
         finish()
     }
