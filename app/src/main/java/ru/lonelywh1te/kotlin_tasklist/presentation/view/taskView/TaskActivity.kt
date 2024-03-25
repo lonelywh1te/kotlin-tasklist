@@ -45,9 +45,14 @@ class TaskActivity : AppCompatActivity() {
             val newTaskDescription = binding.inputTaskDescription.text.toString()
             val newFavouriteState = binding.cbIsFavourive.isChecked
 
-            updateTask(newTaskTitle, newTaskDescription, newFavouriteState)
-            setTaskData()
-            changeActivityMode()
+            if (newTaskTitle.isBlank()) {
+                binding.inputTaskTitle.error = "Введите заголовок"
+            }
+            else {
+                updateTask(newTaskTitle, newTaskDescription, newFavouriteState)
+                setTaskData()
+                changeActivityMode()
+            }
         }
     }
 

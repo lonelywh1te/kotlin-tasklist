@@ -40,6 +40,12 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
 
         viewModel.taskList.observe(this) {
             adapter.updateTaskList(viewModel.getTaskList())
+
+            binding.tvIsEmptyList.visibility = if (viewModel.getTaskList().isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
 
         setContentView(binding.root)
@@ -68,9 +74,14 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
             val newTaskGroupName = binding.inputTaskGroupName.text.toString()
             val newTaskGroupDescription = binding.inputTaskGroupDescription.text.toString()
 
-            updateTaskGroup(newTaskGroupName, newTaskGroupDescription)
-            setTaskGroupData()
-            changeActivityMode()
+            if (newTaskGroupName.isBlank()) {
+                binding.inputTaskGroupName.error = "Введите название"
+            }
+            else {
+                updateTaskGroup(newTaskGroupName, newTaskGroupDescription)
+                setTaskGroupData()
+                changeActivityMode()
+            }
         }
     }
 
@@ -88,6 +99,12 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
     private fun setTaskGroupData() {
         binding.tvTaskGroupName.text = taskGroup.name
         binding.tvTaskGroupDescription.text = taskGroup.description
+
+        binding.tvTaskGroupDescription.visibility = if (binding.tvTaskGroupDescription.text.isEmpty()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
     }
 
     private fun updateTaskGroup(name: String, description: String) {

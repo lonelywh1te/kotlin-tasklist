@@ -55,7 +55,7 @@ class ItemListFragment(private val isFavouriteTaskList: Boolean) : Fragment(), T
         mediatorLiveData.observe(viewLifecycleOwner) { (taskList, taskListGroup) ->
             adapter.updateTaskList(taskList, taskListGroup)
 
-            binding.tvIsEmptyList.visibility = if (viewModel.getTaskList().isEmpty()) {
+            binding.tvIsEmptyList.visibility = if (viewModel.getTaskList().isEmpty() && viewModel.getTaskGroupList().isEmpty()) {
                 View.VISIBLE
             } else {
                 View.GONE

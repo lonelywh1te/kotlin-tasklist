@@ -22,7 +22,12 @@ class CreateTaskGroupActivity : AppCompatActivity() {
             val name = binding.inputTaskGroupName.text.toString()
             val description = binding.inputTaskGroupDescription.text.toString()
 
-            createTaskGroup(name, description)
+            if (name.isBlank()) {
+                binding.inputTaskGroupName.error = "Введите название"
+            }
+            else {
+                createTaskGroup(name, description)
+            }
         }
     }
 

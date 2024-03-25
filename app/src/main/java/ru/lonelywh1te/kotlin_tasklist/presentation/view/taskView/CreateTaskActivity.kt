@@ -25,7 +25,12 @@ class CreateTaskActivity : AppCompatActivity() {
             val description = binding.inputTaskDescription.text.toString()
             val isFavourite = binding.cbIsFavourive.isChecked
 
-            createTask(title, description, isFavourite, taskGroupId)
+            if (title.isBlank()) {
+                binding.inputTaskTitle.error = "Введите заголовок"
+            }
+            else {
+                createTask(title, description, isFavourite, taskGroupId)
+            }
         }
     }
 
