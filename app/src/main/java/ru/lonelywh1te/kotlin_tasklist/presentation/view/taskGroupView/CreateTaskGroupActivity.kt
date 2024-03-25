@@ -1,12 +1,9 @@
-package ru.lonelywh1te.kotlin_tasklist.presentation.view
+package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView
 
-import android.app.ActivityManager.TaskDescription
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
-import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 

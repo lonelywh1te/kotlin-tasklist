@@ -88,15 +88,21 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun getAllTaskGroups() {
+        viewModelScope.launch {
+            taskGroupList.postValue(taskGroupDao.getAllTaskGroups())
+        }
+    }
+
     fun addTaskGroup(taskGroup: TaskGroup) {
         viewModelScope.launch {
             taskGroupDao.addTaskGroup(taskGroup)
         }
     }
 
-    fun getAllTaskGroups() {
+    fun updateTaskGroup(taskGroup: TaskGroup) {
         viewModelScope.launch {
-            taskGroupList.postValue(taskGroupDao.getAllTaskGroups())
+            taskGroupDao.updateTaskGroup(taskGroup)
         }
     }
 

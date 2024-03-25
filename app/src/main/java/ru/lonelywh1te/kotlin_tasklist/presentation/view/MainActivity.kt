@@ -6,21 +6,22 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityMainBinding
 import ru.lonelywh1te.kotlin_tasklist.databinding.DialogCreateItemBinding
+import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.CreateTaskGroupActivity
+import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateTaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
 
-    private var taskListFragment = TaskListFragment(false)
-    private var favouriteTaskListFragment = TaskListFragment(true)
+    private var itemListFragment = ItemListFragment(false)
+    private var favouriteItemListFragment = ItemListFragment(true)
     private var settingsFragment = SettingsFragment()
     private lateinit var createItemDialog: Dialog
 
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         createItemDialog = Dialog(this)
 
         setContentView(binding.root)
-        setFragment(taskListFragment)
+        setFragment(itemListFragment)
 
         binding.navBottomMenu.selectedItemId = R.id.nav_tasks
 
@@ -41,13 +42,13 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.nav_favourive  -> {
                     binding.btnCreateItem.visibility = View.GONE
-                    setFragment(favouriteTaskListFragment)
+                    setFragment(favouriteItemListFragment)
                     true
                 }
 
                 R.id.nav_tasks -> {
                     binding.btnCreateItem.visibility = View.VISIBLE
-                    setFragment(taskListFragment)
+                    setFragment(itemListFragment)
                     true
                 }
 

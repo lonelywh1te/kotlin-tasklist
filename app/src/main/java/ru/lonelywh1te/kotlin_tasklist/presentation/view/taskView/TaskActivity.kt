@@ -1,4 +1,4 @@
-package ru.lonelywh1te.kotlin_tasklist.presentation.view
+package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -13,8 +13,7 @@ import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskGroupItemBinding
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskItemBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.TaskActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.TaskGroupActivity
+import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.TaskGroupActivity
 
 interface TaskClickListener {
     fun onTaskClicked(task: Task)
