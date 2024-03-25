@@ -13,16 +13,16 @@
         android:theme="@style/Theme.Kotlintasklist"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.view.TaskGroupActivity"
+            android:name=".presentation.view.taskGroupView.TaskGroupActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.CreateTaskGroupActivity"
+            android:name=".presentation.view.taskGroupView.CreateTaskGroupActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.TaskActivity"
+            android:name=".presentation.view.taskView.TaskActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.view.CreateTaskActivity"
+            android:name=".presentation.view.taskView.CreateTaskActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.view.MainActivity"

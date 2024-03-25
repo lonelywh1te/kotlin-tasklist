@@ -4,72 +4,161 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.TaskGroupActivity">
+    tools:context=".presentation.view.taskGroupView.TaskGroupActivity">
 
-    <LinearLayout
-        android:id="@+id/readTaskLayout"
-        android:visibility="visible"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/readTaskGroupLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:visibility="visible">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTaskGroupName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TaskGroup Name"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tvTaskGroupDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginEnd="15dp"
+                android:text="description"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTaskGroupTasks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/task_item"/>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddTaskToGroup"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_plus"
+            app:fabCustomSize="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnEditTaskGroup"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_edit"
+            app:fabCustomSize="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddTaskToGroup"
+            app:layout_constraintStart_toEndOf="@+id/btnDeleteTaskGroup" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnDeleteTaskGroup"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_delete"
+            app:fabCustomSize="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/editTaskGroupLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <TextView
-            android:id="@+id/tvTaskGroupName"
+            android:id="@+id/tvEditTaskGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TaskGroup Name"
+            android:text="Редактировать список"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvTaskGroupDescription"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/titleInputlayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:hint="Название"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
-            android:text="description"
-            android:textSize="16sp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEditTaskGroup">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTaskGroupTasks"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTaskGroupName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/descInputlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/task_item"/>
-    </LinearLayout>
+            android:layout_height="150dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:gravity="top"
+            android:layout_marginEnd="15dp"
+            android:hint="Описание"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddTaskToGroup"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="15dp"
-        android:src="@drawable/ic_plus"
-        app:fabCustomSize="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTaskGroupDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnEditTaskGroup"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="15dp"
-        android:src="@drawable/ic_edit"
-        app:fabCustomSize="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddTaskToGroup"
-        app:layout_constraintStart_toEndOf="@+id/btnDeleteTaskGroup" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnDeleteTaskGroup"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="15dp"
-        android:src="@drawable/ic_delete"
-        app:fabCustomSize="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnSaveTaskGroupChanges"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_save"
+            app:fabCustomSize="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnRestoreTaskGroupChanges"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_back"
+            app:fabCustomSize="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
