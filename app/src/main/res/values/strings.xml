@@ -11,4 +11,5 @@
     <string name="addToFavourite">Добавить в избранное</string>
     <string name="settings">Настройки</string>
     <string name="tasks">Задачи</string>
+    <string name="editTask">Редактировать задачу</string>
 </resources>

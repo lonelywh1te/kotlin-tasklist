@@ -16,7 +16,7 @@
             android:id="@+id/tvTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task title"
+            tools:text="Task Title"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
@@ -46,7 +46,7 @@
             android:id="@+id/tvTaskDescription"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:text="Discription text"
+            tools:text="Description text"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
@@ -84,7 +84,7 @@
             android:id="@+id/tvEditTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit task"
+            android:text="@string/editTask"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
@@ -98,19 +98,22 @@
             android:id="@+id/titleInputlayout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Task title"
+            android:hint="@string/taskTitle"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvEditTask">
+            app:layout_constraintTop_toBottomOf="@+id/tvEditTask"
+            app:counterEnabled="true"
+            app:counterMaxLength="24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputTaskTitle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:maxLength="25"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,7 +126,7 @@
             android:layout_marginBottom="25dp"
             android:gravity="top"
             android:layout_marginEnd="15dp"
-            android:hint="Task description"
+            android:hint="@string/taskDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
 
@@ -151,7 +154,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="add to favourite" />
+                android:text="@string/addToFavourite" />
 
             <CheckBox
                 android:id="@+id/cbIsFavourive"
