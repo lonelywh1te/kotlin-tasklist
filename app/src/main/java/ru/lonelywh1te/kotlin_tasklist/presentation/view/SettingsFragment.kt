@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.lonelywh1te.kotlin_tasklist.R
+import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+    private lateinit var binding: FragmentSettingsBinding
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 }

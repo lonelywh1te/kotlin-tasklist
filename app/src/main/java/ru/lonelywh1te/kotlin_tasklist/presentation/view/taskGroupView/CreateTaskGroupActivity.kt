@@ -5,16 +5,16 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskGroupBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
 
 class CreateTaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateTaskGroupBinding
-    private lateinit var viewModel: MainViewModel
+    private lateinit var taskGroupViewModel: TaskGroupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTaskGroupBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        taskGroupViewModel = ViewModelProvider(this)[TaskGroupViewModel::class.java]
 
         setContentView(binding.root)
 
@@ -32,7 +32,7 @@ class CreateTaskGroupActivity : AppCompatActivity() {
     }
 
     private fun createTaskGroup(name: String, description: String) {
-        viewModel.addTaskGroup(TaskGroup(name, description))
+        taskGroupViewModel.addTaskGroup(TaskGroup(name, description))
         finish()
     }
 }

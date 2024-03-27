@@ -8,17 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityMainBinding
 import ru.lonelywh1te.kotlin_tasklist.databinding.DialogCreateItemBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.CreateTaskGroupActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateTaskActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: MainViewModel
 
     private var itemListFragment = ItemListFragment(false)
     private var favouriteItemListFragment = ItemListFragment(true)
@@ -28,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         createItemDialog = Dialog(this)
 
         setContentView(binding.root)

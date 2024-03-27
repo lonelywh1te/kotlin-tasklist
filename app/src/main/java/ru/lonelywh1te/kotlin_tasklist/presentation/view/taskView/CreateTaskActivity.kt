@@ -5,16 +5,16 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 
 class CreateTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateTaskBinding
-    private lateinit var viewModel: MainViewModel
+    private lateinit var taskViewModel: TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTaskBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
 
         val taskGroupId = intent.extras?.getInt("taskGroupId")
 
@@ -35,7 +35,7 @@ class CreateTaskActivity : AppCompatActivity() {
     }
 
     private fun createTask(title: String, description: String, isFavourite: Boolean, taskGroupId: Int?) {
-        viewModel.addTask(Task(title, description, isFavourite, taskGroupId = taskGroupId))
+        taskViewModel.addTask(Task(title, description, isFavourite, taskGroupId = taskGroupId))
         finish()
     }
 }

@@ -6,11 +6,11 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 
 class TaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskBinding
-    private lateinit var viewModel: MainViewModel
+    private lateinit var taskViewModel: TaskViewModel
     private lateinit var task: Task
 
     private var editMode = false
@@ -19,7 +19,7 @@ class TaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskBinding.inflate(layoutInflater)
         task = intent.extras?.getSerializable("task") as Task
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
 
         setContentView(binding.root)
         setTaskData()
@@ -76,11 +76,11 @@ class TaskActivity : AppCompatActivity() {
 
     private fun updateTask(title: String, description: String, isFavourite: Boolean) {
         task = Task(title, description, isFavourite, id = task.id, isCompleted = task.isCompleted, taskGroupId = task.taskGroupId)
-        viewModel.updateTask(task)
+        taskViewModel.updateTask(task)
     }
 
     private fun deleteTask() {
-        viewModel.deleteTask(task)
+        taskViewModel.deleteTask(task)
         finish()
     }
 }

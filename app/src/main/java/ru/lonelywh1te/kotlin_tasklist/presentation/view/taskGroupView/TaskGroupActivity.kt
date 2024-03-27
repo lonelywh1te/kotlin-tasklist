@@ -7,41 +7,59 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ru.lonelywh1te.kotlin_tasklist.data.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
-import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskClickListener
+import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.ItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateTaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 
-class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
+class TaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskGroupBinding
     private lateinit var recycler: RecyclerView
     private lateinit var taskGroup: TaskGroup
-    private lateinit var viewModel: MainViewModel
+
+    private lateinit var taskGroupViewModel: TaskGroupViewModel
+    private lateinit var taskViewModel: TaskViewModel
 
     private var editMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskGroupBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
+        taskGroupViewModel = ViewModelProvider(this)[TaskGroupViewModel::class.java]
+        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+
         taskGroup = intent.extras?.getSerializable("taskGroup") as TaskGroup
         recycler = binding.rvTaskGroupTasks
 
-        val adapter = TaskAdapter(this)
+        val adapter = TaskAdapter(object: ItemClickListener {
+            override fun onItemClicked(taskItem: TaskItem) {
+                val intent = Intent(binding.root.context, TaskActivity::class.java)
+                intent.putExtra("task", taskItem as Task)
+
+                binding.root.context.startActivity(intent);
+            }
+
+            override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
+                taskViewModel.changeTaskCompletion(task, isCompleted)
+            }
+        })
 
         recycler.apply {
             this.adapter = adapter
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.taskList.observe(this) {
-            adapter.updateTaskList(viewModel.getTaskList())
+        taskViewModel.taskList.observe(this) {
+            adapter.updateTaskList(taskViewModel.getTaskList())
 
-            binding.tvIsEmptyList.visibility = if (viewModel.getTaskList().isEmpty()) {
+            binding.tvIsEmptyList.visibility = if (taskViewModel.getTaskList().isEmpty()) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -87,7 +105,7 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllTasks(taskGroup.id)
+        taskViewModel.getAllTasks(taskGroup.id)
     }
 
     private fun addTask() {
@@ -109,16 +127,16 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
 
     private fun updateTaskGroup(name: String, description: String) {
         taskGroup = TaskGroup(name, description, id = taskGroup.id)
-        viewModel.updateTaskGroup(taskGroup)
+        taskGroupViewModel.updateTaskGroup(taskGroup)
     }
 
     private fun deleteTaskGroup() {
-        for (task in viewModel.getTaskList()) {
+        for (task in taskViewModel.getTaskList()) {
             task.taskGroupId = null
-            viewModel.updateTask(task)
+            taskViewModel.updateTask(task)
         }
 
-        viewModel.deleteTaskGroup(taskGroup)
+        taskGroupViewModel.deleteTaskGroup(taskGroup)
         finish()
     }
 
@@ -127,16 +145,5 @@ class TaskGroupActivity : AppCompatActivity(), TaskClickListener {
 
         binding.editTaskGroupLayout.visibility = if (editMode) View.VISIBLE else View.GONE
         binding.readTaskGroupLayout.visibility = if (editMode) View.GONE else View.VISIBLE
-    }
-
-    override fun onTaskClicked(task: Task) {
-        val intent = Intent(binding.root.context, TaskActivity::class.java)
-        intent.putExtra("task", task)
-
-        binding.root.context.startActivity(intent);
-    }
-
-    override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
-        viewModel.changeTaskCompletion(task, isCompleted)
     }
 }
