@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">kotlin-tasklist</string>
+    <string name="app_name">Задачи</string>
     <string name="listIsEmpty">Cписок пуст</string>
     <string name="hideCompletedTasks">Скрыть выполненные задачи</string>
     <string name="darkTheme">Тёмная тема</string>
