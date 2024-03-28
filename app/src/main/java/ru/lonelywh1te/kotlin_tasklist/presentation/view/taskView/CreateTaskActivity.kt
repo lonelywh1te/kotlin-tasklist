@@ -3,6 +3,7 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
@@ -26,7 +27,7 @@ class CreateTaskActivity : AppCompatActivity() {
             val isFavourite = binding.cbIsFavourive.isChecked
 
             if (title.isBlank()) {
-                binding.inputTaskTitle.error = "Введите заголовок"
+                binding.inputTaskTitle.error = getString(R.string.enterTitle)
             }
             else {
                 createTask(title, description, isFavourite, taskGroupId)

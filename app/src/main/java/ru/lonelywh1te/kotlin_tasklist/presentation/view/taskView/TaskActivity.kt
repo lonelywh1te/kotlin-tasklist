@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
@@ -46,7 +47,7 @@ class TaskActivity : AppCompatActivity() {
             val newFavouriteState = binding.cbIsFavourive.isChecked
 
             if (newTaskTitle.isBlank()) {
-                binding.inputTaskTitle.error = "Введите заголовок"
+                binding.inputTaskTitle.error = getString(R.string.enterTitle)
             }
             else {
                 updateTask(newTaskTitle, newTaskDescription, newFavouriteState)

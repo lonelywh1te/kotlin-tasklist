@@ -3,6 +3,7 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
@@ -23,7 +24,7 @@ class CreateTaskGroupActivity : AppCompatActivity() {
             val description = binding.inputTaskGroupDescription.text.toString()
 
             if (name.isBlank()) {
-                binding.inputTaskGroupName.error = "Введите название"
+                binding.inputTaskGroupName.error = getString(R.string.enterName)
             }
             else {
                 createTaskGroup(name, description)

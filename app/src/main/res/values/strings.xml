@@ -9,7 +9,9 @@
     <string name="taskTitle">Заголовок</string>
     <string name="taskDescription">Описание</string>
     <string name="addToFavourite">Добавить в избранное</string>
-    <string name="settings">Настройки</string>
+    <string name="about">О приложении</string>
     <string name="tasks">Задачи</string>
     <string name="editTask">Редактировать задачу</string>
+    <string name="enterName">Введите название</string>
+    <string name="enterTitle">Введите заголовок</string>
 </resources>

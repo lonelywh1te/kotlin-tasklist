@@ -9,7 +9,6 @@ import ru.lonelywh1te.kotlin_tasklist.data.MainDatabase
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 
 class TaskGroupViewModel(app: Application): AndroidViewModel(app) {
-    val taskGroup = MutableLiveData<TaskGroup>()
     val taskGroupList = MutableLiveData<List<TaskGroup>>()
 
     private val db = MainDatabase.getDatabase(app)

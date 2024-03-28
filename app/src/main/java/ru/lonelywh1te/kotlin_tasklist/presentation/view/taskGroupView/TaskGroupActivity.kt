@@ -7,6 +7,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
@@ -93,7 +94,7 @@ class TaskGroupActivity : AppCompatActivity() {
             val newTaskGroupDescription = binding.inputTaskGroupDescription.text.toString()
 
             if (newTaskGroupName.isBlank()) {
-                binding.inputTaskGroupName.error = "Введите название"
+                binding.inputTaskGroupName.error = getString(R.string.enterName)
             }
             else {
                 updateTaskGroup(newTaskGroupName, newTaskGroupDescription)

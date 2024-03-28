@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private var itemListFragment = ItemListFragment(false)
     private var favouriteItemListFragment = ItemListFragment(true)
-    private var settingsFragment = SettingsFragment()
+    private var infoFragment = InfoFragment()
     private lateinit var createItemDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.nav_settings -> {
                     binding.btnCreateItem.visibility = View.GONE
-                    setFragment(settingsFragment)
+                    setFragment(infoFragment)
                     true
                 }
 

@@ -5,13 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.lonelywh1te.kotlin_tasklist.R
-import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentSettingsBinding
+import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentInfoBinding
 
-class SettingsFragment : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
+class InfoFragment : Fragment() {
+    private lateinit var binding: FragmentInfoBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
+        binding = FragmentInfoBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 }
