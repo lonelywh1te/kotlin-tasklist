@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tasks</string>
+    <string name="listIsEmpty">The list is empty</string>
+    <string name="isFavourite">Favourites</string>
+    <string name="newTask">New task</string>
+    <string name="taskTitle">Title</string>
+    <string name="description">Description</string>
+    <string name="addToFavourite">Add to Favorites</string>
+    <string name="about">About</string>
+    <string name="tasks">Tasks</string>
+    <string name="editTask">Edit a task</string>
+    <string name="enterName">Enter a name</string>
+    <string name="enterTitle">Enter the title</string>
+    <string name="editGroup">Edit the list</string>
+    <string name="name">Name</string>
+    <string name="createItemQuestion">What do you want to create?</string>
+    <string name="task">Task</string>
+    <string name="group">List</string>
+</resources>

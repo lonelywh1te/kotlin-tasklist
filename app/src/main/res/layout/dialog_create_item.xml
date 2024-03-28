@@ -24,7 +24,7 @@
                 android:textAppearance="@style/textDefaultStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Что вы хотите создать?"
+                android:text="@string/createItemQuestion"
                 android:gravity="center"
                 android:layout_weight="2"/>
 
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Задача"
+                    android:text="@string/task"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginEnd="5dp"/>
@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Список"
+                    android:text="@string/group"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"/>

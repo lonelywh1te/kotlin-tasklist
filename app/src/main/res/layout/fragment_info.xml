@@ -30,12 +30,13 @@
                 android:text="kotlin-tasklist" />
 
             <TextView
+                android:id="@+id/tvAppVersionInfo"
                 android:textAppearance="@style/textDefaultStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:padding="5dp"
-                android:text="v 1.0.0" />
+                tools:text="v 1.0.0" />
 
 
         </LinearLayout>

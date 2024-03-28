@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Задачи</string>
     <string name="listIsEmpty">Cписок пуст</string>
-    <string name="hideCompletedTasks">Скрыть выполненные задачи</string>
-    <string name="darkTheme">Тёмная тема</string>
-    <string name="language">Язык</string>
     <string name="isFavourite">Избранное</string>
     <string name="newTask">Новая задача</string>
     <string name="taskTitle">Заголовок</string>
@@ -16,4 +13,7 @@
     <string name="enterTitle">Введите заголовок</string>
     <string name="editGroup">Редактировать список</string>
     <string name="name">Название</string>
+    <string name="createItemQuestion">Что вы хотите создать?</string>
+    <string name="task">Задача</string>
+    <string name="group">Список</string>
 </resources>
