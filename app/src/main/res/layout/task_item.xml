@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         style="@style/taskItemCardStyle"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +19,7 @@
         <TextView
             android:id="@+id/tvTaskTitle"
             android:textAppearance="@style/textDefaultStyle"
+            android:textColor="@color/primaryColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -27,6 +28,7 @@
 
         <CheckBox
             android:id="@+id/cbCompleteTask"
+            style="@style/checkboxStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end|center_vertical"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColor"
     tools:context=".presentation.view.taskView.TaskActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/isFavourite"
+            android:textColor="@color/accentColor"
 
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
@@ -54,12 +56,12 @@
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
             android:textSize="16sp"
+            android:maxHeight="650dp"
             app:layout_constraintTop_toBottomOf="@+id/tvIsFavouriteStatus" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnEditTask"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            style="@style/floatingButtonStyle"
             android:layout_margin="15dp"
             android:src="@drawable/ic_edit"
             app:fabCustomSize="60dp"
@@ -68,8 +70,8 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnDeleteTask"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            style="@style/floatingButtonStyle"
+            android:backgroundTint="@color/errorColor"
             android:layout_margin="15dp"
             android:src="@drawable/ic_delete"
             app:fabCustomSize="60dp"
@@ -91,7 +93,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
-            android:textSize="30sp"
+            style="@style/textHeaderStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -109,12 +111,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvEditTask"
             app:counterEnabled="true"
-            app:counterMaxLength="24">
+            app:counterMaxLength="24"
+            style="@style/textInputLayoutStyle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputTaskTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@style/textDefaultStyle"
                 android:maxLength="25"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -128,13 +132,15 @@
             android:layout_marginBottom="25dp"
             android:gravity="top"
             android:layout_marginEnd="15dp"
-            android:hint="@string/taskDescription"
+            android:hint="@string/description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
+            app:layout_constraintTop_toBottomOf="@+id/titleInputlayout"
+            style="@style/textInputLayoutStyle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputTaskDescription"
                 android:layout_width="match_parent"
+                style="@style/textDefaultStyle"
                 android:layout_height="match_parent"
                 android:gravity="top" />
 
@@ -154,12 +160,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                style="@style/textDefaultStyle"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/addToFavourite" />
 
             <CheckBox
                 android:id="@+id/cbIsFavourive"
+                style="@style/checkboxStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -169,8 +177,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnSaveTaskChanges"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            style="@style/floatingButtonStyle"
             android:layout_margin="15dp"
             android:src="@drawable/ic_save"
             app:fabCustomSize="60dp"
@@ -179,8 +186,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnRestoreTaskChanges"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            style="@style/floatingButtonStyle"
             android:layout_margin="15dp"
             android:src="@drawable/ic_back"
             app:fabCustomSize="60dp"

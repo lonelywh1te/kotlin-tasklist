@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColor"
     tools:context=".presentation.view.MainActivity">
 
     <LinearLayout
@@ -33,6 +34,7 @@
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            style="@style/bottomNavigationStyle"
             android:id="@+id/navBottomMenu"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -50,6 +52,7 @@
         android:src="@drawable/ic_plus"
         app:fabCustomSize="70dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/floatingButtonStyle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

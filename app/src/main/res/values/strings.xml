@@ -7,11 +7,13 @@
     <string name="isFavourite">Избранное</string>
     <string name="newTask">Новая задача</string>
     <string name="taskTitle">Заголовок</string>
-    <string name="taskDescription">Описание</string>
+    <string name="description">Описание</string>
     <string name="addToFavourite">Добавить в избранное</string>
     <string name="about">О приложении</string>
     <string name="tasks">Задачи</string>
     <string name="editTask">Редактировать задачу</string>
     <string name="enterName">Введите название</string>
     <string name="enterTitle">Введите заголовок</string>
+    <string name="editGroup">Редактировать список</string>
+    <string name="name">Название</string>
 </resources>

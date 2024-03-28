@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColor"
     tools:context=".presentation.view.taskGroupView.CreateTaskGroupActivity">
 
     <TextView
@@ -34,7 +35,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCreateActivityTitle"
         app:counterEnabled="true"
-        app:counterMaxLength="24">
+        app:counterMaxLength="24"
+        style="@style/textInputLayoutStyle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskGroupName"
@@ -54,9 +56,10 @@
         android:layout_marginBottom="25dp"
         android:gravity="top"
         android:layout_marginEnd="15dp"
-        android:hint="@string/taskDescription"
+        android:hint="@string/description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
+        app:layout_constraintTop_toBottomOf="@+id/titleInputlayout"
+        style="@style/textInputLayoutStyle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskGroupDescription"
@@ -69,12 +72,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddTaskGroup"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
         android:layout_margin="15dp"
         android:src="@drawable/ic_plus"
         app:fabCustomSize="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/floatingButtonStyle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

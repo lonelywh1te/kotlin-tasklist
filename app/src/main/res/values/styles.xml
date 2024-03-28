@@ -17,4 +17,36 @@
         <item name="android:fontFamily">@font/inter_bold</item>
         <item name="android:textSize">30sp</item>
     </style>
+    
+    <style name="textInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/accentColor</item>
+        <item name="hintTextColor">@color/accentColor</item>
+        <item name="boxStrokeErrorColor">@color/errorColor</item>
+        <item name="cursorColor">@color/black</item>
+    </style>
+
+    <style name="checkboxStyle" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/accentColor</item>
+    </style>
+
+    <style name="floatingButtonStyle" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="backgroundTint">@color/accentColor</item>
+        <item name="tint">@color/primaryColor</item>
+    </style>
+
+    <style name="bottomNavigationStyle" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/secondaryColor</item>
+        <item name="itemRippleColor">@color/accentColor</item>
+        <item name="itemIconTint">@color/primaryColor</item>
+        <item name="itemTextColor">@color/primaryColor</item>
+        <item name="itemActiveIndicatorStyle">@style/bottomNavigation.ActiveIndicatorStyle</item>
+    </style>
+    
+    <style name="bottomNavigation.ActiveIndicatorStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/selectedItemColor</item>
+    </style>
+
+
 </resources>

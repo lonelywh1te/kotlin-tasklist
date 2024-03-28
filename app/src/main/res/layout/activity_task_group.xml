@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColor"
     tools:context=".presentation.view.taskGroupView.TaskGroupActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +28,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="25dp"
-                android:text="TaskGroup Name"/>
+                tools:text="TaskGroup Name"/>
 
             <TextView
                 android:id="@+id/tvTaskGroupDescription"
@@ -37,14 +38,15 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="25dp"
-                android:text="description" />
+                tools:text="description" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTaskGroupTasks"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                tools:listitem="@layout/task_item" />
+                tools:listitem="@layout/task_item"
+                android:overScrollMode="never"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -52,8 +54,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnAddTaskToGroup"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/floatingButtonStyle"
                     android:layout_margin="15dp"
                     android:src="@drawable/ic_plus"
                     app:fabCustomSize="70dp"
@@ -63,8 +64,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnEditTaskGroup"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/floatingButtonStyle"
                     android:layout_margin="15dp"
                     android:src="@drawable/ic_edit"
                     app:fabCustomSize="60dp"
@@ -75,8 +75,8 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnDeleteTaskGroup"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/floatingButtonStyle"
+                    android:backgroundTint="@color/errorColor"
                     android:layout_margin="15dp"
                     android:src="@drawable/ic_delete"
                     app:fabCustomSize="60dp"
@@ -86,12 +86,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-
-
         <TextView
             android:id="@+id/tvIsEmptyList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/textDefaultStyle"
             android:text="@string/listIsEmpty"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -111,12 +110,12 @@
             android:id="@+id/tvEditTaskGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Редактировать список"
+            android:text="@string/editGroup"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
-            android:textSize="30sp"
+            style="@style/textHeaderStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -125,7 +124,7 @@
             android:id="@+id/titleInputlayout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Название"
+            android:hint="@string/name"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
@@ -134,10 +133,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvEditTaskGroup"
             app:counterEnabled="true"
-            app:counterMaxLength="24">
+            app:counterMaxLength="24"
+            style="@style/textInputLayoutStyle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputTaskGroupName"
+                style="@style/textDefaultStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLength="25"/>
@@ -153,12 +154,14 @@
             android:layout_marginBottom="25dp"
             android:gravity="top"
             android:layout_marginEnd="15dp"
-            android:hint="Описание"
+            android:hint="@string/description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
+            app:layout_constraintTop_toBottomOf="@+id/titleInputlayout"
+            style="@style/textInputLayoutStyle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputTaskGroupDescription"
+                style="@style/textDefaultStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top" />
@@ -167,23 +170,21 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnSaveTaskGroupChanges"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
             android:layout_margin="15dp"
             android:src="@drawable/ic_save"
             app:fabCustomSize="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/floatingButtonStyle"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnRestoreTaskGroupChanges"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
             android:layout_margin="15dp"
             android:src="@drawable/ic_back"
             app:fabCustomSize="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/floatingButtonStyle"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

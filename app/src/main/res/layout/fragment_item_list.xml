@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColor"
     tools:context=".presentation.view.ItemListFragment">
 
 
@@ -11,11 +12,13 @@
         android:id="@+id/rvTaskList"
         android:layout_width="match_parent"
         tools:listitem="@layout/task_item"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:overScrollMode="never"/>
 
     <TextView
         android:id="@+id/tvIsEmptyList"
         android:visibility="gone"
+        android:textAppearance="@style/textDefaultStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/listIsEmpty"
