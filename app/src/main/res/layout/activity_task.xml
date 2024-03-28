@@ -14,6 +14,7 @@
 
         <TextView
             android:id="@+id/tvTaskTitle"
+            android:textAppearance="@style/textHeaderStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Task Title"
@@ -21,13 +22,14 @@
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
-            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvIsFavouriteStatus"
+            android:textAppearance="@style/textDefaultStyle"
+            android:textStyle="italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/isFavourite"
@@ -37,13 +39,13 @@
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
 
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTaskTitle" />
 
         <TextView
             android:id="@+id/tvTaskDescription"
+            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Description text"

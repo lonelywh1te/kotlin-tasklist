@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/tvCreateActivityTitle"
+        android:textAppearance="@style/textHeaderStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/newTask"
@@ -37,6 +38,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskTitle"
+            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="25"/>
@@ -58,6 +60,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskDescription"
+            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"/>
@@ -76,6 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/descInputlayout">
 
         <TextView
+            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

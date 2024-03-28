@@ -14,6 +14,7 @@
 
         <TextView
             android:id="@+id/tvActivityTitle"
+            android:textAppearance="@style/textHeaderStyle"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:gravity="center_vertical"

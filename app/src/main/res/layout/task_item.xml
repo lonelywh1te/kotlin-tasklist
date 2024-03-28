@@ -9,12 +9,8 @@
         android:id="@+id/taskCard"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="7.5dp"
-        android:layout_marginBottom="7.5dp"
-        android:backgroundTint="@color/cardview_light_background"
-        app:cardCornerRadius="10dp"
+        style="@style/taskItemCardStyle"
+        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,19 +18,19 @@
 
         <TextView
             android:id="@+id/tvTaskTitle"
+            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="15dp"
-            tools:text="Task Title"
-            android:textSize="16sp" />
+            tools:text="Task Title" />
 
         <CheckBox
             android:id="@+id/cbCompleteTask"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="10dp" />
+            android:padding="15dp"/>
 
 
     </com.google.android.material.card.MaterialCardView>

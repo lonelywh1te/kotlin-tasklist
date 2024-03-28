@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="taskItemCardStyle">
+        <item name="cornerRadius">10dp</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:layout_marginTop">7.5dp</item>
+        <item name="android:layout_marginBottom">7.5dp</item>
+    </style>
+
+    <style name="textDefaultStyle">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="textHeaderStyle">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+</resources>
