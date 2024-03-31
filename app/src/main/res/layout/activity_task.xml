@@ -14,6 +14,24 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:visibility="visible"
+            android:id="@+id/tvTaskCompletionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:textAppearance="@style/textDefaultStyle"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="5dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTaskTitle"
+            tools:text="01.01.1970 00:00" />
+
+        <TextView
             android:id="@+id/tvTaskTitle"
             android:textAppearance="@style/textHeaderStyle"
             android:layout_width="match_parent"
@@ -29,21 +47,19 @@
 
         <TextView
             android:id="@+id/tvIsFavouriteStatus"
-            android:textAppearance="@style/textDefaultStyle"
-            android:textStyle="italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/isFavourite"
-            android:textColor="@color/accentColor"
-
             android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
+            android:text="@string/isFavourite"
+            android:textAppearance="@style/textDefaultStyle"
+
+            android:textColor="@color/accentColor"
+            android:textStyle="italic"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTaskTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTaskCompletionDate" />
 
         <TextView
             android:id="@+id/tvTaskDescription"
@@ -172,6 +188,44 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <TextView
+                android:textAppearance="@style/textDefaultStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Дата выполнения" />
+
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/btnResetTaskDeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:backgroundTint="@android:color/transparent"
+                app:tint="@color/secondaryColor" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSetTaskCompletionDate"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="12sp"
+                android:text="Назначить"
+                style="@style/defaultButton"/>
 
         </LinearLayout>
 

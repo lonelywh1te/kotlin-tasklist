@@ -16,23 +16,65 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tvTaskTitle"
-            android:textAppearance="@style/textDefaultStyle"
-            android:textColor="@color/primaryColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="15dp"
-            tools:text="Task Title" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <CheckBox
-            android:id="@+id/cbCompleteTask"
-            style="@style/checkboxStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end|center_vertical"
-            android:padding="15dp"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cbCompleteTask"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvTaskTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:textAppearance="@style/textDefaultStyle"
+                    android:textColor="@color/primaryColor"
+                    tools:text="Task Title" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvTaskDeadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:textAppearance="@style/textDefaultStyle"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/primaryColor"
+                    tools:text="12.03.2024 12:13"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    app:drawableTint="@color/white" />
+
+            </LinearLayout>
+
+
+
+            <CheckBox
+                android:id="@+id/cbCompleteTask"
+                style="@style/checkboxStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical"
+                android:padding="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
     </com.google.android.material.card.MaterialCardView>

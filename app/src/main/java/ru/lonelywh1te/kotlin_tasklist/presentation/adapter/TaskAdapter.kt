@@ -2,6 +2,7 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -134,6 +135,11 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
             binding.tvTaskTitle.text = task.title
             binding.cbCompleteTask.isChecked = task.isCompleted
             binding.taskCard.alpha =  if (task.isCompleted) 0.3f else 1.0f
+
+            if (task.completionDateInMillis != null) {
+                binding.tvTaskDeadline.text = Task.normalDateFormat(task.completionDateInMillis!!)
+                binding.tvTaskDeadline.visibility = View.VISIBLE
+            }
         }
     }
 
