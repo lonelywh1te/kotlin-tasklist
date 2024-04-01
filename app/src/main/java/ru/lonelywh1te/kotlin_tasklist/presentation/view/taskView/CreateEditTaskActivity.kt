@@ -6,28 +6,36 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
-import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskBinding
+import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateEditTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
-import java.util.Date
 import java.util.Locale
 
-class CreateTaskActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCreateTaskBinding
+class CreateEditTaskActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCreateEditTaskBinding
     private lateinit var taskViewModel: TaskViewModel
+    private lateinit var task: Task
+    private var editMode = false
+
     private var completionDate: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCreateTaskBinding.inflate(layoutInflater)
+        binding = ActivityCreateEditTaskBinding.inflate(layoutInflater)
         taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-
         val taskGroupId = intent.extras?.getInt("taskGroupId")
 
+        editMode = intent.extras?.getBoolean("editMode") ?: false
+
+        if (editMode) {
+            task = intent.extras?.getSerializable("task") as Task
+            completionDate = task.completionDateInMillis
+        }
+
+        setActivityMode()
         setContentView(binding.root)
 
         binding.btnAddTask.setOnClickListener {
@@ -53,7 +61,7 @@ class CreateTaskActivity : AppCompatActivity() {
                 completionDate = calendar.timeInMillis
 
                 binding.btnResetTaskDeadline.visibility = View.VISIBLE
-                binding.btnSetTaskCompletionDate.text = changeDateFormat(completionDate!!, "dd.MM.yyyy HH:mm")
+                binding.btnSetTaskCompletionDate.text = Task.normalDateFormat(completionDate!!)
 
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true)
 
@@ -69,17 +77,53 @@ class CreateTaskActivity : AppCompatActivity() {
         binding.btnResetTaskDeadline.setOnClickListener {
             completionDate = null
             binding.btnResetTaskDeadline.visibility = View.GONE
-            binding.btnSetTaskCompletionDate.text = "Назначить"
+            binding.btnSetTaskCompletionDate.text = getString(R.string.set)
+        }
+
+        binding.btnRestoreTaskChanges.setOnClickListener {
+            finish()
+        }
+
+        binding.btnSaveTaskChanges.setOnClickListener {
+            val title = binding.inputTaskTitle.text.toString()
+            val description = binding.inputTaskDescription.text.toString()
+            val isFavourite = binding.cbIsFavourive.isChecked
+
+            if (title.isBlank()) {
+                binding.inputTaskTitle.error = getString(R.string.enterTitle)
+            }
+            else {
+                updateTask(title, description, isFavourite, completionDate)
+                finish()
+            }
         }
     }
 
-    private fun changeDateFormat(time: Long, format: String): String {
-        val sdf = SimpleDateFormat(format, Locale.getDefault())
-        return sdf.format(time)
+    private fun setActivityMode() {
+        binding.tvCreateActivityTitle.text = if (editMode) getString(R.string.editTask) else getString(R.string.newTask)
+        binding.btnAddTask.visibility = if (editMode) View.GONE else View.VISIBLE
+        binding.btnRestoreTaskChanges.visibility = if (!editMode) View.GONE else View.VISIBLE
+        binding.btnSaveTaskChanges.visibility = if (!editMode) View.GONE else View.VISIBLE
+
+        if (editMode) {
+            binding.inputTaskTitle.setText(task.title)
+            binding.inputTaskDescription.setText(task.description)
+            binding.cbIsFavourive.isChecked = task.isFavourite
+
+            if (task.completionDateInMillis != null) {
+                binding.btnResetTaskDeadline.visibility = View.VISIBLE
+                binding.btnSetTaskCompletionDate.text = Task.normalDateFormat(task.completionDateInMillis!!)
+            }
+        }
     }
 
     private fun createTask(title: String, description: String, isFavourite: Boolean, completionDate: Long?, taskGroupId: Int?) {
         taskViewModel.addTask(Task(title, description, isFavourite, completionDateInMillis = completionDate, taskGroupId = taskGroupId))
         finish()
+    }
+
+    private fun updateTask(title: String, description: String, isFavourite: Boolean, completionDate: Long?) {
+        val task = Task(title, description, isFavourite, task.isCompleted, completionDate, task.taskGroupId, task.id)
+        taskViewModel.updateTask(task)
     }
 }

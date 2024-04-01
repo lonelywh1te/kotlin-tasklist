@@ -41,8 +41,7 @@
                     tools:text="Task Title" />
 
                 <TextView
-                    android:visibility="gone"
-                    android:id="@+id/tvTaskDeadline"
+                    android:id="@+id/tvTaskCompletionDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -53,6 +52,7 @@
                     android:drawablePadding="5dp"
                     android:textColor="@color/primaryColor"
                     tools:text="12.03.2024 12:13"
+                    tools:visibility="visible"
                     app:drawableStartCompat="@drawable/ic_calendar"
                     app:drawableTint="@color/white" />
 

@@ -15,12 +15,12 @@
 
         <TextView
             android:id="@+id/tvActivityTitle"
-            android:textAppearance="@style/textHeaderStyle"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:gravity="center_vertical"
             android:paddingStart="15dp"
             android:text="@string/tasks"
+            android:textAppearance="@style/textHeaderStyle"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,25 +34,25 @@
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            style="@style/bottomNavigationStyle"
             android:id="@+id/navBottomMenu"
+            style="@style/bottomNavigationStyle"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_gravity="start"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/bottom_navigation_menu"/>
+            app:menu="@menu/bottom_navigation_menu" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnCreateItem"
+        style="@style/floatingButtonStyle"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="95dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginBottom="95dp"
         android:src="@drawable/ic_plus"
         app:fabCustomSize="70dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/floatingButtonStyle"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

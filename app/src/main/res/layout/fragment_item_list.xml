@@ -11,17 +11,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTaskList"
         android:layout_width="match_parent"
-        tools:listitem="@layout/task_item"
         android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never"
+        tools:listitem="@layout/task_item" />
 
     <TextView
         android:id="@+id/tvIsEmptyList"
-        android:visibility="gone"
-        android:textAppearance="@style/textDefaultStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/listIsEmpty"
+        android:textAppearance="@style/textDefaultStyle"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

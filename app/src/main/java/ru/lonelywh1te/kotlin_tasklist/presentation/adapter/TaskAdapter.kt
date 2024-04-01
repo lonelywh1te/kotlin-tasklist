@@ -1,6 +1,5 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -131,14 +130,15 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
 
     class TaskViewHolder(private val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(task: Task) {
-            Log.println(Log.DEBUG, "recycler", "${task.id} | ${task.isCompleted}")
             binding.tvTaskTitle.text = task.title
             binding.cbCompleteTask.isChecked = task.isCompleted
             binding.taskCard.alpha =  if (task.isCompleted) 0.3f else 1.0f
 
             if (task.completionDateInMillis != null) {
-                binding.tvTaskDeadline.text = Task.normalDateFormat(task.completionDateInMillis!!)
-                binding.tvTaskDeadline.visibility = View.VISIBLE
+                binding.tvTaskCompletionDate.text = Task.normalDateFormat(task.completionDateInMillis)
+                binding.tvTaskCompletionDate.visibility = View.VISIBLE
+            } else {
+                binding.tvTaskCompletionDate.visibility = View.GONE
             }
         }
     }

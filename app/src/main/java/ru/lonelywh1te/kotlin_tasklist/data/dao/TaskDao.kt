@@ -30,4 +30,7 @@ interface TaskDao {
 
     @Query("UPDATE task_table SET isCompleted = :isCompleted WHERE id=:id")
     suspend fun changeTaskCompletion(id: Int, isCompleted: Boolean)
+
+    @Query("SELECT * FROM task_table WHERE id=:id")
+    suspend fun getTaskById(id: Int): Task
 }

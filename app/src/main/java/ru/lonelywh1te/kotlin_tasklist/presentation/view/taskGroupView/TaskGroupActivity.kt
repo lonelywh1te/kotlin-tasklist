@@ -3,6 +3,7 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,7 @@ import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.ItemClickListener
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateTaskActivity
+import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateEditTaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
@@ -27,16 +28,21 @@ class TaskGroupActivity : AppCompatActivity() {
     private lateinit var taskGroupViewModel: TaskGroupViewModel
     private lateinit var taskViewModel: TaskViewModel
 
-    private var editMode = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskGroupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         taskGroupViewModel = ViewModelProvider(this)[TaskGroupViewModel::class.java]
         taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
 
         taskGroup = intent.extras?.getSerializable("taskGroup") as TaskGroup
+
+        taskGroupViewModel.taskGroup.observe(this) {
+            taskGroup = it
+            setTaskGroupData()
+        }
+
         recycler = binding.rvTaskGroupTasks
 
         val adapter = TaskAdapter(object: ItemClickListener {
@@ -58,17 +64,14 @@ class TaskGroupActivity : AppCompatActivity() {
         }
 
         taskViewModel.taskList.observe(this) {
-            adapter.updateTaskList(taskViewModel.getTaskList())
+            adapter.updateTaskList(it)
 
-            binding.tvIsEmptyList.visibility = if (taskViewModel.getTaskList().isEmpty()) {
+            binding.tvIsEmptyList.visibility = if (it.isEmpty()) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
         }
-
-        setContentView(binding.root)
-        setTaskGroupData()
 
         binding.btnDeleteTaskGroup.setOnClickListener {
             deleteTaskGroup()
@@ -79,38 +82,22 @@ class TaskGroupActivity : AppCompatActivity() {
         }
 
         binding.btnEditTaskGroup.setOnClickListener {
-            changeActivityMode()
-
-            binding.inputTaskGroupName.setText(taskGroup.name)
-            binding.inputTaskGroupDescription.setText(taskGroup.description)
-        }
-
-        binding.btnRestoreTaskGroupChanges.setOnClickListener {
-            changeActivityMode()
-        }
-
-        binding.btnSaveTaskGroupChanges.setOnClickListener {
-            val newTaskGroupName = binding.inputTaskGroupName.text.toString()
-            val newTaskGroupDescription = binding.inputTaskGroupDescription.text.toString()
-
-            if (newTaskGroupName.isBlank()) {
-                binding.inputTaskGroupName.error = getString(R.string.enterName)
-            }
-            else {
-                updateTaskGroup(newTaskGroupName, newTaskGroupDescription)
-                setTaskGroupData()
-                changeActivityMode()
-            }
+            val intent = Intent(this, CreateEditTaskGroupActivity::class.java)
+            intent.putExtra("editMode", true)
+            intent.putExtra("taskGroup", taskGroup)
+            startActivity(intent)
         }
     }
 
     override fun onResume() {
         super.onResume()
+
+        taskGroupViewModel.getTaskGroupById(taskGroup.id)
         taskViewModel.getAllTasks(taskGroup.id)
     }
 
     private fun addTask() {
-        val intent = Intent(this, CreateTaskActivity::class.java)
+        val intent = Intent(this, CreateEditTaskActivity::class.java)
         intent.putExtra("taskGroupId", taskGroup.id)
         startActivity(intent)
     }
@@ -126,25 +113,13 @@ class TaskGroupActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTaskGroup(name: String, description: String) {
-        taskGroup = TaskGroup(name, description, id = taskGroup.id)
-        taskGroupViewModel.updateTaskGroup(taskGroup)
-    }
-
     private fun deleteTaskGroup() {
         for (task in taskViewModel.getTaskList()) {
-            task.taskGroupId = null
-            taskViewModel.updateTask(task)
+            val updatedTask = Task(task.title, task.description, task.isFavourite, task.isCompleted, task.completionDateInMillis, null, task.id)
+            taskViewModel.updateTask(updatedTask)
         }
 
         taskGroupViewModel.deleteTaskGroup(taskGroup)
         finish()
-    }
-
-    private fun changeActivityMode() {
-        editMode = !editMode
-
-        binding.editTaskGroupLayout.visibility = if (editMode) View.VISIBLE else View.GONE
-        binding.readTaskGroupLayout.visibility = if (editMode) View.GONE else View.VISIBLE
     }
 }

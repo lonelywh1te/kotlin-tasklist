@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
-    tools:context=".presentation.view.taskGroupView.CreateTaskGroupActivity">
+    tools:context=".presentation.view.taskGroupView.CreateEditTaskGroupActivity">
 
     <TextView
         android:id="@+id/tvCreateActivityTitle"
-        android:textAppearance="@style/textHeaderStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Новая группа"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/newGroup"
+        android:textAppearance="@style/textHeaderStyle"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,59 +24,79 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleInputlayout"
+        style="@style/textInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="@string/taskTitle"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
         android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCreateActivityTitle"
+        android:layout_marginBottom="25dp"
+        android:hint="@string/taskTitle"
         app:counterEnabled="true"
         app:counterMaxLength="24"
-        style="@style/textInputLayoutStyle">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateActivityTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskGroupName"
-            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLength="25"/>
+            android:maxLength="25"
+            android:textAppearance="@style/textDefaultStyle" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/descInputlayout"
+        style="@style/textInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="25dp"
         android:gravity="top"
-        android:layout_marginEnd="15dp"
         android:hint="@string/description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleInputlayout"
-        style="@style/textInputLayoutStyle">
+        app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskGroupDescription"
-            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="top" />
+            android:gravity="top"
+            android:textAppearance="@style/textDefaultStyle" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddTaskGroup"
+        style="@style/floatingButtonStyle"
         android:layout_margin="15dp"
         android:src="@drawable/ic_plus"
         app:fabCustomSize="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/floatingButtonStyle"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSaveTaskGroupChanges"
+        android:visibility="gone"
+        style="@style/floatingButtonStyle"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_save"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnRestoreTaskGroupChanges"
+        style="@style/floatingButtonStyle"
+        android:visibility="gone"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_back"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

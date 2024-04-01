@@ -9,6 +9,7 @@ import ru.lonelywh1te.kotlin_tasklist.data.MainDatabase
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 
 class TaskViewModel(app: Application): AndroidViewModel(app) {
+    val task = MutableLiveData<Task>()
     val taskList = MutableLiveData<List<Task>>()
     var isFavouriteTaskList = false
 
@@ -31,6 +32,12 @@ class TaskViewModel(app: Application): AndroidViewModel(app) {
     fun getAllTasks(taskGroupId: Int?) {
         viewModelScope.launch {
             taskList.postValue(taskDao.getAllTasks(taskGroupId))
+        }
+    }
+
+    fun getTaskById(id: Int) {
+        viewModelScope.launch {
+            task.postValue(taskDao.getTaskById(id))
         }
     }
 

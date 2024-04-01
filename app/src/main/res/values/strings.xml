@@ -16,4 +16,6 @@
     <string name="createItemQuestion">Что вы хотите создать?</string>
     <string name="task">Задача</string>
     <string name="group">Список</string>
+    <string name="set">Назначить</string>
+    <string name="newGroup">Новая группа</string>
 </resources>

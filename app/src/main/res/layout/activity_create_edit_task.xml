@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
-    tools:context=".presentation.view.taskView.CreateTaskActivity">
+    tools:context=".presentation.view.taskView.CreateEditTaskActivity">
 
     <TextView
         android:id="@+id/tvCreateActivityTitle"
-        android:textAppearance="@style/textHeaderStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/newTask"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/newTask"
+        android:textAppearance="@style/textHeaderStyle"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,49 +24,49 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleInputlayout"
+        style="@style/textInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="@string/taskTitle"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginBottom="25dp"
+        android:hint="@string/taskTitle"
+        app:counterEnabled="true"
+        app:counterMaxLength="24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCreateActivityTitle"
-        style="@style/textInputLayoutStyle"
-        app:counterEnabled="true"
-        app:counterMaxLength="24">
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateActivityTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskTitle"
-            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLength="25"/>
+            android:maxLength="25"
+            android:textAppearance="@style/textDefaultStyle" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/descInputlayout"
+        style="@style/textInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="25dp"
         android:gravity="top"
-        android:layout_marginEnd="15dp"
         android:hint="@string/description"
-        style="@style/textInputLayoutStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskDescription"
-            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="top"/>
+            android:gravity="top"
+            android:textAppearance="@style/textDefaultStyle" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,18 +82,18 @@
         app:layout_constraintTop_toBottomOf="@+id/descInputlayout">
 
         <TextView
-            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@string/addToFavourite" />
+            android:text="@string/addToFavourite"
+            android:textAppearance="@style/textDefaultStyle" />
 
         <CheckBox
             android:id="@+id/cbIsFavourive"
+            style="@style/checkboxStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/checkboxStyle"
             android:layout_gravity="end"
             android:layout_weight="1" />
 
@@ -111,39 +111,60 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
-            android:textAppearance="@style/textDefaultStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Дата выполнения" />
+            android:text="Дата выполнения"
+            android:textAppearance="@style/textDefaultStyle" />
 
         <ImageButton
-            android:visibility="gone"
             android:id="@+id/btnResetTaskDeadline"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_delete"
+            android:layout_height="match_parent"
             android:backgroundTint="@android:color/transparent"
-            app:tint="@color/secondaryColor" />
+            android:src="@drawable/ic_delete"
+            android:visibility="gone"
+            app:tint="@color/secondaryColor"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSetTaskCompletionDate"
+            style="@style/defaultButton"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:textSize="12sp"
-            android:text="Назначить"
-            style="@style/defaultButton"/>
+            android:text="@string/set"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddTask"
-        android:layout_margin="15dp"
         style="@style/floatingButtonStyle"
+        android:layout_margin="15dp"
         android:src="@drawable/ic_plus"
         app:fabCustomSize="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSaveTaskChanges"
+        style="@style/floatingButtonStyle"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_save"
+        android:visibility="gone"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnRestoreTaskChanges"
+        style="@style/floatingButtonStyle"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_back"
+        android:visibility="gone"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

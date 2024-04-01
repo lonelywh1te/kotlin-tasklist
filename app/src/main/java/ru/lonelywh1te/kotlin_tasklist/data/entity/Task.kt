@@ -9,12 +9,12 @@ import java.util.Locale
 
 @Entity(tableName = "task_table")
 data class Task (
-    var title: String,
-    var description: String,
-    var isFavourite: Boolean = false,
-    var isCompleted: Boolean = false,
-    var completionDateInMillis: Long? = null,
-    var taskGroupId: Int? = null,
+    val title: String,
+    val description: String,
+    val isFavourite: Boolean = false,
+    val isCompleted: Boolean = false,
+    val completionDateInMillis: Long? = null,
+    val taskGroupId: Int? = null,
 
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 ) : TaskItem(), Serializable

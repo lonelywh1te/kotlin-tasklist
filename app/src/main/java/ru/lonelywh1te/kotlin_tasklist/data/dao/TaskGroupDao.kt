@@ -21,4 +21,7 @@ interface TaskGroupDao {
 
     @Query("SELECT * from task_group")
     suspend fun getAllTaskGroups(): List<TaskGroup>
+
+    @Query("SELECT * from task_group WHERE id=:id")
+    suspend fun getTaskGroupById(id: Int): TaskGroup
 }

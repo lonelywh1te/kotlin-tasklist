@@ -9,33 +9,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp">
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
+            android:alpha="0.3"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:alpha="0.3">
+            android:orientation="horizontal">
 
             <TextView
-                android:textAppearance="@style/textDefaultStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="kotlin-tasklist" />
+                android:text="kotlin-tasklist"
+                android:textAppearance="@style/textDefaultStyle" />
 
             <TextView
                 android:id="@+id/tvAppVersionInfo"
-                android:textAppearance="@style/textDefaultStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:padding="5dp"
+                android:textAppearance="@style/textDefaultStyle"
                 tools:text="v 1.0.0" />
 
 
@@ -45,25 +45,25 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
+            android:alpha="0.3"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:alpha="0.3">
+            android:orientation="horizontal">
 
             <TextView
-                android:textAppearance="@style/textDefaultStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="made by" />
+                android:text="made by"
+                android:textAppearance="@style/textDefaultStyle" />
 
             <TextView
-                android:textAppearance="@style/textDefaultStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:padding="5dp"
-                android:text="lonelywh1te" />
+                android:text="lonelywh1te"
+                android:textAppearance="@style/textDefaultStyle" />
 
 
         </LinearLayout>
