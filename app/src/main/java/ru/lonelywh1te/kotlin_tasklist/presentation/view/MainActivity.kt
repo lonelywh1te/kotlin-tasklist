@@ -17,8 +17,8 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateEditTaskA
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private var itemListFragment = ItemListFragment(false)
-    private var favouriteItemListFragment = ItemListFragment(true)
+    private var itemListFragment = ItemListFragment.newInstance(false)
+    private var favouriteItemListFragment = ItemListFragment.newInstance(true)
     private var infoFragment = InfoFragment()
     private lateinit var createItemDialog: Dialog
 

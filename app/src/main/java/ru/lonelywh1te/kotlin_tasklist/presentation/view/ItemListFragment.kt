@@ -21,7 +21,10 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 
-class ItemListFragment(private val isFavouriteTaskList: Boolean) : Fragment() {
+const val ARG_IS_FAVOURITE_LIST = "isFavList"
+class ItemListFragment: Fragment() {
+    private var isFavouriteTaskList: Boolean? = null
+
     private lateinit var binding: FragmentItemListBinding
     private lateinit var taskViewModel: TaskViewModel
     private lateinit var taskGroupViewModel: TaskGroupViewModel
@@ -29,6 +32,8 @@ class ItemListFragment(private val isFavouriteTaskList: Boolean) : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
+        isFavouriteTaskList = arguments?.getBoolean(ARG_IS_FAVOURITE_LIST)
+
         taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         taskGroupViewModel = ViewModelProvider(this)[TaskGroupViewModel::class.java]
 
@@ -59,7 +64,7 @@ class ItemListFragment(private val isFavouriteTaskList: Boolean) : Fragment() {
             }
 
             override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
-                taskViewModel.isFavouriteTaskList = isFavouriteTaskList
+                taskViewModel.isFavouriteTaskList = (isFavouriteTaskList == true)
                 taskViewModel.changeTaskCompletion(task, isCompleted)
             }
         })
@@ -94,7 +99,7 @@ class ItemListFragment(private val isFavouriteTaskList: Boolean) : Fragment() {
     }
 
     override fun onResume() {
-        if (isFavouriteTaskList){
+        if (isFavouriteTaskList == true){
             taskViewModel.getFavouriteTasks()
         } else {
             taskViewModel.getAllTasks()
@@ -102,5 +107,16 @@ class ItemListFragment(private val isFavouriteTaskList: Boolean) : Fragment() {
         }
 
         super.onResume()
+    }
+
+    companion object {
+        fun newInstance(isFavouriteTaskList: Boolean): ItemListFragment {
+            val instance = ItemListFragment()
+            val arguments = Bundle()
+            arguments.putBoolean(ARG_IS_FAVOURITE_LIST, isFavouriteTaskList)
+            instance.arguments = arguments
+
+            return instance
+        }
     }
 }
