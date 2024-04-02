@@ -1,8 +1,12 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuffColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.lonelywh1te.kotlin_tasklist.R
@@ -11,6 +15,7 @@ import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskGroupItemBinding
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskItemBinding
+import ru.lonelywh1te.kotlin_tasklist.presentation.utils.DateUtils
 
 interface ItemClickListener {
     fun onItemClicked(taskItem: TaskItem)
@@ -135,7 +140,7 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
             binding.taskCard.alpha =  if (task.isCompleted) 0.3f else 1.0f
 
             if (task.completionDateInMillis != null) {
-                binding.tvTaskCompletionDate.text = Task.normalDateFormat(task.completionDateInMillis)
+                binding.tvTaskCompletionDate.text = DateUtils.normalDateFormat(task.completionDateInMillis)
                 binding.tvTaskCompletionDate.visibility = View.VISIBLE
             } else {
                 binding.tvTaskCompletionDate.visibility = View.GONE

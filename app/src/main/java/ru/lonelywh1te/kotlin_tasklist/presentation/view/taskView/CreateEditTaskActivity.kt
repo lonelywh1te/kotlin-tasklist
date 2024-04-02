@@ -6,26 +6,36 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateEditTaskBinding
+import ru.lonelywh1te.kotlin_tasklist.presentation.notifications.Notification
+import ru.lonelywh1te.kotlin_tasklist.presentation.notifications.NotificationScheduler
+import ru.lonelywh1te.kotlin_tasklist.presentation.utils.DateUtils
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.NotificationViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 import java.util.Locale
 
 class CreateEditTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateEditTaskBinding
     private lateinit var taskViewModel: TaskViewModel
+    private lateinit var notificationViewModel: NotificationViewModel
     private lateinit var task: Task
     private var editMode = false
 
     private var completionDate: Long? = null
+    private var deletedCompletionDate: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateEditTaskBinding.inflate(layoutInflater)
+
         taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+        notificationViewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
+
         val taskGroupId = intent.extras?.getInt("taskGroupId")
 
         editMode = intent.extras?.getBoolean("editMode") ?: false
@@ -43,12 +53,15 @@ class CreateEditTaskActivity : AppCompatActivity() {
             val description = binding.inputTaskDescription.text.toString()
             val isFavourite = binding.cbIsFavourive.isChecked
 
-            if (title.isBlank()) {
-                binding.inputTaskTitle.error = getString(R.string.enterTitle)
-            }
-            else {
-                createTask(title, description, isFavourite, completionDate, taskGroupId)
-            }
+            handleTaskOperation(title, description, isFavourite, taskGroupId)
+        }
+
+        binding.btnSaveTaskChanges.setOnClickListener {
+            val title = binding.inputTaskTitle.text.toString()
+            val description = binding.inputTaskDescription.text.toString()
+            val isFavourite = binding.cbIsFavourive.isChecked
+
+            handleTaskOperation(title, description, isFavourite, taskGroupId)
         }
 
         binding.btnSetTaskCompletionDate.setOnClickListener {
@@ -61,7 +74,7 @@ class CreateEditTaskActivity : AppCompatActivity() {
                 completionDate = calendar.timeInMillis
 
                 binding.btnResetTaskDeadline.visibility = View.VISIBLE
-                binding.btnSetTaskCompletionDate.text = Task.normalDateFormat(completionDate!!)
+                binding.btnSetTaskCompletionDate.text = DateUtils.normalDateFormat(completionDate!!)
 
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true)
 
@@ -75,6 +88,7 @@ class CreateEditTaskActivity : AppCompatActivity() {
         }
 
         binding.btnResetTaskDeadline.setOnClickListener {
+            deletedCompletionDate = completionDate
             completionDate = null
             binding.btnResetTaskDeadline.visibility = View.GONE
             binding.btnSetTaskCompletionDate.text = getString(R.string.set)
@@ -82,20 +96,6 @@ class CreateEditTaskActivity : AppCompatActivity() {
 
         binding.btnRestoreTaskChanges.setOnClickListener {
             finish()
-        }
-
-        binding.btnSaveTaskChanges.setOnClickListener {
-            val title = binding.inputTaskTitle.text.toString()
-            val description = binding.inputTaskDescription.text.toString()
-            val isFavourite = binding.cbIsFavourive.isChecked
-
-            if (title.isBlank()) {
-                binding.inputTaskTitle.error = getString(R.string.enterTitle)
-            }
-            else {
-                updateTask(title, description, isFavourite, completionDate)
-                finish()
-            }
         }
     }
 
@@ -112,18 +112,47 @@ class CreateEditTaskActivity : AppCompatActivity() {
 
             if (task.completionDateInMillis != null) {
                 binding.btnResetTaskDeadline.visibility = View.VISIBLE
-                binding.btnSetTaskCompletionDate.text = Task.normalDateFormat(task.completionDateInMillis!!)
+                binding.btnSetTaskCompletionDate.text = DateUtils.normalDateFormat(task.completionDateInMillis!!)
             }
         }
     }
 
+    private fun setTaskNotification() {
+        notificationViewModel.setTaskNotification(task, completionDate!!)
+    }
+
+    private fun cancelTaskNotification() {
+        notificationViewModel.cancelTaskNotification(task, deletedCompletionDate!!)
+    }
+
     private fun createTask(title: String, description: String, isFavourite: Boolean, completionDate: Long?, taskGroupId: Int?) {
-        taskViewModel.addTask(Task(title, description, isFavourite, completionDateInMillis = completionDate, taskGroupId = taskGroupId))
+        task = Task(title, description, isFavourite, completionDateInMillis = completionDate, taskGroupId = taskGroupId)
+        taskViewModel.addTask(task)
         finish()
     }
 
     private fun updateTask(title: String, description: String, isFavourite: Boolean, completionDate: Long?) {
-        val task = Task(title, description, isFavourite, task.isCompleted, completionDate, task.taskGroupId, task.id)
+        task = Task(title, description, isFavourite, task.isCompleted, completionDate, task.taskGroupId, task.id)
         taskViewModel.updateTask(task)
+    }
+
+    private fun handleTaskOperation(title: String, description: String, isFavourite: Boolean, taskGroupId: Int?) {
+        if (title.isBlank()) {
+            binding.inputTaskTitle.error = getString(R.string.enterTitle)
+            return
+        }
+
+        if (!editMode) {
+            createTask(title, description, isFavourite, completionDate, taskGroupId)
+        } else {
+            updateTask(title, description, isFavourite, completionDate)
+            finish()
+        }
+
+        if (completionDate != null) {
+            setTaskNotification()
+        } else if (deletedCompletionDate != null){
+            cancelTaskNotification()
+        }
     }
 }

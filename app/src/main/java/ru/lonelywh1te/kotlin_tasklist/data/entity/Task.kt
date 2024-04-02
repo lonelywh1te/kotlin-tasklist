@@ -18,13 +18,3 @@ data class Task (
 
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 ) : TaskItem(), Serializable
-{
-    companion object {
-        private const val DATE_FORMAT = "dd.MM.yyyy HH:mm"
-
-        fun normalDateFormat(time: Long): String {
-            val sdf = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-            return sdf.format(time)
-        }
-    }
-}
