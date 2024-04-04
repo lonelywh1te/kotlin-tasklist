@@ -1,5 +1,6 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.notifications
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -11,11 +12,12 @@ class NotificationScheduler(private val context: Context) {
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
     private val intent = Intent(context, NotificationReceiver::class.java)
 
+    @SuppressLint("ScheduleExactAlarm")
     fun schedule(notification: Notification) {
         intent.putExtra(Notification.TITLE_EXTRA_NAME, notification.title)
         intent.putExtra(Notification.MESSAGE_EXTRA_NAME, notification.message)
 
-        alarmManager.setAndAllowWhileIdle (
+        alarmManager.setExactAndAllowWhileIdle (
             AlarmManager.RTC_WAKEUP,
             notification.timeInMillis,
             getPendingIntent(notification)
