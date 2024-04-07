@@ -1,12 +1,8 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
-import android.content.Context
-import android.graphics.Color
-import android.graphics.PorterDuffColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.lonelywh1te.kotlin_tasklist.R

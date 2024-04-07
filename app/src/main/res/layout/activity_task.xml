@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:drawableStart="@drawable/ic_calendar"
         android:drawablePadding="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
@@ -23,7 +22,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskTitle"
         tools:text="01.01.1970 00:00"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        app:drawableStartCompat="@drawable/ic_calendar" />
 
     <TextView
         android:id="@+id/tvTaskTitle"
