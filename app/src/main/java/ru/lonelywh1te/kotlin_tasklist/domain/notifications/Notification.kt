@@ -1,6 +1,6 @@
-package ru.lonelywh1te.kotlin_tasklist.presentation.notifications
+package ru.lonelywh1te.kotlin_tasklist.domain.notifications
 
-import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
+import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 
 data class Notification (
     val id: Int,

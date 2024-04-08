@@ -40,6 +40,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTaskTitle"
+            android:inputType="textShortMessage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="25"

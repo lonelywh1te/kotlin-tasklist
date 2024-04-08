@@ -65,11 +65,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (createItemDialog.isShowing) createItemDialog.dismiss()
-    }
-
     private fun setFragment(fragment: Fragment) {
         binding.navBottomMenu.selectedItemId = fragment.id
         supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout, fragment).commit()
@@ -84,10 +79,12 @@ class MainActivity : AppCompatActivity() {
 
         dialogBinding.btnCreateTask.setOnClickListener {
             startActivity(Intent(this, CreateEditTaskActivity::class.java))
+            createItemDialog.dismiss()
         }
 
         dialogBinding.btnCreateTaskGroup.setOnClickListener {
             startActivity(Intent(this, CreateEditTaskGroupActivity::class.java))
+            createItemDialog.dismiss()
         }
 
         createItemDialog.show()

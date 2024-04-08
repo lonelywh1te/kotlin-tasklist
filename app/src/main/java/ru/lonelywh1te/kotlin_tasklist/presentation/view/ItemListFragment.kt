@@ -10,16 +10,19 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.lonelywh1te.kotlin_tasklist.data.TaskItem
-import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
-import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentItemListBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.ItemClickListener
+import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.OnItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.TaskGroupActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskGroupViewModelFactory
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskViewModelFactory
 
 const val ARG_IS_FAVOURITE_LIST = "isFavList"
 class ItemListFragment: Fragment() {
@@ -34,40 +37,17 @@ class ItemListFragment: Fragment() {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
         isFavouriteTaskList = arguments?.getBoolean(ARG_IS_FAVOURITE_LIST)
 
-        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-        taskGroupViewModel = ViewModelProvider(this)[TaskGroupViewModel::class.java]
+        taskViewModel = ViewModelProvider(this, TaskViewModelFactory(requireContext()))[TaskViewModel::class.java]
+        taskGroupViewModel = ViewModelProvider(this, TaskGroupViewModelFactory(requireContext()))[TaskGroupViewModel::class.java]
 
+        taskViewModel.isFavouriteTaskList = (isFavouriteTaskList == true)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = TaskAdapter(object: ItemClickListener {
-
-            override fun onItemClicked(taskItem: TaskItem) {
-                val intent: Intent = when(taskItem) {
-                    is Task -> {
-                        Intent(binding.root.context, TaskActivity::class.java).apply {
-                            putExtra("task", taskItem)
-                        }
-                    }
-                    is TaskGroup -> {
-                        Intent(binding.root.context, TaskGroupActivity::class.java).apply {
-                            putExtra("taskGroup", taskItem)
-                        }
-                    }
-                    else -> throw IllegalAccessException("Invalid View Type")
-                }
-
-                binding.root.context.startActivity(intent);
-            }
-
-            override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
-                taskViewModel.isFavouriteTaskList = (isFavouriteTaskList == true)
-                taskViewModel.changeTaskCompletion(task, isCompleted)
-            }
-        })
+        val adapter = TaskAdapter(OnItemClickListener(requireContext(), taskViewModel))
 
         recycler = binding.rvTaskList
         recycler.apply {

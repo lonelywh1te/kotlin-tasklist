@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.lonelywh1te.kotlin_tasklist.R
-import ru.lonelywh1te.kotlin_tasklist.data.TaskItem
-import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
-import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskGroupItemBinding
 import ru.lonelywh1te.kotlin_tasklist.databinding.TaskItemBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.utils.DateUtils
+import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
 
 interface ItemClickListener {
     fun onItemClicked(taskItem: TaskItem)
@@ -60,9 +60,9 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
             diffTasks.dispatchUpdatesTo(this)
         }
 
-    fun updateTaskList(taskList: List<Task>, taskGroup: List<TaskGroup>) {
+    fun updateTaskList(taskList: List<Task>, taskGroupList: List<TaskGroup>) {
         val newTaskItems = mutableListOf<TaskItem>()
-        newTaskItems.addAll(taskGroup)
+        newTaskItems.addAll(taskGroupList)
         newTaskItems.addAll(taskList)
 
         taskItems = newTaskItems

@@ -1,19 +1,34 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.lonelywh1te.kotlin_tasklist.data.MainDatabase
-import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
+import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.AddTaskUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.DeleteTaskUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.GetAllTasksUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.GetFavouriteTasksUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.GetTaskByIdUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.UpdateTaskUseCase
 
-class TaskViewModel(app: Application): AndroidViewModel(app) {
-    val task = MutableLiveData<Task>()
-    val taskList = MutableLiveData<List<Task>>()
+class TaskViewModel(
+    private val addTaskUseCase: AddTaskUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val updateTaskUseCase: UpdateTaskUseCase,
+    private val getAllTasksUseCase: GetAllTasksUseCase,
+    private val getFavouriteTasksUseCase: GetFavouriteTasksUseCase,
+    private val getTaskByIdUseCase: GetTaskByIdUseCase,
+): ViewModel() {
+    private val _task = MutableLiveData<Task>()
+    private val _taskList = MutableLiveData<List<Task>>()
+
+    val task: LiveData<Task> = _task
+    val taskList: LiveData<List<Task>> = _taskList
+
     var isFavouriteTaskList = false
-
-    private val taskDao = MainDatabase.getDatabase(app).TaskDao()
 
     fun getTaskList(): List<Task> {
         return taskList.value.orEmpty()
@@ -24,56 +39,57 @@ class TaskViewModel(app: Application): AndroidViewModel(app) {
             if (isFavouriteTaskList) {
                 getFavouriteTasks()
             } else {
-                taskList.postValue(taskDao.getAllTasks())
+                _taskList.postValue(getAllTasksUseCase.execute())
             }
         }
     }
 
     fun getAllTasks(taskGroupId: Int?) {
         viewModelScope.launch {
-            taskList.postValue(taskDao.getAllTasks(taskGroupId))
+            _taskList.postValue(getAllTasksUseCase.execute(taskGroupId))
+            Log.println(Log.DEBUG, "kotlin-tasklist", "${getAllTasksUseCase.execute(taskGroupId)}")
         }
     }
 
     fun getTaskById(id: Int) {
         viewModelScope.launch {
-            task.postValue(taskDao.getTaskById(id))
+            _task.postValue(getTaskByIdUseCase.execute(id))
         }
     }
 
     fun getFavouriteTasks() {
         viewModelScope.launch {
-            taskList.postValue(taskDao.getFavouriteTasks())
+            _taskList.postValue(getFavouriteTasksUseCase.execute())
         }
     }
 
     fun addTask(task: Task) {
         viewModelScope.launch {
-            taskDao.addTask(task)
+            addTaskUseCase.execute(task)
             getAllTasks()
         }
     }
 
     fun deleteTask(task: Task) {
         viewModelScope.launch {
-            taskDao.deleteTask(task)
+            deleteTaskUseCase.execute(task)
             getAllTasks()
         }
     }
 
     fun updateTask(task: Task) {
         viewModelScope.launch {
-            taskDao.updateTask(task)
-            getAllTasks()
+            updateTaskUseCase.execute(task)
+
+            if (task.taskGroupId == null || isFavouriteTaskList) getAllTasks()
+            else getAllTasks(task.taskGroupId)
         }
     }
 
     fun changeTaskCompletion(task: Task, isCompleted: Boolean) {
         viewModelScope.launch {
-            taskDao.changeTaskCompletion(task.id, isCompleted)
-
-            if (task.taskGroupId == null || isFavouriteTaskList) getAllTasks()
-            else getAllTasks(task.taskGroupId)
+            val changedTask = Task(task.title, task.description, task.isFavourite, isCompleted, task.completionDateInMillis, task.taskGroupId, task.id)
+            updateTask(changedTask)
         }
     }
 }

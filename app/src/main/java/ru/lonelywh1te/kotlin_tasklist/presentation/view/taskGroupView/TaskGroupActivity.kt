@@ -8,17 +8,19 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.lonelywh1te.kotlin_tasklist.R
-import ru.lonelywh1te.kotlin_tasklist.data.TaskItem
-import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
-import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.ItemClickListener
+import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.OnItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateEditTaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskGroupViewModelFactory
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskViewModelFactory
 
 class TaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskGroupBinding
@@ -33,8 +35,8 @@ class TaskGroupActivity : AppCompatActivity() {
         binding = ActivityTaskGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        taskGroupViewModel = ViewModelProvider(this)[TaskGroupViewModel::class.java]
-        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+        taskGroupViewModel = ViewModelProvider(this, TaskGroupViewModelFactory(this))[TaskGroupViewModel::class.java]
+        taskViewModel = ViewModelProvider(this, TaskViewModelFactory(this))[TaskViewModel::class.java]
 
         taskGroup = intent.extras?.getSerializable("taskGroup") as TaskGroup
 
@@ -45,18 +47,7 @@ class TaskGroupActivity : AppCompatActivity() {
 
         recycler = binding.rvTaskGroupTasks
 
-        val adapter = TaskAdapter(object: ItemClickListener {
-            override fun onItemClicked(taskItem: TaskItem) {
-                val intent = Intent(binding.root.context, TaskActivity::class.java)
-                intent.putExtra("task", taskItem as Task)
-
-                binding.root.context.startActivity(intent);
-            }
-
-            override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
-                taskViewModel.changeTaskCompletion(task, isCompleted)
-            }
-        })
+        val adapter = TaskAdapter(OnItemClickListener(this, taskViewModel))
 
         recycler.apply {
             this.adapter = adapter
@@ -64,6 +55,7 @@ class TaskGroupActivity : AppCompatActivity() {
         }
 
         taskViewModel.taskList.observe(this) {
+            Log.println(Log.DEBUG, "kotlin-tasklist", "TASKGROUP_ACTIVITY_GET: $it")
             adapter.updateTaskList(it)
 
             binding.tvIsEmptyList.visibility = if (it.isEmpty()) {
@@ -115,8 +107,8 @@ class TaskGroupActivity : AppCompatActivity() {
 
     private fun deleteTaskGroup() {
         for (task in taskViewModel.getTaskList()) {
-            val updatedTask = Task(task.title, task.description, task.isFavourite, task.isCompleted, task.completionDateInMillis, null, task.id)
-            taskViewModel.updateTask(updatedTask)
+            val updatedTaskEntity = Task(task.title, task.description, task.isFavourite, task.isCompleted, task.completionDateInMillis, null, task.id)
+            taskViewModel.updateTask(updatedTaskEntity)
         }
 
         taskGroupViewModel.deleteTaskGroup(taskGroup)

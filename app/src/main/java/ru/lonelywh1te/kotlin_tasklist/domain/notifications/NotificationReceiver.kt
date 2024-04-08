@@ -1,4 +1,4 @@
-package ru.lonelywh1te.kotlin_tasklist.presentation.notifications
+package ru.lonelywh1te.kotlin_tasklist.domain.notifications
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

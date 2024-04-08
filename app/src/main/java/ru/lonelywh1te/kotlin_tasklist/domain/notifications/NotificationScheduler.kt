@@ -1,4 +1,4 @@
-package ru.lonelywh1te.kotlin_tasklist.presentation.notifications
+package ru.lonelywh1te.kotlin_tasklist.domain.notifications
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -6,7 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import ru.lonelywh1te.kotlin_tasklist.presentation.utils.DateUtils
+import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
 
 class NotificationScheduler(private val context: Context) {
     private val alarmManager = context.getSystemService(AlarmManager::class.java)

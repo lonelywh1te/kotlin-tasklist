@@ -1,19 +1,25 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.lonelywh1te.kotlin_tasklist.data.MainDatabase
-import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.AddTaskGroupUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.DeleteTaskGroupUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.GetAllTaskGroupsUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.GetTaskGroupByIdUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.UpdateTaskGroupUseCase
 
-class TaskGroupViewModel(app: Application): AndroidViewModel(app) {
+class TaskGroupViewModel(
+    private val addTaskGroupUseCase: AddTaskGroupUseCase,
+    private val deleteTaskGroupUseCase: DeleteTaskGroupUseCase,
+    private val updateTaskGroupUseCase: UpdateTaskGroupUseCase,
+    private val getAllTaskGroupUseCase: GetAllTaskGroupsUseCase,
+    private val getTaskGroupByIdUseCase: GetTaskGroupByIdUseCase
+): ViewModel() {
     val taskGroup = MutableLiveData<TaskGroup>()
     val taskGroupList = MutableLiveData<List<TaskGroup>>()
-
-    private val db = MainDatabase.getDatabase(app)
-    private val taskGroupDao = db.TaskGroupDao()
 
     fun getTaskGroupList(): List<TaskGroup> {
         return taskGroupList.value.orEmpty()
@@ -21,31 +27,31 @@ class TaskGroupViewModel(app: Application): AndroidViewModel(app) {
 
     fun getAllTaskGroups() {
         viewModelScope.launch {
-            taskGroupList.postValue(taskGroupDao.getAllTaskGroups())
+            taskGroupList.postValue(getAllTaskGroupUseCase.execute())
         }
     }
 
     fun getTaskGroupById(id: Int) {
         viewModelScope.launch {
-            taskGroup.postValue(taskGroupDao.getTaskGroupById(id))
+            taskGroup.postValue(getTaskGroupByIdUseCase.execute(id))
         }
     }
 
     fun addTaskGroup(taskGroup: TaskGroup) {
         viewModelScope.launch {
-            taskGroupDao.addTaskGroup(taskGroup)
+            addTaskGroupUseCase.execute(taskGroup)
         }
     }
 
     fun updateTaskGroup(taskGroup: TaskGroup) {
         viewModelScope.launch {
-            taskGroupDao.updateTaskGroup(taskGroup)
+            updateTaskGroupUseCase.execute(taskGroup)
         }
     }
 
     fun deleteTaskGroup(taskGroup: TaskGroup) {
         viewModelScope.launch {
-            taskGroupDao.deleteTaskGroup(taskGroup)
+            deleteTaskGroupUseCase.execute(taskGroup)
         }
     }
 }

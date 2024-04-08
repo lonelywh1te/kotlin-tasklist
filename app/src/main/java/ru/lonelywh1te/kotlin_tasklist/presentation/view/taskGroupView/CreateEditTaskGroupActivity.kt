@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
-import ru.lonelywh1te.kotlin_tasklist.data.entity.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateEditTaskGroupBinding
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskGroupViewModelFactory
 
 class CreateEditTaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateEditTaskGroupBinding
@@ -18,7 +19,7 @@ class CreateEditTaskGroupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateEditTaskGroupBinding.inflate(layoutInflater)
-        taskGroupViewModel = ViewModelProvider(this)[TaskGroupViewModel::class.java]
+        taskGroupViewModel = ViewModelProvider(this, TaskGroupViewModelFactory(this))[TaskGroupViewModel::class.java]
 
         editMode = intent.extras?.getBoolean("editMode") ?: false
         if (editMode) taskGroup = intent.extras?.getSerializable("taskGroup") as TaskGroup
@@ -62,7 +63,7 @@ class CreateEditTaskGroupActivity : AppCompatActivity() {
     }
 
     private fun updateTaskGroup(name: String, description: String) {
-        taskGroup = TaskGroup(name, description, id = taskGroup.id)
+        taskGroup = TaskGroup(name, description, taskGroup.id)
         taskGroupViewModel.updateTaskGroup(taskGroup)
     }
 

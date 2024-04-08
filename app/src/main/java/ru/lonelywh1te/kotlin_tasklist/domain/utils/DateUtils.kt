@@ -1,7 +1,6 @@
-package ru.lonelywh1te.kotlin_tasklist.presentation.utils
+package ru.lonelywh1te.kotlin_tasklist.domain.utils
 
 import android.icu.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 
 private const val DATE_FORMAT = "dd.MM.yyyy HH:mm"

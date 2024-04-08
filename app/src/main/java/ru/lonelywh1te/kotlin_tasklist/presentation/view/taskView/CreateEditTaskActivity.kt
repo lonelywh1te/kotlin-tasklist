@@ -2,22 +2,18 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import ru.lonelywh1te.kotlin_tasklist.R
-import ru.lonelywh1te.kotlin_tasklist.data.entity.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateEditTaskBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.notifications.Notification
-import ru.lonelywh1te.kotlin_tasklist.presentation.notifications.NotificationScheduler
-import ru.lonelywh1te.kotlin_tasklist.presentation.utils.DateUtils
+import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
+import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.NotificationViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
-import java.util.Locale
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskViewModelFactory
 
 class CreateEditTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateEditTaskBinding
@@ -33,8 +29,8 @@ class CreateEditTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateEditTaskBinding.inflate(layoutInflater)
 
-        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-        notificationViewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
+        taskViewModel = ViewModelProvider(this, TaskViewModelFactory(this))[TaskViewModel::class.java]
+        notificationViewModel = NotificationViewModel(this)
 
         val taskGroupId = intent.extras?.getInt("taskGroupId")
 
