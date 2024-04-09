@@ -5,22 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
-import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.ItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.OnItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateEditTaskActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskGroupViewModelFactory
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskViewModelFactory
 
 class TaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskGroupBinding
@@ -33,10 +30,11 @@ class TaskGroupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskGroupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        taskGroupViewModel = ViewModelProvider(this, TaskGroupViewModelFactory(this))[TaskGroupViewModel::class.java]
-        taskViewModel = ViewModelProvider(this, TaskViewModelFactory(this))[TaskViewModel::class.java]
+        taskGroupViewModel = getViewModel()
+        taskViewModel = getViewModel()
+
+        setContentView(binding.root)
 
         taskGroup = intent.extras?.getSerializable("taskGroup") as TaskGroup
 
@@ -55,7 +53,6 @@ class TaskGroupActivity : AppCompatActivity() {
         }
 
         taskViewModel.taskList.observe(this) {
-            Log.println(Log.DEBUG, "kotlin-tasklist", "TASKGROUP_ACTIVITY_GET: $it")
             adapter.updateTaskList(it)
 
             binding.tvIsEmptyList.visibility = if (it.isEmpty()) {

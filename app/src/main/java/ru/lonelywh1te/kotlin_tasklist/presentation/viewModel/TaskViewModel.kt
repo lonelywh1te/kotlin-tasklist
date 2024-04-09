@@ -1,7 +1,6 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,11 +21,8 @@ class TaskViewModel(
     private val getFavouriteTasksUseCase: GetFavouriteTasksUseCase,
     private val getTaskByIdUseCase: GetTaskByIdUseCase,
 ): ViewModel() {
-    private val _task = MutableLiveData<Task>()
-    private val _taskList = MutableLiveData<List<Task>>()
-
-    val task: LiveData<Task> = _task
-    val taskList: LiveData<List<Task>> = _taskList
+    val task = MutableLiveData<Task>()
+    val taskList = MutableLiveData<List<Task>>()
 
     var isFavouriteTaskList = false
 
@@ -39,32 +35,32 @@ class TaskViewModel(
             if (isFavouriteTaskList) {
                 getFavouriteTasks()
             } else {
-                _taskList.postValue(getAllTasksUseCase.execute())
+                taskList.postValue(getAllTasksUseCase.execute())
             }
         }
     }
 
     fun getAllTasks(taskGroupId: Int?) {
         viewModelScope.launch {
-            _taskList.postValue(getAllTasksUseCase.execute(taskGroupId))
-            Log.println(Log.DEBUG, "kotlin-tasklist", "${getAllTasksUseCase.execute(taskGroupId)}")
+            taskList.postValue(getAllTasksUseCase.execute(taskGroupId))
         }
     }
 
     fun getTaskById(id: Int) {
         viewModelScope.launch {
-            _task.postValue(getTaskByIdUseCase.execute(id))
+            task.postValue(getTaskByIdUseCase.execute(id))
         }
     }
 
     fun getFavouriteTasks() {
         viewModelScope.launch {
-            _taskList.postValue(getFavouriteTasksUseCase.execute())
+            taskList.postValue(getFavouriteTasksUseCase.execute())
         }
     }
 
     fun addTask(task: Task) {
         viewModelScope.launch {
+            Log.println(Log.DEBUG, "kotlin-tasklist", "TASKLIST_BEFORE_EXECUTE: ${taskList.value}")
             addTaskUseCase.execute(task)
             getAllTasks()
         }

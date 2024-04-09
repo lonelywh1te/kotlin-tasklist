@@ -5,19 +5,19 @@ import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateEditTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.NotificationViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskViewModelFactory
 
 class CreateEditTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateEditTaskBinding
-    private lateinit var taskViewModel: TaskViewModel
     private lateinit var notificationViewModel: NotificationViewModel
     private lateinit var task: Task
     private var editMode = false
@@ -25,11 +25,13 @@ class CreateEditTaskActivity : AppCompatActivity() {
     private var completionDate: Long? = null
     private var deletedCompletionDate: Long? = null
 
+    private lateinit var taskViewModel: TaskViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateEditTaskBinding.inflate(layoutInflater)
 
-        taskViewModel = ViewModelProvider(this, TaskViewModelFactory(this))[TaskViewModel::class.java]
+        taskViewModel = getViewModel()
         notificationViewModel = NotificationViewModel(this)
 
         val taskGroupId = intent.extras?.getInt("taskGroupId")

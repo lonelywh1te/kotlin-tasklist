@@ -5,27 +5,29 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.NotificationViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskViewModelFactory
 
 class TaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskBinding
-    private lateinit var taskViewModel: TaskViewModel
     private lateinit var notificationViewModel: NotificationViewModel
     private lateinit var task: Task
+
+    private lateinit var taskViewModel: TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.println(Log.DEBUG, "kotlin-tasklist", "CREATED")
         super.onCreate(savedInstanceState)
         binding = ActivityTaskBinding.inflate(layoutInflater)
-        task = intent.extras?.getSerializable("task") as Task
+        taskViewModel = getViewModel()
 
-        taskViewModel = ViewModelProvider(this, TaskViewModelFactory(this))[TaskViewModel::class.java]
+        task = intent.extras?.getSerializable("task") as Task
         notificationViewModel = NotificationViewModel(this)
 
         setContentView(binding.root)

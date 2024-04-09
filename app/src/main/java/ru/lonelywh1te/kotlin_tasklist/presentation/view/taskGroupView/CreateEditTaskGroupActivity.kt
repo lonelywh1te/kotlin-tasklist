@@ -3,23 +3,24 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateEditTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskGroupViewModelFactory
 
 class CreateEditTaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateEditTaskGroupBinding
-    private lateinit var taskGroupViewModel: TaskGroupViewModel
     private lateinit var taskGroup: TaskGroup
     private var editMode = false
+
+    private lateinit var taskGroupViewModel: TaskGroupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateEditTaskGroupBinding.inflate(layoutInflater)
-        taskGroupViewModel = ViewModelProvider(this, TaskGroupViewModelFactory(this))[TaskGroupViewModel::class.java]
+
+        taskGroupViewModel = getViewModel()
 
         editMode = intent.extras?.getBoolean("editMode") ?: false
         if (editMode) taskGroup = intent.extras?.getSerializable("taskGroup") as TaskGroup

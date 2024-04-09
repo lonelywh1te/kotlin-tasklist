@@ -1,44 +1,39 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.view
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentItemListBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
-import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.ItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.OnItemClickListener
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.TaskGroupActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskGroupViewModelFactory
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.factory.TaskViewModelFactory
 
 const val ARG_IS_FAVOURITE_LIST = "isFavList"
+
 class ItemListFragment: Fragment() {
     private var isFavouriteTaskList: Boolean? = null
 
     private lateinit var binding: FragmentItemListBinding
+    private lateinit var recycler: RecyclerView
     private lateinit var taskViewModel: TaskViewModel
     private lateinit var taskGroupViewModel: TaskGroupViewModel
-    private lateinit var recycler: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
         isFavouriteTaskList = arguments?.getBoolean(ARG_IS_FAVOURITE_LIST)
 
-        taskViewModel = ViewModelProvider(this, TaskViewModelFactory(requireContext()))[TaskViewModel::class.java]
-        taskGroupViewModel = ViewModelProvider(this, TaskGroupViewModelFactory(requireContext()))[TaskGroupViewModel::class.java]
+        taskViewModel = getViewModel()
+        taskGroupViewModel = getViewModel()
 
         taskViewModel.isFavouriteTaskList = (isFavouriteTaskList == true)
         return binding.root
@@ -69,7 +64,6 @@ class ItemListFragment: Fragment() {
 
         mediatorLiveData.observe(viewLifecycleOwner) { (taskList, taskListGroup) ->
             adapter.updateTaskList(taskList, taskListGroup)
-
             binding.tvIsEmptyList.visibility = if (taskViewModel.getTaskList().isEmpty() && taskGroupViewModel.getTaskGroupList().isEmpty()) {
                 View.VISIBLE
             } else {
@@ -79,6 +73,7 @@ class ItemListFragment: Fragment() {
     }
 
     override fun onResume() {
+        taskViewModel.isFavouriteTaskList = (isFavouriteTaskList == true)
         if (isFavouriteTaskList == true){
             taskViewModel.getFavouriteTasks()
         } else {
