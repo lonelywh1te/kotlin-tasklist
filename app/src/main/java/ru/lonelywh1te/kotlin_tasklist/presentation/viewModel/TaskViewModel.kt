@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.AddTaskUseCase
@@ -60,7 +61,6 @@ class TaskViewModel(
 
     fun addTask(task: Task) {
         viewModelScope.launch {
-            Log.println(Log.DEBUG, "kotlin-tasklist", "TASKLIST_BEFORE_EXECUTE: ${taskList.value}")
             addTaskUseCase.execute(task)
             getAllTasks()
         }
@@ -69,7 +69,6 @@ class TaskViewModel(
     fun deleteTask(task: Task) {
         viewModelScope.launch {
             deleteTaskUseCase.execute(task)
-            getAllTasks()
         }
     }
 
@@ -83,9 +82,8 @@ class TaskViewModel(
     }
 
     fun changeTaskCompletion(task: Task, isCompleted: Boolean) {
-        viewModelScope.launch {
-            val changedTask = Task(task.title, task.description, task.isFavourite, isCompleted, task.completionDateInMillis, task.taskGroupId, task.id)
-            updateTask(changedTask)
+        viewModelScope.launch (Dispatchers.IO) {
+            updateTask(task.copy(isCompleted = isCompleted))
         }
     }
 }

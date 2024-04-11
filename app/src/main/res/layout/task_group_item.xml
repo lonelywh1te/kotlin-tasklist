@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:backgroundTint="@color/accentColor"
+        app:strokeWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
 
             <TextView
                 android:id="@+id/tvTaskGroupName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawablePadding="15dp"

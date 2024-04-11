@@ -23,7 +23,7 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".presentation.view.taskGroupView.CreateEditTaskGroupActivity"
+            android:name=".presentation.view.taskGroupView.CreateTaskGroupActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
@@ -31,7 +31,7 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".presentation.view.taskView.CreateEditTaskActivity"
+            android:name=".presentation.view.taskView.CreateTaskActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity

@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityMainBinding
 import ru.lonelywh1te.kotlin_tasklist.databinding.DialogCreateItemBinding
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.CreateEditTaskGroupActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateEditTaskActivity
+import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.CreateTaskGroupActivity
+import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateTaskActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -78,12 +78,12 @@ class MainActivity : AppCompatActivity() {
         createItemDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogBinding.btnCreateTask.setOnClickListener {
-            startActivity(Intent(this, CreateEditTaskActivity::class.java))
+            startActivity(Intent(this, CreateTaskActivity::class.java))
             createItemDialog.dismiss()
         }
 
         dialogBinding.btnCreateTaskGroup.setOnClickListener {
-            startActivity(Intent(this, CreateEditTaskGroupActivity::class.java))
+            startActivity(Intent(this, CreateTaskGroupActivity::class.java))
             createItemDialog.dismiss()
         }
 

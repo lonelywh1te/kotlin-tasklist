@@ -11,6 +11,7 @@
         android:layout_height="65dp"
         style="@style/taskItemCardStyle"
         android:backgroundTint="@color/secondaryColor"
+        app:strokeWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,21 +22,22 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/linearLayout4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical"
+                android:paddingStart="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cbCompleteTask"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:gravity="center">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tvTaskTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
                     android:textAppearance="@style/textDefaultStyle"
                     android:textColor="@color/primaryColor"
                     tools:text="Task Title" />
@@ -45,16 +47,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
-                    android:textAppearance="@style/textDefaultStyle"
-                    android:textSize="12sp"
-                    android:gravity="center"
                     android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:textAppearance="@style/textDefaultStyle"
                     android:textColor="@color/primaryColor"
-                    tools:text="12.03.2024 12:13"
-                    tools:visibility="visible"
+                    android:textSize="12sp"
                     app:drawableStartCompat="@drawable/ic_calendar"
-                    app:drawableTint="@color/white" />
+                    app:drawableTint="@color/white"
+                    tools:text="12.03.2024 12:13"
+                    tools:visibility="visible" />
 
             </LinearLayout>
 

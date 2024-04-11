@@ -9,17 +9,20 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.TaskGroupA
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 
+const val TASK_NAME_EXTRA = "task"
+const val TASK_GROUP_NAME_EXTRA = "taskGroup"
+
 class OnItemClickListener(private val context: Context, private val taskViewModel: TaskViewModel): ItemClickListener {
     override fun onItemClicked(taskItem: TaskItem) {
         val intent: Intent = when(taskItem) {
             is Task -> {
                 Intent(context, TaskActivity::class.java).apply {
-                    putExtra("task", taskItem)
+                    putExtra(TASK_NAME_EXTRA, taskItem)
                 }
             }
             is TaskGroup -> {
                 Intent(context, TaskGroupActivity::class.java).apply {
-                    putExtra("taskGroup", taskItem)
+                    putExtra(TASK_GROUP_NAME_EXTRA, taskItem)
                 }
             }
             else -> throw IllegalAccessException("Invalid View Type")

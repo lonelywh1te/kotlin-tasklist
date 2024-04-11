@@ -13,7 +13,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <EditText
+            android:inputType="textNoSuggestions"
+            android:imeOptions="actionDone"
+            android:maxLength="25"
+            android:background="@android:color/transparent"
             android:id="@+id/tvTaskGroupName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +28,10 @@
             android:textAppearance="@style/textHeaderStyle"
             tools:text="TaskGroup Name" />
 
-        <TextView
+        <EditText
+            android:background="@android:color/transparent"
+            android:hint="Добавить описание"
+            android:inputType="textNoSuggestions"
             android:id="@+id/tvTaskGroupDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,17 +61,6 @@
                 app:fabCustomSize="70dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnEditTaskGroup"
-                style="@style/floatingButtonStyle"
-                android:layout_margin="15dp"
-                android:src="@drawable/ic_edit"
-                app:fabCustomSize="60dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddTaskToGroup"
-                app:layout_constraintStart_toEndOf="@+id/btnDeleteTaskGroup"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

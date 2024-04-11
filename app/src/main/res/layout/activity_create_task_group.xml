@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
-    tools:context=".presentation.view.taskView.CreateEditTaskActivity">
+    tools:context=".presentation.view.taskGroupView.CreateTaskGroupActivity">
 
     <TextView
         android:id="@+id/tvCreateActivityTitle"
@@ -15,7 +15,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="25dp"
-        android:text="@string/newTask"
+        android:text="@string/newGroup"
         android:textAppearance="@style/textHeaderStyle"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCreateActivityTitle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputTaskTitle"
+            android:id="@+id/inputTaskGroupName"
             android:inputType="textShortMessage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titleInputlayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputTaskDescription"
+            android:id="@+id/inputTaskGroupDescription"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
@@ -71,76 +71,8 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_margin="30dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descInputlayout">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="@string/addToFavourite"
-            android:textAppearance="@style/textDefaultStyle" />
-
-        <CheckBox
-            android:id="@+id/cbIsFavourive"
-            style="@style/checkboxStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="Дата выполнения"
-            android:textAppearance="@style/textDefaultStyle" />
-
-        <ImageButton
-            android:id="@+id/btnResetTaskDeadline"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/ic_delete"
-            android:visibility="gone"
-            app:tint="@color/secondaryColor"
-            tools:visibility="visible" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSetTaskCompletionDate"
-            style="@style/defaultButton"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="@string/set"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddTask"
+        android:id="@+id/btnAddTaskGroup"
         style="@style/floatingButtonStyle"
         android:layout_margin="15dp"
         android:src="@drawable/ic_plus"
@@ -149,21 +81,21 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnSaveTaskChanges"
+        android:id="@+id/btnSaveTaskGroupChanges"
+        android:visibility="gone"
         style="@style/floatingButtonStyle"
         android:layout_margin="15dp"
         android:src="@drawable/ic_save"
-        android:visibility="gone"
         app:fabCustomSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnRestoreTaskChanges"
+        android:id="@+id/btnRestoreTaskGroupChanges"
         style="@style/floatingButtonStyle"
+        android:visibility="gone"
         android:layout_margin="15dp"
         android:src="@drawable/ic_back"
-        android:visibility="gone"
         app:fabCustomSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
