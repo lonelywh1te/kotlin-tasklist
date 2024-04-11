@@ -1,11 +1,16 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.ListView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskBinding
@@ -44,10 +49,17 @@ class TaskActivity : AppCompatActivity() {
             setTaskCompletionDate()
         }
 
+        binding.tvTaskGroupInfo.setOnClickListener {
+            setTaskGroup()
+        }
 
         binding.ivIsFavourite.setOnClickListener {
             clearEditTextFocus()
             updateTask(task.copy(isFavourite = !task.isFavourite))
+        }
+
+        taskGroupViewModel.taskGroup.observe(this) {
+            binding.tvTaskGroupInfo.text = it.name
         }
 
         setTaskData()
@@ -58,6 +70,15 @@ class TaskActivity : AppCompatActivity() {
         super.onPause()
         clearEditTextFocus()
         updateTask(task)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        task.taskGroupId?.let {
+            taskGroupViewModel.getTaskGroupById(task.taskGroupId!!)
+        }
+
+        taskGroupViewModel.getAllTaskGroups()
     }
 
     private fun setTaskData() {
@@ -72,6 +93,14 @@ class TaskActivity : AppCompatActivity() {
         } else {
             binding.tvTaskCompletionDate.alpha = 0.3F
             binding.tvTaskCompletionDate.text = "Добавить дату / время"
+        }
+
+
+        if (task.taskGroupId != null) {
+            binding.tvTaskGroupInfo.alpha = 1.0F
+        } else {
+            binding.tvTaskGroupInfo.alpha = 0.3F
+            binding.tvTaskGroupInfo.text = "Добавить группу"
         }
 
         // favourite status
@@ -120,10 +149,10 @@ class TaskActivity : AppCompatActivity() {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
         if (task.completionDateInMillis != null) {
-            datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Удалить", DialogInterface.OnClickListener { dialog, which ->
+            datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Удалить") { _, _ ->
                 cancelTaskNotification()
                 updateTask(task.copy(completionDateInMillis = null))
-            })
+            }
         }
 
         datePickerDialog.show()
@@ -142,5 +171,46 @@ class TaskActivity : AppCompatActivity() {
     private fun clearEditTextFocus() {
         binding.tvTaskTitle.clearFocus()
         binding.tvTaskDescription.clearFocus()
+    }
+
+    private fun setTaskGroup() {
+        val taskGroups = taskGroupViewModel.getTaskGroupList()
+        val taskGroupNames = taskGroups.map { it.name }.toTypedArray()
+        val taskGroupIds = taskGroups.map { it.id }
+
+        val currentItemIndex = taskGroupIds.indexOf(task.taskGroupId)
+        val currentItem = if (currentItemIndex != -1) taskGroupNames.indexOf(taskGroupNames[currentItemIndex]) else -1
+
+        if (taskGroups.isEmpty()) {
+            Toast.makeText(this, "Нет доступных групп", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Выбрать группу")
+            .setSingleChoiceItems(taskGroupNames, currentItem, null)
+            .setPositiveButton("Переместить") { dialog, _ ->
+                val checkedIndex = (dialog as AlertDialog).listView.checkedItemPosition
+                if (checkedIndex != ListView.INVALID_POSITION) {
+                    task = task.copy(taskGroupId = taskGroupIds[checkedIndex])
+                    taskGroupViewModel.getTaskGroupById(task.taskGroupId!!)
+
+                    updateTask(task)
+                } else {
+                    dialog.dismiss()
+                }
+            }
+            .create()
+
+        val negativeButtonTitle = if (task.taskGroupId == null) "Отмена" else "Удалить"
+        dialog.setButton(Dialog.BUTTON_NEGATIVE, negativeButtonTitle) { _, _ ->
+            if (task.taskGroupId != null) {
+                task = task.copy(taskGroupId = null)
+                updateTask(task)
+            }
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }

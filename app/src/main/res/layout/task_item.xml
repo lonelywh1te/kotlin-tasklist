@@ -59,8 +59,6 @@
 
             </LinearLayout>
 
-
-
             <CheckBox
                 android:id="@+id/cbCompleteTask"
                 style="@style/checkboxStyle"

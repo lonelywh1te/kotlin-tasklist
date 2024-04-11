@@ -44,7 +44,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvTaskCompletionDate"
+        android:id="@+id/tvTaskGroupInfo"
         android:foreground="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +58,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
+        android:text="Без группы"
+        app:drawableStartCompat="@drawable/ic_task_group_small"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <TextView
+        android:id="@+id/tvTaskCompletionDate"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:drawablePadding="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textAppearance="@style/textDefaultStyle"
+        android:alpha="0.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTaskGroupInfo"
         android:text="Добавить дату / время"
         app:drawableStartCompat="@drawable/ic_calendar"
         android:clickable="true"
