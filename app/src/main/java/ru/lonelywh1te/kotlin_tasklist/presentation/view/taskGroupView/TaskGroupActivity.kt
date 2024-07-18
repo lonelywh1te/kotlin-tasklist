@@ -9,42 +9,39 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
-import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.OnItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TASK_GROUP_NAME_EXTRA
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateTaskActivity
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupActivityViewModel
 
 class TaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskGroupBinding
     private lateinit var recycler: RecyclerView
     private lateinit var taskGroup: TaskGroup
 
-    private lateinit var taskGroupViewModel: TaskGroupViewModel
-    private lateinit var taskViewModel: TaskViewModel
+//    private lateinit var taskGroupViewModel: TaskGroupViewModel
+//    private lateinit var tasksViewModel: TasksViewModel
+
+    private lateinit var taskGroupActivityViewModel: TaskGroupActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskGroupBinding.inflate(layoutInflater)
-
-        taskGroupViewModel = getViewModel()
-        taskViewModel = getViewModel()
+        taskGroupActivityViewModel = getViewModel()
 
         taskGroup = intent.extras?.getSerializable(TASK_GROUP_NAME_EXTRA) as TaskGroup
-
         recycler = binding.rvTaskGroupTasks
 
-        val adapter = TaskAdapter(OnItemClickListener(this, taskViewModel))
+        val adapter = TaskAdapter(OnItemClickListener(this, taskGroupActivityViewModel))
 
         recycler.apply {
             this.adapter = adapter
             layoutManager = LinearLayoutManager(context)
         }
 
-        taskViewModel.taskList.observe(this) {
-            adapter.updateTaskList(it)
+        taskGroupActivityViewModel.tasks.observe(this) {
+            adapter.updateList(it)
 
             binding.tvIsEmptyList.visibility = if (it.isEmpty()) {
                 View.VISIBLE
@@ -73,7 +70,7 @@ class TaskGroupActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        taskViewModel.getAllTasks(taskGroup.id)
+        taskGroupActivityViewModel.getAllTasksById(taskGroup.id)
     }
 
     private fun updateTaskGroup(newTaskGroup: TaskGroup) {
@@ -86,7 +83,7 @@ class TaskGroupActivity : AppCompatActivity() {
             newTaskGroup
         }
 
-        taskGroupViewModel.updateTaskGroup(taskGroup)
+        taskGroupActivityViewModel.updateTaskGroup(taskGroup)
         setTaskGroupData()
     }
 
@@ -101,13 +98,9 @@ class TaskGroupActivity : AppCompatActivity() {
         binding.tvTaskGroupDescription.setText(taskGroup.description)
     }
 
+    // TODO: добавить уведомление, что делать с задачами
     private fun deleteTaskGroup() {
-        for (task in taskViewModel.getTaskList()) {
-            val updatedTaskEntity = Task(task.title, task.description, task.isFavourite, task.isCompleted, task.completionDateInMillis, null, task.id)
-            taskViewModel.updateTask(updatedTaskEntity)
-        }
-
-        taskGroupViewModel.deleteTaskGroup(taskGroup)
+        taskGroupActivityViewModel.deleteTaskGroup(taskGroup)
         finish()
     }
 

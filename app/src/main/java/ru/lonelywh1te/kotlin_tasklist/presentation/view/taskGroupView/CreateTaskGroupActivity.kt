@@ -6,16 +6,16 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskGroupBinding
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.CreateTaskGroupActivityViewModel
 
 class CreateTaskGroupActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateTaskGroupBinding
-    private lateinit var taskGroupViewModel: TaskGroupViewModel
+    private lateinit var createTaskGroupActivityViewModel: CreateTaskGroupActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTaskGroupBinding.inflate(layoutInflater)
-        taskGroupViewModel = getViewModel()
+        createTaskGroupActivityViewModel = getViewModel()
 
         binding.btnAddTaskGroup.setOnClickListener {
             val name = binding.inputTaskGroupName.text.toString()
@@ -33,7 +33,7 @@ class CreateTaskGroupActivity : AppCompatActivity() {
     }
 
     private fun addTaskGroup(name: String, description: String) {
-        taskGroupViewModel.addTaskGroup(TaskGroup(name, description))
+        createTaskGroupActivityViewModel.createTaskGroup(TaskGroup(name, description))
         finish()
     }
 }

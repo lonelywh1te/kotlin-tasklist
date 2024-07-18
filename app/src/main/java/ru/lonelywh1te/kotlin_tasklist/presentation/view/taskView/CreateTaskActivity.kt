@@ -3,7 +3,6 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,13 +11,12 @@ import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityCreateTaskBinding
 import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
-import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TASK_NAME_EXTRA
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.CreateTaskActivityViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.NotificationViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 
 class CreateTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateTaskBinding
-    private lateinit var taskViewModel: TaskViewModel
+    private lateinit var createTaskActivityViewModel: CreateTaskActivityViewModel
     private lateinit var notificationViewModel: NotificationViewModel
 
     private var task = Task("", "")
@@ -29,7 +27,7 @@ class CreateTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateTaskBinding.inflate(layoutInflater)
 
-        taskViewModel = getViewModel()
+        createTaskActivityViewModel = getViewModel()
         notificationViewModel = NotificationViewModel(this)
 
         taskGroupId = intent.extras?.getInt("taskGroupId")
@@ -43,7 +41,7 @@ class CreateTaskActivity : AppCompatActivity() {
             }
 
             if (completionDate != null) notificationViewModel.setTaskNotification(task, completionDate!!)
-            taskViewModel.addTask(task)
+            createTaskActivityViewModel.createTask(task)
 
             finish()
         }
@@ -64,12 +62,7 @@ class CreateTaskActivity : AppCompatActivity() {
         task = task.copy(title = title, description = description, isFavourite = isFavourite, completionDateInMillis = completionDateInMillis, taskGroupId = taskGroupId)
     }
 
-    private fun openTaskActivity() {
-        val intent = Intent(this, TaskActivity::class.java)
-        intent.putExtra(TASK_NAME_EXTRA, task)
-        startActivity(intent)
-    }
-
+    // TODO: использовать LocalDate вместо Calendar
     private fun setTaskCompletionDate() {
         val calendar = Calendar.getInstance()
 

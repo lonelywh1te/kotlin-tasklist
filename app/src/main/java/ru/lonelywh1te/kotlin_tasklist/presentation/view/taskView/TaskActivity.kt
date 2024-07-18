@@ -7,10 +7,13 @@ import android.content.DialogInterface
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.ActivityTaskBinding
@@ -18,23 +21,20 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TASK_NAME_EXTRA
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.NotificationViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupViewModel
-import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskActivityViewModel
 
 class TaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTaskBinding
     private lateinit var notificationViewModel: NotificationViewModel
     private lateinit var task: Task
 
-    private lateinit var taskViewModel: TaskViewModel
-    private lateinit var taskGroupViewModel: TaskGroupViewModel
+    private lateinit var taskActivityViewModel: TaskActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskBinding.inflate(layoutInflater)
 
-        taskViewModel = getViewModel()
-        taskGroupViewModel = getViewModel()
+        taskActivityViewModel = getViewModel()
         notificationViewModel = NotificationViewModel(this)
 
         task = intent.extras?.getSerializable(TASK_NAME_EXTRA) as Task
@@ -58,11 +58,7 @@ class TaskActivity : AppCompatActivity() {
             updateTask(task.copy(isFavourite = !task.isFavourite))
         }
 
-        taskGroupViewModel.taskGroup.observe(this) {
-            binding.tvTaskGroupInfo.text = it.name
-        }
-
-        setTaskData()
+        updateTaskUI()
         setContentView(binding.root)
     }
 
@@ -72,16 +68,7 @@ class TaskActivity : AppCompatActivity() {
         updateTask(task)
     }
 
-    override fun onResume() {
-        super.onResume()
-        task.taskGroupId?.let {
-            taskGroupViewModel.getTaskGroupById(task.taskGroupId!!)
-        }
-
-        taskGroupViewModel.getAllTaskGroups()
-    }
-
-    private fun setTaskData() {
+    private fun updateTaskUI() {
         // task data
         binding.tvTaskTitle.setText(task.title)
         binding.tvTaskDescription.setText(task.description)
@@ -95,9 +82,14 @@ class TaskActivity : AppCompatActivity() {
             binding.tvTaskCompletionDate.text = "Добавить дату / время"
         }
 
+        // task group
+        if (task.taskGroupId != null) lifecycleScope.launch {
+            val taskGroup = taskActivityViewModel.getTaskGroupById(task.taskGroupId!!).await()
 
-        if (task.taskGroupId != null) {
-            binding.tvTaskGroupInfo.alpha = 1.0F
+            withContext(Dispatchers.Main) {
+                binding.tvTaskGroupInfo.alpha = 1.0F
+                binding.tvTaskGroupInfo.text = taskGroup.name
+            }
         } else {
             binding.tvTaskGroupInfo.alpha = 0.3F
             binding.tvTaskGroupInfo.text = "Добавить группу"
@@ -121,19 +113,20 @@ class TaskActivity : AppCompatActivity() {
             newTask
         }
 
-        taskViewModel.updateTask(task)
-        setTaskData()
+        taskActivityViewModel.updateTask(task)
+        updateTaskUI()
     }
 
     private fun deleteTask() {
-        taskViewModel.deleteTask(task)
+        taskActivityViewModel.deleteTask(task)
         finish()
     }
 
+    // TODO: Calendar -> LocalDate
     private fun setTaskCompletionDate() {
         val calendar = Calendar.getInstance()
 
-        val timePicker = TimePickerDialog(this, { view, hourOfDay, minute ->
+        val timePicker = TimePickerDialog(this, { _, hourOfDay, minute ->
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
             calendar.set(Calendar.MINUTE, minute)
 
@@ -174,17 +167,16 @@ class TaskActivity : AppCompatActivity() {
     }
 
     private fun setTaskGroup() {
-        val taskGroups = taskGroupViewModel.getTaskGroupList()
-        val taskGroupNames = taskGroups.map { it.name }.toTypedArray()
-        val taskGroupIds = taskGroups.map { it.id }
+        val taskGroupNames = taskActivityViewModel.getTaskGroupsNames()
+        val taskGroupIds = taskActivityViewModel.getTaskGroupIds()
 
-        val currentItemIndex = taskGroupIds.indexOf(task.taskGroupId)
-        val currentItem = if (currentItemIndex != -1) taskGroupNames.indexOf(taskGroupNames[currentItemIndex]) else -1
-
-        if (taskGroups.isEmpty()) {
+        if (taskGroupNames.isEmpty() || taskGroupIds.isEmpty()) {
             Toast.makeText(this, "Нет доступных групп", Toast.LENGTH_SHORT).show()
             return
         }
+
+        val currentItemIndex = taskGroupIds.indexOf(task.taskGroupId)
+        val currentItem = if (currentItemIndex != -1) taskGroupNames.indexOf(taskGroupNames[currentItemIndex]) else -1
 
         val dialog = AlertDialog.Builder(this)
             .setTitle("Выбрать группу")
@@ -193,8 +185,6 @@ class TaskActivity : AppCompatActivity() {
                 val checkedIndex = (dialog as AlertDialog).listView.checkedItemPosition
                 if (checkedIndex != ListView.INVALID_POSITION) {
                     task = task.copy(taskGroupId = taskGroupIds[checkedIndex])
-                    taskGroupViewModel.getTaskGroupById(task.taskGroupId!!)
-
                     updateTask(task)
                 } else {
                     dialog.dismiss()

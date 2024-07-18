@@ -17,7 +17,7 @@ val MIGRATION_1_2: Migration = object: Migration(1, 2) {
     }
 }
 
-@Database(entities = [TaskEntity::class, TaskGroupEntity::class], version = 2)
+@Database(entities = [TaskEntity::class, TaskGroupEntity::class], version = 3)
 abstract class MainDatabase: RoomDatabase() {
     abstract fun TaskDao(): TaskDao
     abstract fun TaskGroupDao(): TaskGroupDao
@@ -29,6 +29,7 @@ abstract class MainDatabase: RoomDatabase() {
             if (db == null) {
                 synchronized(MainDatabase::class) {
                     db = Room.databaseBuilder(context.applicationContext, MainDatabase::class.java, "tasks_db")
+                        .fallbackToDestructiveMigration() // TODO: DELETE
                         .addMigrations(MIGRATION_1_2)
                         .build()
                 }

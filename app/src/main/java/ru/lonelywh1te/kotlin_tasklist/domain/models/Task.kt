@@ -10,4 +10,4 @@ data class Task (
     val completionDateInMillis: Long? = null,
     val taskGroupId: Int? = null,
     val id: Int = 0,
-) : TaskItem(), Serializable
+) : TaskItem, Serializable

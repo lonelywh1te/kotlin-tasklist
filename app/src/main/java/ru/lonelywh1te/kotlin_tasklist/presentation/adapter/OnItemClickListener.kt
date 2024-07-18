@@ -7,12 +7,13 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskGroupView.TaskGroupActivity
 import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.TaskActivity
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainFragmentViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskViewModel
 
 const val TASK_NAME_EXTRA = "task"
 const val TASK_GROUP_NAME_EXTRA = "taskGroup"
 
-class OnItemClickListener(private val context: Context, private val taskViewModel: TaskViewModel): ItemClickListener {
+class OnItemClickListener(private val context: Context, private val viewModel: TaskViewModel): ItemClickListener {
     override fun onItemClicked(taskItem: TaskItem) {
         val intent: Intent = when(taskItem) {
             is Task -> {
@@ -25,13 +26,12 @@ class OnItemClickListener(private val context: Context, private val taskViewMode
                     putExtra(TASK_GROUP_NAME_EXTRA, taskItem)
                 }
             }
-            else -> throw IllegalAccessException("Invalid View Type")
         }
 
-        context.startActivity(intent);
+        context.startActivity(intent)
     }
 
-    override fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean) {
-        taskViewModel.changeTaskCompletion(task, isCompleted)
+    override fun onTaskCheckboxClicked(task: Task) {
+        viewModel.completeTask(task)
     }
 }

@@ -6,4 +6,4 @@ data class TaskGroup (
     val name: String,
     val description: String,
     val id: Int = 0,
-) : TaskItem(), Serializable
+) : TaskItem, Serializable

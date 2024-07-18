@@ -8,8 +8,8 @@ import ru.lonelywh1te.kotlin_tasklist.domain.repository.TaskRepository
 class TaskRepositoryImpl(private val taskDao: TaskDao): TaskRepository {
     private val mapper = Mapper()
 
-    override suspend fun addTask(task: Task) {
-        taskDao.addTask(mapper.taskToTaskEntity(task))
+    override suspend fun createTask(task: Task) {
+        taskDao.createTask(mapper.taskToTaskEntity(task))
     }
 
     override suspend fun updateTask(task: Task) {

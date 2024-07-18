@@ -3,6 +3,7 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.lonelywh1te.kotlin_tasklist.R
@@ -12,10 +13,11 @@ import ru.lonelywh1te.kotlin_tasklist.databinding.TaskItemBinding
 import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
+import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.MainFragmentViewModel
 
 interface ItemClickListener {
     fun onItemClicked(taskItem: TaskItem)
-    fun onTaskCheckboxClicked(task: Task, isCompleted: Boolean)
+    fun onTaskCheckboxClicked(task: Task)
 }
 
 class TaskCallback(private val oldList: List<TaskItem>, private val newList: List<TaskItem>): DiffUtil.Callback() {
@@ -50,6 +52,7 @@ class TaskCallback(private val oldList: List<TaskItem>, private val newList: Lis
 }
 
 class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private var taskItems: List<TaskItem> = emptyList()
         set(newList) {
             val diffCallback = TaskCallback(taskItems, newList)
@@ -60,26 +63,14 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
             diffTasks.dispatchUpdatesTo(this)
         }
 
-    fun updateTaskList(taskList: List<Task>, taskGroupList: List<TaskGroup>) {
-        val newTaskItems = mutableListOf<TaskItem>()
-        newTaskItems.addAll(taskGroupList)
-        newTaskItems.addAll(taskList)
-
-        taskItems = newTaskItems
-    }
-
-    fun updateTaskList(taskList: List<Task>) {
-        val newTaskItems = mutableListOf<TaskItem>()
-        newTaskItems.addAll(taskList)
-
-        taskItems = newTaskItems
+    fun updateList(taskItems: List<TaskItem>) {
+        this.taskItems = taskItems
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (taskItems[position]) {
             is Task -> R.layout.task_item
             is TaskGroup -> R.layout.task_group_item
-            else -> throw IllegalAccessException("Invalid View Type")
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -110,7 +101,7 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
                 }
 
                 binding.cbCompleteTask.setOnClickListener {
-                    itemClickListener.onTaskCheckboxClicked(task, !task.isCompleted)
+                    itemClickListener.onTaskCheckboxClicked(task)
                 }
 
                 holder.bind(task)

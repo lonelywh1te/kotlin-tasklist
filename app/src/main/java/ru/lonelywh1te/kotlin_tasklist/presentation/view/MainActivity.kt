@@ -17,8 +17,8 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.view.taskView.CreateTaskActiv
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private var itemListFragment = ItemListFragment.newInstance(false)
-    private var favouriteItemListFragment = ItemListFragment.newInstance(true)
+    private var mainFragment = MainFragment()
+    private var favouriteTasksFragment = FavouriteTasksFragment()
     private var infoFragment = InfoFragment()
     private lateinit var createItemDialog: Dialog
 
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         createItemDialog = Dialog(this)
 
         setContentView(binding.root)
-        setFragment(itemListFragment)
+        setFragment(mainFragment)
 
         binding.navBottomMenu.selectedItemId = R.id.nav_tasks
 
@@ -38,13 +38,13 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.nav_favourive  -> {
                     binding.btnCreateItem.visibility = View.GONE
-                    setFragment(favouriteItemListFragment)
+                    setFragment(favouriteTasksFragment)
                     true
                 }
 
                 R.id.nav_tasks -> {
                     binding.btnCreateItem.visibility = View.VISIBLE
-                    setFragment(itemListFragment)
+                    setFragment(mainFragment)
                     true
                 }
 

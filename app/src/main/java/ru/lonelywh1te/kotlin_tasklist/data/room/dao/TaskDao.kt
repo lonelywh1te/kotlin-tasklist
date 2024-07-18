@@ -3,6 +3,7 @@ package ru.lonelywh1te.kotlin_tasklist.data.room.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ru.lonelywh1te.kotlin_tasklist.data.room.entity.TaskEntity
@@ -11,12 +12,12 @@ import ru.lonelywh1te.kotlin_tasklist.data.room.entity.TaskEntity
 interface TaskDao {
 
     @Insert
-    suspend fun addTask(taskEntity: TaskEntity)
+    suspend fun createTask(taskEntity: TaskEntity)
 
     @Delete
     suspend fun deleteTask(taskEntity: TaskEntity)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateTask(taskEntity: TaskEntity)
 
     @Query("SELECT * FROM task_table WHERE taskGroupId IS NULL ORDER BY isCompleted ASC")
