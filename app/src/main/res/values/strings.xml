@@ -18,4 +18,6 @@
     <string name="group">Список</string>
     <string name="set">Назначить</string>
     <string name="newGroup">Новая группа</string>
+    <string name="create">Создать</string>
+    <string name="add_date_time">Добавить дату / время</string>
 </resources>

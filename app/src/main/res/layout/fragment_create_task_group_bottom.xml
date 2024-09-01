@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:background="@drawable/shape_bottom_sheet_fragment_background">
+
+    <EditText
+        android:id="@+id/input_task_group_title"
+        android:textAppearance="@style/textDefaultStyle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="@string/taskTitle"
+        android:inputType="textShortMessage"
+        app:counterEnabled="true"
+        app:counterMaxLength="24"/>
+
+    <EditText
+        android:id="@+id/input_task_group_desc"
+        android:textAppearance="@style/textDefaultStyle"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:gravity="top"
+        android:hint="@string/description"
+        app:counterEnabled="true"
+        app:counterMaxLength="24"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_create_task_group"
+        style="@style/defaultButton"
+        android:backgroundTint="@color/accentColor"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/create"
+        android:textSize="12sp" />
+</LinearLayout>

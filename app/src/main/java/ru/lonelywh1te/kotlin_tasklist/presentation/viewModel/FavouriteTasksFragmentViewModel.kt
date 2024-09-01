@@ -12,7 +12,7 @@ import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.UpdateTaskUseC
 class FavouriteTasksFragmentViewModel(
     private val getFavouriteTasksUseCase: GetFavouriteTasksUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
-) : ViewModel(), TaskViewModel {
+) : ViewModel(), TaskCompleter {
     val favouriteTasks = MutableLiveData<List<Task>>()
     private val dispatcher = Dispatchers.IO
 

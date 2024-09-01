@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor"
+    android:paddingBottom="15dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
+
+    <TextView
+        android:id="@+id/tvTaskGroupInfo"
+        style="@style/taskAttributeStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Без группы"
+        app:drawableStartCompat="@drawable/ic_task_group_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTaskCompletionDate"
+        style="@style/taskAttributeStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/textDefaultStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTaskGroupInfo"
+        tools:text="Добавить дату / время"
+        app:drawableStartCompat="@drawable/ic_calendar"/>
+
+
+    <EditText
+        android:id="@+id/tvTaskDescription"
+        android:background="@android:color/transparent"
+        android:inputType="textNoSuggestions"
+        android:hint="Введите описание задачи"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:maxHeight="650dp"
+        android:textAppearance="@style/textDefaultStyle"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvTaskCompletionDate"
+        tools:text="Описание задачи" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnDeleteTask"
+        style="@style/floatingButtonStyle"
+        android:backgroundTint="@color/errorColor"
+        android:src="@drawable/ic_delete"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

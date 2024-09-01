@@ -11,31 +11,16 @@ import ru.lonelywh1te.kotlin_tasklist.data.room.dao.TaskGroupDao
 import ru.lonelywh1te.kotlin_tasklist.data.room.entity.TaskEntity
 import ru.lonelywh1te.kotlin_tasklist.data.room.entity.TaskGroupEntity
 
-val MIGRATION_1_2: Migration = object: Migration(1, 2) {
-    override fun migrate(db: SupportSQLiteDatabase) {
-        db.execSQL("ALTER TABLE task_table ADD COLUMN completionDateInMillis BIGINT DEFAULT NULL")
-    }
-}
-
-@Database(entities = [TaskEntity::class, TaskGroupEntity::class], version = 3)
+@Database(entities = [TaskEntity::class, TaskGroupEntity::class], version = 1, exportSchema = false)
 abstract class MainDatabase: RoomDatabase() {
     abstract fun TaskDao(): TaskDao
     abstract fun TaskGroupDao(): TaskGroupDao
 
     companion object {
-        private var db: MainDatabase? = null
-
-        fun getDatabase(context: Context): MainDatabase {
-            if (db == null) {
-                synchronized(MainDatabase::class) {
-                    db = Room.databaseBuilder(context.applicationContext, MainDatabase::class.java, "tasks_db")
-                        .fallbackToDestructiveMigration() // TODO: DELETE
-                        .addMigrations(MIGRATION_1_2)
+        fun get(context: Context): MainDatabase {
+            return Room.databaseBuilder(context.applicationContext, MainDatabase::class.java, "tasks_db")
+                        .fallbackToDestructiveMigration() // TODO: удалить
                         .build()
-                }
-            }
-
-            return db!!
         }
     }
 }

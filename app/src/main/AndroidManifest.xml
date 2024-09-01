@@ -19,23 +19,23 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".presentation.view.taskGroupView.TaskGroupActivity"
+            android:name=".presentation.fragment.taskGroup.TaskGroupActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".presentation.view.taskGroupView.CreateTaskGroupActivity"
+            android:name=".presentation.fragment.taskGroup.CreateTaskGroupActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".presentation.view.taskView.TaskActivity"
+            android:name=".presentation.fragment.task.TaskActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".presentation.view.taskView.CreateTaskActivity"
+            android:name=".presentation.fragment.task.CreateTaskActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".presentation.view.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -43,7 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".domain.notifications.NotificationReceiver"/>
+        <receiver android:name=".presentation.receiver.NotificationReceiver"/>
     </application>
 
 </manifest>

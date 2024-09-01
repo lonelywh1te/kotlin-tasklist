@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_favourive"
+        android:id="@+id/favourite_tasks_fragment"
         android:title="@string/isFavourite"
         android:icon="@drawable/ic_favourite"
         android:orderInCategory="1" />
 
     <item
-        android:id="@+id/nav_tasks"
+        android:id="@+id/tasks_fragment"
         android:title="@string/tasks"
         android:icon="@drawable/ic_tasks"
         android:orderInCategory="2"/>
 
     <item
-        android:id="@+id/nav_settings"
+        android:id="@+id/info_fragment"
         android:icon="@drawable/ic_info"
         android:title="@string/about"
         android:orderInCategory="3"/>

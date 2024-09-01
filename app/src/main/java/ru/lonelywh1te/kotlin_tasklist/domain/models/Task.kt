@@ -1,7 +1,5 @@
 package ru.lonelywh1te.kotlin_tasklist.domain.models
 
-import java.io.Serializable
-
 data class Task (
     val title: String,
     val description: String,
@@ -10,4 +8,4 @@ data class Task (
     val completionDateInMillis: Long? = null,
     val taskGroupId: Int? = null,
     val id: Int = 0,
-) : TaskItem, Serializable
+) : TaskItem

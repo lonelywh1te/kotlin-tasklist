@@ -5,56 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
-    tools:context=".presentation.view.MainActivity">
+    tools:context=".presentation.MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tvActivityTitle"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tool_bar"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:gravity="center_vertical"
-            android:paddingStart="15dp"
-            android:text="@string/tasks"
-            android:textAppearance="@style/textHeaderStyle"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            tools:title="Заголовок"/>
 
-        <FrameLayout
-            android:id="@+id/mainFrameLayout"
+        <fragment
+            android:id="@+id/fragment_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph"/>
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navBottomMenu"
             style="@style/bottomNavigationStyle"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_navigation_menu">
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnCreateItem"
-        style="@style/floatingButtonStyle"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="95dp"
-        android:src="@drawable/ic_plus"
-        app:fabCustomSize="70dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
