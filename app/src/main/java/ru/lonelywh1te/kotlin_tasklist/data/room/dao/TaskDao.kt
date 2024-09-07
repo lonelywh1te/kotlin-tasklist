@@ -20,11 +20,11 @@ interface TaskDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateTask(taskEntity: TaskEntity)
 
-    @Query("SELECT * FROM task_table WHERE taskGroupId IS NULL ORDER BY isCompleted ASC")
+    @Query("SELECT * FROM task_table WHERE taskGroupId IS NULL ORDER BY `order` ASC")
     suspend fun getAllTasks(): List<TaskEntity>
 
-    @Query("SELECT * FROM task_table WHERE taskGroupId=:taskGroupId ORDER BY isCompleted ASC")
-    suspend fun getAllTasks(taskGroupId: Int?): List<TaskEntity>
+    @Query("SELECT * FROM task_table WHERE taskGroupId=:taskGroupId ORDER BY `order` ASC")
+    suspend fun getAllTasks(taskGroupId: Int): List<TaskEntity>
 
     @Query("SELECT * FROM task_table WHERE isFavourite=1 ORDER BY isCompleted ASC")
     suspend fun getFavouriteTasks(): List<TaskEntity>

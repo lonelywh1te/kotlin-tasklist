@@ -1,7 +1,10 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -10,8 +13,10 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.DeleteTaskGroupUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.GetTaskGroupByIdUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.UpdateTaskGroupUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.CompleteTaskUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.DeleteTaskUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.GetAllTasksUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.MoveTaskToTaskGroupUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.UpdateTaskUseCase
 
 class TaskGroupFragmentViewModel(
@@ -21,14 +26,29 @@ class TaskGroupFragmentViewModel(
     private val getAllTasksUseCase: GetAllTasksUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val moveTaskToTaskGroupUseCase: MoveTaskToTaskGroupUseCase,
+    private val completeTaskUseCase: CompleteTaskUseCase,
 ): ViewModel(), TaskCompleter {
-    val taskGroup = MutableLiveData<TaskGroup>()
-    val tasks = MutableLiveData<List<Task>>()
+    var taskGroupId: Int = -1
+        set(id) {
+            if (field == id) return
+            field = id
+
+            getTaskGroup()
+            getAllTasks()
+        }
+
+    private val _taskGroup = MutableLiveData<TaskGroup>()
+    val taskGroup: LiveData<TaskGroup> get() = _taskGroup
+
+    private val _tasks = MutableLiveData<List<Task>>()
+    val tasks: LiveData<List<Task>> get() = _tasks
+
     private val dispatcher = Dispatchers.IO
 
-    fun getTaskGroupById(id: Int) {
+    private fun getTaskGroup() {
         viewModelScope.launch (dispatcher) {
-            taskGroup.postValue(getTaskGroupByIdUseCase.execute(id))
+            _taskGroup.postValue(getTaskGroupByIdUseCase.execute(taskGroupId))
         }
     }
 
@@ -45,9 +65,26 @@ class TaskGroupFragmentViewModel(
         }
     }
 
-    fun getAllTasksById(taskGroupId: Int) {
+    fun updateTaskOrder(fromPosition: Int, toPosition: Int) {
+        if (fromPosition == toPosition) return
+
+        viewModelScope.launch(dispatcher) {
+            val currentList = _tasks.value?.toMutableList() ?: mutableListOf()
+
+            val movedTask = currentList.removeAt(fromPosition)
+            currentList.add(toPosition, movedTask)
+
+            currentList.forEachIndexed { index, task ->
+                updateTaskUseCase.execute(task.copy(order = index))
+            }
+
+            getAllTasks()
+        }
+    }
+
+    fun getAllTasks() {
         viewModelScope.launch (dispatcher) {
-            tasks.postValue(getAllTasksUseCase.execute(taskGroupId))
+            _tasks.postValue(getAllTasksUseCase.execute(taskGroupId))
         }
     }
 
@@ -58,13 +95,13 @@ class TaskGroupFragmentViewModel(
     }
 
     private suspend fun deleteTaskGroupIds() = viewModelScope.launch(dispatcher) {
-        tasks.value?.forEach { updateTaskUseCase.execute(it.copy(taskGroupId = null)) }
+        tasks.value?.forEach { moveTaskToTaskGroupUseCase.execute(it, null) }
     }
 
-    override fun completeTask(task: Task) {
+    override fun completeTask(id: Int) {
         viewModelScope.launch (dispatcher){
-            updateTaskUseCase.execute(task.copy(isCompleted = !task.isCompleted))
-            getAllTasksById(task.taskGroupId!!)
+            completeTaskUseCase.execute(id)
+            getAllTasks()
         }
     }
 }

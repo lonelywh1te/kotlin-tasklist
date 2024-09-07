@@ -7,5 +7,6 @@ data class Task (
     val isCompleted: Boolean = false,
     val completionDateInMillis: Long? = null,
     val taskGroupId: Int? = null,
-    val id: Int = 0,
-) : TaskItem
+    override val id: Int = 0,
+    override val order: Int = 0
+) : TaskItem(id, order)

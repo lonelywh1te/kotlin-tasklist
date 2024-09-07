@@ -10,5 +10,6 @@ data class TaskGroupEntity (
     val name: String,
     val description: String,
 
+    val order: Int,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )

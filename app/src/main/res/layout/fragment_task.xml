@@ -35,16 +35,17 @@
 
     <EditText
         android:id="@+id/tvTaskDescription"
-        android:background="@android:color/transparent"
-        android:inputType="textNoSuggestions"
-        android:hint="Введите описание задачи"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:background="@android:color/transparent"
+        android:hint="Описание задачи"
+        android:inputType="textMultiLine"
         android:maxHeight="650dp"
         android:textAppearance="@style/textDefaultStyle"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskCompletionDate"
         tools:text="Описание задачи" />
 

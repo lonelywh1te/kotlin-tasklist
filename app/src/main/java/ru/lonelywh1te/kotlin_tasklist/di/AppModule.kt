@@ -14,20 +14,22 @@ val appModule = module {
     viewModel<TasksFragmentViewModel> {
         TasksFragmentViewModel(
             getAllTaskItemsUseCase = get(),
-            updateTaskUseCase = get()
+            updateTaskUseCase = get(),
+            updateTaskGroupUseCase = get(),
+            completeTaskUseCase = get()
         )
     }
 
     viewModel<FavouriteTasksFragmentViewModel> {
         FavouriteTasksFragmentViewModel(
             getFavouriteTasksUseCase = get(),
-            updateTaskUseCase = get()
+            completeTaskUseCase = get()
         )
     }
 
     viewModel<CreateTaskFragmentViewModel> {
         CreateTaskFragmentViewModel(
-            createTaskUseCase = get()
+            createTaskUseCase = get(),
         )
     }
 
@@ -43,7 +45,8 @@ val appModule = module {
             deleteTaskUseCase = get(),
             getAllTaskGroupsUseCase = get(),
             getTaskGroupByIdUseCase = get(),
-            getTaskByIdUseCase = get()
+            getTaskByIdUseCase = get(),
+            moveTaskToTaskGroupUseCase = get(),
         )
     }
 
@@ -54,7 +57,10 @@ val appModule = module {
             getAllTasksUseCase = get(),
             updateTaskUseCase = get(),
             deleteTaskUseCase = get(),
-            getTaskGroupByIdUseCase = get()
+            getTaskGroupByIdUseCase = get(),
+            moveTaskToTaskGroupUseCase = get(),
+            completeTaskUseCase = get()
+
         )
     }
 

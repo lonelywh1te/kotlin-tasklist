@@ -22,7 +22,7 @@ interface TaskGroupDao {
     @Update
     suspend fun updateTaskGroup(taskGroupEntity: TaskGroupEntity)
 
-    @Query("SELECT * from task_group")
+    @Query("SELECT * from task_group ORDER BY `order` ASC")
     suspend fun getAllTaskGroups(): List<TaskGroupEntity>
 
     @Query("SELECT * from task_group WHERE id=:id")

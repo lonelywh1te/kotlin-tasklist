@@ -25,7 +25,7 @@ class CreateTaskBottomFragment: BottomSheetDialogFragment() {
     private val viewModel by viewModel<CreateTaskFragmentViewModel>()
     private val notificationViewModel by viewModel<NotificationViewModel>()
 
-    private var task = Task("", "")
+    private var completionDate: Long? = null
     private var taskGroupId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,9 +59,10 @@ class CreateTaskBottomFragment: BottomSheetDialogFragment() {
         val title = binding.inputTaskTitle.text.toString()
         val description = binding.inputTaskDescription.text.toString()
         val isFavourite = binding.cbIsFavourive.isChecked
-        val completionDateInMillis = task.completionDateInMillis
+        val completionDateInMillis = completionDate
 
-        task = task.copy(
+        // TODO: вынести во viewModel
+        val task = Task(
             title = title,
             description = description,
             isFavourite = isFavourite,
@@ -82,16 +83,16 @@ class CreateTaskBottomFragment: BottomSheetDialogFragment() {
     }
 
     private fun setTaskCompletionDate() {
-        val dialog = DateTimePickerDialog(task.completionDateInMillis)
+        val dialog = DateTimePickerDialog(completionDate)
 
         dialog.apply {
             onDateSelected { timeInMillis ->
-                task = task.copy(completionDateInMillis = timeInMillis)
+                completionDate = timeInMillis
                 binding.btnSetTaskCompletionDate.text = DateUtils.normalDateFormat(timeInMillis)
             }
 
             onDateDeleted {
-                task = task.copy(completionDateInMillis = null)
+                completionDate = null
                 binding.btnSetTaskCompletionDate.text = "Назначить"
             }
         }

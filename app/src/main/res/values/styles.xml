@@ -15,7 +15,7 @@
         <item name="android:fontFamily">@font/inter_bold</item>
         <item name="android:textSize">30sp</item>
     </style>
-    
+
     <style name="textInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/accentColor</item>
         <item name="hintTextColor">@color/accentColor</item>
@@ -41,7 +41,7 @@
         <item name="itemTextColor">@color/primaryColor</item>
         <item name="itemActiveIndicatorStyle">@style/bottomNavigation.ActiveIndicatorStyle</item>
     </style>
-    
+
     <style name="bottomNavigation.ActiveIndicatorStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/selectedItemColor</item>
     </style>

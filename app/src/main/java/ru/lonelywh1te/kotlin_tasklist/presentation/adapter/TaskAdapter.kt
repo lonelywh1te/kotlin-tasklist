@@ -1,5 +1,7 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.domain.utils.DateUtils
 import ru.lonelywh1te.kotlin_tasklist.presentation.callback.ItemClickListener
 
+private const val LOG_TAG = "TaskAdapter"
 
 class TaskDiffUtil(private val oldList: List<TaskItem>, private val newList: List<TaskItem>): DiffUtil.Callback() {
     override fun getOldListSize() = oldList.size
@@ -37,9 +40,11 @@ class TaskDiffUtil(private val oldList: List<TaskItem>, private val newList: Lis
         val newItem = newList[newItemPosition]
 
         if (oldItem is Task && newItem is Task) {
-            return oldItem == newItem
+            return oldItem.title == newItem.title &&
+                    oldItem.isCompleted == newItem.isCompleted &&
+                    oldItem.completionDateInMillis == newItem.completionDateInMillis
         } else if (oldItem is TaskGroup && newItem is TaskGroup) {
-            return oldItem == newItem
+            return oldItem.name == newItem.name
         }
 
         return false
@@ -68,6 +73,7 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
             is TaskGroup -> R.layout.task_group_item
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val taskBinding = TaskItemBinding.inflate(inflater, parent, false)
@@ -84,6 +90,13 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
         return taskItems.size
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+        } else {
+
+        }
+    }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = taskItems[position]
 
@@ -97,7 +110,7 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
                 }
 
                 binding.cbCompleteTask.setOnClickListener {
-                    itemClickListener.onTaskCheckboxClicked(task)
+                    itemClickListener.onTaskCheckboxClicked(task.id)
                 }
 
                 holder.bind(task)
@@ -116,7 +129,17 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
         }
     }
 
-    class TaskViewHolder(private val binding: TaskItemBinding,) : RecyclerView.ViewHolder(binding.root) {
+
+    fun itemMoved(oldPosition: Int, newPosition: Int) {
+        val currentList = taskItems.toMutableList()
+
+        val movedTask = currentList.removeAt(oldPosition)
+        currentList.add(newPosition, movedTask)
+
+        taskItems = currentList
+    }
+
+    class TaskViewHolder(private val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: Task) {
             binding.tvTaskTitle.text = task.title

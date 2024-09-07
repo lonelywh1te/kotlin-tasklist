@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import androidx.recyclerview.widget.SimpleItemAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentTasksBinding
@@ -18,6 +19,7 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
+import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskItemTouchCallback
 import ru.lonelywh1te.kotlin_tasklist.presentation.callback.ItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.fragment.task.CreateTaskBottomFragment
 import ru.lonelywh1te.kotlin_tasklist.presentation.fragment.taskGroup.CreateTaskGroupBottomFragment
@@ -51,6 +53,20 @@ class TasksFragment: Fragment(), ItemClickListener {
             this.adapter = adapter
         }
 
+        val taskItemCallback = TaskItemTouchCallback(adapter)
+
+        taskItemCallback.apply {
+            setOnItemMovedListener { oldPos, newPos ->
+                viewModel.updateItemOrder(oldPos, newPos)
+            }
+            setOnSwipeListener {
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(taskItemCallback)
+        itemTouchHelper.attachToRecyclerView(recycler)
+
         binding.btnCreateItem.setOnClickListener {
             if (binding.btnCreateTask.visibility == View.GONE) openFab() else hideFab()
         }
@@ -59,7 +75,6 @@ class TasksFragment: Fragment(), ItemClickListener {
             val bottomFragment = CreateTaskBottomFragment.newInstance()
 
             bottomFragment.onCreateTask {
-                Log.d(LOG_TAG, viewModel.toString())
                 viewModel.getAllTaskItems()
             }
 
@@ -83,6 +98,11 @@ class TasksFragment: Fragment(), ItemClickListener {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllTaskItems()
+    }
+
     private fun openFab() {
         binding.btnCreateTask.visibility = View.VISIBLE
         binding.btnCreateTaskGroup.visibility = View.VISIBLE
@@ -95,11 +115,6 @@ class TasksFragment: Fragment(), ItemClickListener {
         binding.btnCreateTaskGroup.visibility = View.GONE
 
         binding.btnCreateItem.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_plus))
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAllTaskItems()
     }
 
     override fun onItemClicked(taskItem: TaskItem) {
@@ -115,7 +130,7 @@ class TasksFragment: Fragment(), ItemClickListener {
         }
     }
 
-    override fun onTaskCheckboxClicked(task: Task) {
-        viewModel.completeTask(task)
+    override fun onTaskCheckboxClicked(id: Int) {
+        viewModel.completeTask(id)
     }
 }

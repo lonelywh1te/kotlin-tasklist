@@ -3,6 +3,7 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.fragment.task
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -28,6 +29,8 @@ import ru.lonelywh1te.kotlin_tasklist.presentation.fragment.dialog.ChooseTaskGro
 import ru.lonelywh1te.kotlin_tasklist.presentation.fragment.dialog.DateTimePickerDialog
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.NotificationViewModel
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskFragmentViewModel
+
+private const val LOG_TAG = "TaskFragment"
 
 class TaskFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentTaskBinding
@@ -69,8 +72,7 @@ class TaskFragment : Fragment(), MenuProvider {
             val dialog = ChooseTaskGroupDialog(task.taskGroupId, taskGroups)
 
             dialog.onTaskGroupChanged { taskGroupId ->
-                task = task.copy(taskGroupId = taskGroupId)
-                updateTask()
+                viewModel.moveTaskToTaskGroup(task, taskGroupId)
             }
 
             dialog.show(parentFragmentManager, dialog.tag)
@@ -166,13 +168,15 @@ class TaskFragment : Fragment(), MenuProvider {
                 binding.tvTaskCompletionDate.text = DateUtils.normalDateFormat(timeInMillis)
 
                 notificationViewModel.setTaskNotification(task, timeInMillis)
+                updateTaskUI()
             }
 
             onDateDeleted {
+                notificationViewModel.cancelTaskNotification(task)
+
                 task = task.copy(completionDateInMillis = null)
                 binding.tvTaskCompletionDate.text = "Назначить"
-
-                notificationViewModel.cancelTaskNotification(task)
+                updateTaskUI()
             }
         }
 

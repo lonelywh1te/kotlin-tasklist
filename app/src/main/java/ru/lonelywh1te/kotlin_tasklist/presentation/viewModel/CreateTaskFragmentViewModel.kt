@@ -1,6 +1,5 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +10,7 @@ import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.CreateTaskUseC
 private const val LOG_TAG = "CreateTaskFragmentViewModel"
 
 class CreateTaskFragmentViewModel(
-    private val createTaskUseCase: CreateTaskUseCase
+    private val createTaskUseCase: CreateTaskUseCase,
 ) : ViewModel() {
     private val dispatcher = Dispatchers.IO
 

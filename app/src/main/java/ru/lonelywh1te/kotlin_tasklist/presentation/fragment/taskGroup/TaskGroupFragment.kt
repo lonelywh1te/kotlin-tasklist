@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,6 +17,7 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskAdapter
+import ru.lonelywh1te.kotlin_tasklist.presentation.adapter.TaskItemTouchCallback
 import ru.lonelywh1te.kotlin_tasklist.presentation.callback.ItemClickListener
 import ru.lonelywh1te.kotlin_tasklist.presentation.fragment.task.CreateTaskBottomFragment
 import ru.lonelywh1te.kotlin_tasklist.presentation.viewModel.TaskGroupFragmentViewModel
@@ -33,7 +35,7 @@ class TaskGroupFragment : Fragment(), ItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         taskGroup = taskGroup.copy(id = args.id)
-        viewModel.getTaskGroupById(taskGroup.id)
+        viewModel.taskGroupId = taskGroup.id
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,6 +54,20 @@ class TaskGroupFragment : Fragment(), ItemClickListener {
             layoutManager = LinearLayoutManager(context)
         }
 
+        val taskItemCallback = TaskItemTouchCallback(adapter)
+
+        taskItemCallback.apply {
+            setOnItemMovedListener { oldPos, newPos ->
+                viewModel.updateTaskOrder(oldPos, newPos)
+            }
+            setOnSwipeListener {
+
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(taskItemCallback)
+        itemTouchHelper.attachToRecyclerView(recycler)
+
         viewModel.taskGroup.observe(viewLifecycleOwner) {
             taskGroup = it
             updateUI()
@@ -65,7 +81,7 @@ class TaskGroupFragment : Fragment(), ItemClickListener {
             val createTaskFragment = CreateTaskBottomFragment.newInstance(taskGroup.id)
 
             createTaskFragment.onCreateTask {
-                viewModel.getAllTasksById(taskGroup.id)
+                viewModel.getAllTasks()
             }
 
             createTaskFragment.show(parentFragmentManager, createTaskFragment.tag)
@@ -83,7 +99,7 @@ class TaskGroupFragment : Fragment(), ItemClickListener {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllTasksById(taskGroup.id)
+        viewModel.getAllTasks()
     }
 
     private fun updateTaskGroup(taskGroup: TaskGroup) {
@@ -109,7 +125,7 @@ class TaskGroupFragment : Fragment(), ItemClickListener {
         findNavController().navigate(direction)
     }
 
-    override fun onTaskCheckboxClicked(task: Task) {
-        viewModel.completeTask(task)
+    override fun onTaskCheckboxClicked(taskId: Int) {
+        viewModel.completeTask(taskId)
     }
 }

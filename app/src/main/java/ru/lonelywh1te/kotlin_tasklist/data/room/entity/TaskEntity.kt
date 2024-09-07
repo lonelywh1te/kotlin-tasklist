@@ -19,5 +19,6 @@ data class TaskEntity (
     val completionDateInMillis: Long? = null,
     val taskGroupId: Int? = null,
 
+    val order: Int,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )

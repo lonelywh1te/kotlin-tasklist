@@ -19,22 +19,6 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".presentation.fragment.taskGroup.TaskGroupActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".presentation.fragment.taskGroup.CreateTaskGroupActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".presentation.fragment.task.TaskActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".presentation.fragment.task.CreateTaskActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">

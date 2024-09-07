@@ -8,7 +8,7 @@ interface TaskRepository {
     suspend fun deleteTask(task: Task)
 
     suspend fun getAllTasks(): List<Task>
-    suspend fun getAllTasksFromGroup(taskGroupId: Int?): List<Task>
+    suspend fun getAllTasksFromGroup(taskGroupId: Int): List<Task>
     suspend fun getFavouriteTasks(): List<Task>
     suspend fun getTaskById(id: Int): Task
 }

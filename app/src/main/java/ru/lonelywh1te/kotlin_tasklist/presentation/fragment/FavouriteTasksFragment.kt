@@ -54,7 +54,7 @@ class FavouriteTasksFragment : Fragment(), ItemClickListener {
         findNavController().navigate(direction)
     }
 
-    override fun onTaskCheckboxClicked(task: Task) {
-        viewModel.completeTask(task)
+    override fun onTaskCheckboxClicked(taskId: Int) {
+        viewModel.completeTask(taskId)
     }
 }

@@ -41,8 +41,11 @@ class CreateTaskGroupBottomFragment: BottomSheetDialogFragment() {
         val name = binding.inputTaskGroupTitle.text.toString()
         val description = binding.inputTaskGroupDesc.text.toString()
 
+        // TODO: вынести во viewModel
+        val taskGroup = TaskGroup(name, description)
+
         lifecycleScope.launch {
-            viewModel.createTaskGroup(TaskGroup(name, description)).join()
+            viewModel.createTaskGroup(taskGroup).join()
             onCreateTaskGroup?.invoke()
         }
 

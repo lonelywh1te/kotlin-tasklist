@@ -26,7 +26,7 @@ class TaskRepositoryImpl(private val taskDao: TaskDao): TaskRepository {
         }
     }
 
-    override suspend fun getAllTasksFromGroup(taskGroupId: Int?): List<Task> {
+    override suspend fun getAllTasksFromGroup(taskGroupId: Int): List<Task> {
         return taskDao.getAllTasks(taskGroupId).map {
             mapper.taskEntityToTask(it)
         }

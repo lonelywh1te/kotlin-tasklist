@@ -6,5 +6,5 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 // TODO: заменить на лямбды
 interface ItemClickListener {
     fun onItemClicked(taskItem: TaskItem)
-    fun onTaskCheckboxClicked(task: Task)
+    fun onTaskCheckboxClicked(taskId: Int)
 }
