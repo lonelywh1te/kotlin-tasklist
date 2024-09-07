@@ -54,14 +54,14 @@ class TaskGroupFragment : Fragment(), ItemClickListener {
             layoutManager = LinearLayoutManager(context)
         }
 
-        val taskItemCallback = TaskItemTouchCallback(adapter)
+        val taskItemCallback = TaskItemTouchCallback(requireContext(), adapter)
 
         taskItemCallback.apply {
             setOnItemMovedListener { oldPos, newPos ->
                 viewModel.updateTaskOrder(oldPos, newPos)
             }
-            setOnSwipeListener {
-
+            setOnLeftSwipeListener { taskItem ->
+                viewModel.deleteTask(taskItem as Task)
             }
         }
 

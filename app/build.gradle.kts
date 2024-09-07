@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.recyclerview.swipedecorator)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

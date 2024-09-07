@@ -60,7 +60,6 @@ class TaskGroupFragmentViewModel(
 
     fun deleteTaskGroup(taskGroup: TaskGroup) {
         viewModelScope.launch (dispatcher) {
-            deleteTaskGroupIds().join()
             deleteTaskGroupUseCase.execute(taskGroup)
         }
     }
@@ -94,8 +93,11 @@ class TaskGroupFragmentViewModel(
         }
     }
 
-    private suspend fun deleteTaskGroupIds() = viewModelScope.launch(dispatcher) {
-        tasks.value?.forEach { moveTaskToTaskGroupUseCase.execute(it, null) }
+    fun deleteTask(task: Task) {
+        viewModelScope.launch (dispatcher) {
+            deleteTaskUseCase.execute(task)
+            getAllTasks()
+        }
     }
 
     override fun completeTask(id: Int) {

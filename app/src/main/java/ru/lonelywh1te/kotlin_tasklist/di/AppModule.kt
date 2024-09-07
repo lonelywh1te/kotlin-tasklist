@@ -16,7 +16,9 @@ val appModule = module {
             getAllTaskItemsUseCase = get(),
             updateTaskUseCase = get(),
             updateTaskGroupUseCase = get(),
-            completeTaskUseCase = get()
+            completeTaskUseCase = get(),
+            deleteTaskGroupUseCase = get(),
+            deleteTaskUseCase = get()
         )
     }
 

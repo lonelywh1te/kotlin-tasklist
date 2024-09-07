@@ -12,8 +12,10 @@ import ru.lonelywh1te.kotlin_tasklist.domain.models.Task
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskGroup
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.GetAllTaskItemsUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.DeleteTaskGroupUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskGroupUseCases.UpdateTaskGroupUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.CompleteTaskUseCase
+import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.DeleteTaskUseCase
 import ru.lonelywh1te.kotlin_tasklist.domain.usecase.taskUseCases.UpdateTaskUseCase
 
 private const val LOG_TAG = "TasksFragmentViewModel"
@@ -23,6 +25,8 @@ class TasksFragmentViewModel(
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val updateTaskGroupUseCase: UpdateTaskGroupUseCase,
     private val completeTaskUseCase: CompleteTaskUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val deleteTaskGroupUseCase: DeleteTaskGroupUseCase,
 ): ViewModel(), TaskCompleter {
     private val _taskItems = MutableLiveData<List<TaskItem>>()
     val taskItems: LiveData<List<TaskItem>> get() = _taskItems
@@ -66,6 +70,17 @@ class TasksFragmentViewModel(
 
             getAllTaskItems()
         }
+    }
+
+    fun deleteItem(taskItem: TaskItem) {
+        viewModelScope.launch {
+            when(taskItem) {
+                is Task -> deleteTaskUseCase.execute(taskItem)
+                is TaskGroup -> deleteTaskGroupUseCase.execute(taskItem)
+            }
+        }
+
+        getAllTaskItems()
     }
 
     init {

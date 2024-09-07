@@ -139,12 +139,16 @@ class TaskAdapter(private val itemClickListener: ItemClickListener) : RecyclerVi
         taskItems = currentList
     }
 
+    fun getItem(position: Int): TaskItem {
+        return taskItems[position]
+    }
+
     class TaskViewHolder(private val binding: TaskItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: Task) {
             binding.tvTaskTitle.text = task.title
             binding.cbCompleteTask.isChecked = task.isCompleted
-            binding.taskCard.alpha =  if (task.isCompleted) 0.3f else 1.0f
+            binding.taskItem.alpha =  if (task.isCompleted) 0.3f else 1.0f
 
             if (task.completionDateInMillis != null) {
                 binding.tvTaskCompletionDate.text = DateUtils.normalDateFormat(task.completionDateInMillis)

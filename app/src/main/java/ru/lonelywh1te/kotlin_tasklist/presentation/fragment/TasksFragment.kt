@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.databinding.FragmentTasksBinding
@@ -53,14 +52,14 @@ class TasksFragment: Fragment(), ItemClickListener {
             this.adapter = adapter
         }
 
-        val taskItemCallback = TaskItemTouchCallback(adapter)
+        val taskItemCallback = TaskItemTouchCallback(requireContext(), adapter)
 
         taskItemCallback.apply {
             setOnItemMovedListener { oldPos, newPos ->
                 viewModel.updateItemOrder(oldPos, newPos)
             }
-            setOnSwipeListener {
-
+            setOnLeftSwipeListener { taskItem ->
+                viewModel.deleteItem(taskItem)
             }
         }
 

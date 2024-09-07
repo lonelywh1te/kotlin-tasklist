@@ -1,20 +1,30 @@
 package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
+import android.content.Context
+import android.graphics.Canvas
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.DOWN
+import androidx.recyclerview.widget.ItemTouchHelper.LEFT
+import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import ru.lonelywh1te.kotlin_tasklist.R
+import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 
 class TaskItemTouchCallback(
+    private val context: Context,
     private val adapter: TaskAdapter
 ): ItemTouchHelper.Callback() {
     private var oldPosition: Int? = null
     private var newPosition: Int? = null
 
     private var onItemMoved: ((oldPos: Int, newPos: Int) -> Unit)? = null
-    private var onSwiped: (() -> Unit)? = null
+    private var onLeftSwipe: ((taskItem: TaskItem) -> Unit)? = null
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        val dragDirs = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        val swipeDirs = 0
+        val dragDirs = UP or DOWN
+        val swipeDirs = LEFT
         return makeMovementFlags(dragDirs, swipeDirs)
     }
 
@@ -38,15 +48,28 @@ class TaskItemTouchCallback(
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        onSwiped?.invoke()
+        if (direction == LEFT) {
+            onLeftSwipe?.invoke(adapter.getItem(viewHolder.absoluteAdapterPosition))
+        }
+    }
+
+    override fun onChildDraw(c: Canvas, rv: RecyclerView, vh: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+        RecyclerViewSwipeDecorator.Builder(c, rv, vh, dX, dY, actionState, isCurrentlyActive)
+            .addBackgroundColor(ContextCompat.getColor(context, R.color.errorColor))
+            .addCornerRadius(1, 10)
+            .addSwipeLeftActionIcon(R.drawable.ic_delete)
+            .create()
+            .decorate()
+
+        super.onChildDraw(c, rv, vh, dX, dY, actionState, isCurrentlyActive)
     }
 
     fun setOnItemMovedListener(callback: ((oldPos: Int, newPos: Int) -> Unit)) {
         onItemMoved = callback
     }
 
-    fun setOnSwipeListener(callback: () -> Unit) {
-        onSwiped = callback
+    fun setOnLeftSwipeListener(callback: (taskItem: TaskItem) -> Unit) {
+        onLeftSwipe = callback
     }
 
 

@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey
     ForeignKey(
         entity = TaskGroupEntity::class,
         parentColumns = ["id"],
-        childColumns = ["taskGroupId"]
+        childColumns = ["taskGroupId"],
+        onDelete = ForeignKey.CASCADE
     )
 ])
 data class TaskEntity (
