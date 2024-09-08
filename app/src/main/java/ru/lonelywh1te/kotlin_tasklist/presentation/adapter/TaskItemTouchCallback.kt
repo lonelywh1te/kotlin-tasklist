@@ -58,6 +58,7 @@ class TaskItemTouchCallback(
             .addBackgroundColor(ContextCompat.getColor(context, R.color.errorColor))
             .addCornerRadius(1, 10)
             .addSwipeLeftActionIcon(R.drawable.ic_delete)
+            .addPadding(1, 5f, 0f, 5f)
             .create()
             .decorate()
 
