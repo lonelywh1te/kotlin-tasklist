@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ktAppBackgroundColor" format="color"/>
+
+    <attr name="ktTaskGroupColor" format="color"/>
+    <attr name="ktTaskColor" format="color"/>
+
+    <attr name="ktDefaultTextColor" format="color"/>
+    <attr name="ktSecondaryTextColor" format="color"/>
+
+    <attr name="ktDefaultIconColor" format="color"/>
+
+    <attr name="ktErrorColor" format="color"/>
+
+    <attr name="ktToolBarBackgroundColor" format="color"/>
+    <attr name="ktToolBarForegroundColor" format="color"/>
+
+    <attr name="ktBottomBarBackgroundColor" format="color"/>
+    <attr name="ktBottomBarForegroundColor" format="color"/>
+
+    <attr name="ktDefaultButtonColor" format="color"/>
+    <attr name="ktSubmitButtonColor" format="color"/>
+</resources>

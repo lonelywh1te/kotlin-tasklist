@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,11 +7,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/task_item"
-        style="@style/taskItemCardStyle"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/secondaryColor"
-        app:strokeWidth="0dp">
+        style="@style/Widget.App.CardView.Task"
+        android:layout_width="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -38,8 +34,7 @@
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textAppearance="@style/textDefaultStyle"
-                    android:textColor="@color/primaryColor"
+                    android:textColor="?attr/ktSecondaryTextColor"
                     tools:text="Task Title" />
 
                 <TextView
@@ -49,11 +44,10 @@
                     android:layout_gravity="center_vertical"
                     android:drawablePadding="5dp"
                     android:gravity="center"
-                    android:textAppearance="@style/textDefaultStyle"
-                    android:textColor="@color/primaryColor"
+                    android:textColor="?attr/ktSecondaryTextColor"
                     android:textSize="12sp"
                     app:drawableStartCompat="@drawable/ic_calendar"
-                    app:drawableTint="@color/white"
+                    app:drawableTint="?attr/ktDefaultIconColor"
                     tools:text="12.03.2024 12:13"
                     tools:visibility="visible" />
 
@@ -61,7 +55,6 @@
 
             <CheckBox
                 android:id="@+id/cb_complete_task"
-                style="@style/checkboxStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end|center_vertical"

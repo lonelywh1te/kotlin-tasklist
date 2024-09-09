@@ -2,9 +2,11 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="secondaryColor">#222831</color>
-    <color name="primaryColor">#EEEEEE</color>
-    <color name="accentColor">#76ABAE</color>
-    <color name="errorColor">#BE3144</color>
-    <color name="selectedItemColor">#363C44</color>
+    <color name="dark_100">#363C44</color>
+    <color name="dark_200">#222831</color>
+    <color name="light">#EEEEEE</color>
+    <color name="blue">#76ABAE</color>
+    <color name="red">#BE3144</color>
+
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

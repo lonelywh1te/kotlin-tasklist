@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
     tools:context=".presentation.fragment.InfoFragment">
 
     <LinearLayout
@@ -26,8 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="kotlin-tasklist"
-                android:textAppearance="@style/textDefaultStyle" />
+                android:text="kotlin-tasklist" />
 
             <TextView
                 android:id="@+id/tvAppVersionInfo"
@@ -35,7 +33,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:padding="5dp"
-                android:textAppearance="@style/textDefaultStyle"
                 tools:text="v 1.0.0" />
 
 
@@ -54,20 +51,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="made by"
-                android:textAppearance="@style/textDefaultStyle" />
+                android:text="made by" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:padding="5dp"
-                android:text="lonelywh1te"
-                android:textAppearance="@style/textDefaultStyle" />
-
+                android:text="lonelywh1te" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </FrameLayout>

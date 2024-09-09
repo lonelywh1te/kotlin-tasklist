@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
     android:paddingBottom="15dp"
     android:paddingStart="15dp"
     android:paddingEnd="15dp">
 
     <TextView
         android:id="@+id/tvTaskGroupInfo"
-        style="@style/taskAttributeStyle"
+        style="@style/Widget.App.TextView.TaskAttribute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Без группы"
@@ -22,10 +21,9 @@
 
     <TextView
         android:id="@+id/tvTaskCompletionDate"
-        style="@style/taskAttributeStyle"
+        style="@style/Widget.App.TextView.TaskAttribute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/textDefaultStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskGroupInfo"
@@ -42,7 +40,6 @@
         android:hint="Описание задачи"
         android:inputType="textMultiLine"
         android:maxHeight="650dp"
-        android:textAppearance="@style/textDefaultStyle"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,8 +49,10 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnDeleteTask"
-        style="@style/floatingButtonStyle"
-        android:backgroundTint="@color/errorColor"
+        style="@style/Widget.App.FloatingActionButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/red"
         android:src="@drawable/ic_delete"
         app:fabCustomSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"

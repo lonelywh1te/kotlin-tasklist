@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primaryColor"
-    tools:context=".presentation.MainActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/linear_layout"
@@ -20,7 +18,7 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:title="Заголовок"/>
+            tools:title="Заголовок" />
 
         <fragment
             android:id="@+id/fragment_container"
@@ -31,17 +29,13 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"/>
 
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navBottomMenu"
-            style="@style/bottomNavigationStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_navigation_menu">
-
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

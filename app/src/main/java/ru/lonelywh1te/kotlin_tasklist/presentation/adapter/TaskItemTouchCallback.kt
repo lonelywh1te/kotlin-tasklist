@@ -55,7 +55,7 @@ class TaskItemTouchCallback(
 
     override fun onChildDraw(c: Canvas, rv: RecyclerView, vh: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         RecyclerViewSwipeDecorator.Builder(c, rv, vh, dX, dY, actionState, isCurrentlyActive)
-            .addBackgroundColor(ContextCompat.getColor(context, R.color.errorColor))
+            .addBackgroundColor(ContextCompat.getColor(context, R.color.red))
             .addCornerRadius(1, 10)
             .addSwipeLeftActionIcon(R.drawable.ic_delete)
             .addPadding(1, 5f, 0f, 5f)

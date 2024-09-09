@@ -4,22 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
-    tools:context=".presentation.fragment.TasksFragment"
     android:paddingStart="15dp"
     android:paddingEnd="15dp">
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTaskList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        tools:listitem="@layout/task_item"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/task_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_create_item"
-        style="@style/floatingButtonStyle"
+        style="@style/Widget.App.FloatingActionButton"
+        android:backgroundTint="?attr/ktTaskGroupColor"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="15dp"
@@ -30,7 +32,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_create_task_group"
-        style="@style/floatingButtonStyle"
+        style="@style/Widget.App.FloatingActionButton"
+        android:backgroundTint="?attr/ktTaskGroupColor"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="15dp"
@@ -44,11 +47,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_create_task"
-        style="@style/floatingButtonStyle"
+        style="@style/Widget.App.FloatingActionButton"
+        android:backgroundTint="?attr/ktTaskColor"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="15dp"
-        android:backgroundTint="@color/selectedItemColor"
         android:src="@drawable/ic_tasks"
         android:visibility="gone"
         app:fabCustomSize="50dp"
@@ -63,14 +66,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/listIsEmpty"
-        android:textAppearance="@style/textDefaultStyle"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

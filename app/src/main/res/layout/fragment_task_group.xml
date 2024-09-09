@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primaryColor"
     android:padding="15dp">
 
     <LinearLayout
@@ -21,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="15dp"
-            android:textAppearance="@style/textDefaultStyle"
             tools:text="Описание" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -38,15 +36,20 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_add_task_to_group"
-                style="@style/floatingButtonStyle"
+                style="@style/Widget.App.FloatingActionButton"
+                android:backgroundTint="?attr/ktTaskGroupColor"
+                android:layout_height="60dp"
+                android:layout_width="60dp"
                 android:src="@drawable/ic_plus"
                 android:layout_gravity="end"
                 app:fabCustomSize="60dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_delete_task_group"
-                style="@style/floatingButtonStyle"
-                android:backgroundTint="@color/errorColor"
+                style="@style/Widget.App.FloatingActionButton"
+                android:backgroundTint="?attr/ktErrorColor"
+                android:layout_height="60dp"
+                android:layout_width="60dp"
                 android:src="@drawable/ic_delete"
                 app:fabCustomSize="60dp"
                 app:layout_constraintBottom_toBottomOf="parent"

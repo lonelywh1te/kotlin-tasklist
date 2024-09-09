@@ -27,7 +27,7 @@ class NotificationReceiver: BroadcastReceiver() {
             .setContentTitle(n.title)
             .setContentText(n.message)
             .setSmallIcon(R.drawable.ic_tasks)
-            .setColor(ContextCompat.getColor(context, R.color.accentColor))
+            .setColor(ContextCompat.getColor(context, R.color.blue))
             .setContentIntent(PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE))
             .build()
 

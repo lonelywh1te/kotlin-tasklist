@@ -1,67 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="taskItemCardStyle">
-        <item name="cornerRadius">10dp</item>
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">10dp</item>
+        <item name="android:layout_height">60dp</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">5dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+    <style name="Widget.App.CardView.Task">
+        <item name="android:backgroundTint">?attr/ktTaskColor</item>
+    </style>
+    <style name="Widget.App.CardView.TaskGroup">
+        <item name="android:backgroundTint">?attr/ktTaskGroupColor</item>
     </style>
 
-    <style name="textDefaultStyle">
-        <item name="android:fontFamily">@font/inter_regular</item>
-        <item name="android:textSize">16sp</item>
+    <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="tint">?attr/ktDefaultIconColor</item>
+        <item name="elevation">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.FloatingActionButton</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.App.FloatingActionButton" parent="ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton">
+        <item name="cornerSize">30%</item>
     </style>
 
-    <style name="textHeaderStyle">
-        <item name="android:fontFamily">@font/inter_bold</item>
-        <item name="android:textSize">30sp</item>
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">?attr/ktBottomBarBackgroundColor</item>
+        <item name="itemIconTint">?attr/ktBottomBarForegroundColor</item>
+        <item name="itemTextColor">?attr/ktBottomBarForegroundColor</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.App.Regular.Small</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.App.Bold.Small</item>
     </style>
 
-    <style name="textInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/accentColor</item>
-        <item name="hintTextColor">@color/accentColor</item>
-        <item name="boxStrokeErrorColor">@color/errorColor</item>
-        <item name="cursorColor">@color/black</item>
+    <style name="Widget.App.ToolBar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.App.Bold.Huge</item>
+        <item name="titleTextColor">?attr/ktToolBarForegroundColor</item>
     </style>
 
-    <style name="checkboxStyle" parent="Widget.Material3.CompoundButton.CheckBox">
-        <item name="buttonTint">@color/accentColor</item>
+    <style name="Widget.App.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.App.Regular</item>
     </style>
-
-    <style name="floatingButtonStyle" parent="Widget.Material3.FloatingActionButton.Primary">
-        <item name="android:layout_height">60dp</item>
-        <item name="android:layout_width">60dp</item>
-        <item name="backgroundTint">@color/accentColor</item>
-        <item name="tint">@color/primaryColor</item>
-    </style>
-
-    <style name="bottomNavigationStyle" parent="Widget.Material3.BottomNavigationView">
-        <item name="backgroundTint">@color/secondaryColor</item>
-        <item name="itemRippleColor">@color/accentColor</item>
-        <item name="itemIconTint">@color/primaryColor</item>
-        <item name="itemTextColor">@color/primaryColor</item>
-        <item name="itemActiveIndicatorStyle">@style/bottomNavigation.ActiveIndicatorStyle</item>
-    </style>
-
-    <style name="bottomNavigation.ActiveIndicatorStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/selectedItemColor</item>
-    </style>
-
-    <style name="defaultButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:background">@drawable/shape_action_btn</item>
-        <item name="android:padding">10dp</item>
-        <item name="textAllCaps">false</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:drawablePadding">5dp</item>
-        <item name="android:drawableTint">@color/white</item>
-    </style>
-
-    <style name="taskAttributeStyle" parent="Widget.AppCompat.TextView">
+    <style name="Widget.App.TextView.TaskAttribute">
         <item name="android:foreground">?attr/selectableItemBackground</item>
-        <item name="android:textAppearance">@style/textDefaultStyle</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
-        <item name="android:alpha">0.2</item>
+        <item name="android:alpha">0.3</item>
         <item name="android:clickable">true</item>
     </style>
+
+    <style name="Widget.App.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textAppearance">@style/TextAppearance.App.Regular</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:background">@drawable/shape_action_btn</item>
+        <item name="backgroundTint">?attr/ktDefaultButtonColor</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Regular</item>
+    </style>
+
+    <style name="Widget.App.Button.Submit">
+        <item name="backgroundTint">?attr/ktSubmitButtonColor</item>
+    </style>
+
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox"/>
 </resources>

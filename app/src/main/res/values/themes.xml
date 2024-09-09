@@ -1,8 +1,42 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Kotlintasklist" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/primaryColor</item>
+    <style name="Base.Theme.KotlinTasklist" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">?attr/ktAppBackgroundColor</item>
+
+        <item name="android:colorBackground">?attr/ktAppBackgroundColor</item>
+        <item name="colorPrimary">?attr/ktTaskColor</item>
+        <item name="colorSecondary">?attr/ktTaskGroupColor</item>
+        <item name="colorControlNormal">?attr/ktToolBarForegroundColor</item>
+
+        <item name="toolbarStyle">@style/Widget.App.ToolBar</item>
+
+        <item name="android:textViewStyle">@style/Widget.App.TextView</item>
+        <item name="editTextStyle">@style/Widget.App.EditText</item>
+        <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
     </style>
 
-    <style name="Theme.Kotlintasklist" parent="Base.Theme.Kotlintasklist" />
+    <style name="Theme.KotlinTasklist.Light" parent="Base.Theme.KotlinTasklist">
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="ktAppBackgroundColor">@color/light</item>
+
+        <item name="ktTaskColor">@color/dark_200</item>
+        <item name="ktTaskGroupColor">@color/blue</item>
+
+        <item name="ktDefaultTextColor">@color/dark_200</item>
+        <item name="ktSecondaryTextColor">@color/light</item>
+
+        <item name="ktDefaultIconColor">@color/light</item>
+
+        <item name="ktErrorColor">@color/red</item>
+
+        <item name="ktToolBarBackgroundColor">?attr/ktAppBackgroundColor</item>
+        <item name="ktToolBarForegroundColor">?attr/ktDefaultTextColor</item>
+        <item name="ktBottomBarBackgroundColor">@color/dark_200</item>
+        <item name="ktBottomBarForegroundColor">@color/light</item>
+
+        <item name="ktDefaultButtonColor">@color/dark_100</item>
+        <item name="ktSubmitButtonColor">@color/blue</item>
+    </style>
 </resources>

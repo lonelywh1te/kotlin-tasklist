@@ -4,12 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp"
-    android:background="@drawable/shape_bottom_sheet_fragment_background">
+    android:background="@drawable/shape_bottom_sheet_fragment_background"
+    android:padding="15dp">
 
     <EditText
         android:id="@+id/inputTaskTitle"
-        android:textAppearance="@style/textDefaultStyle"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:hint="@string/taskTitle"
@@ -19,7 +18,6 @@
 
     <EditText
         android:id="@+id/inputTaskDescription"
-        android:textAppearance="@style/textDefaultStyle"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:paddingTop="20dp"
@@ -45,13 +43,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@string/addToFavourite"
-            android:textAppearance="@style/textDefaultStyle" />
+            android:text="@string/addToFavourite"/>
 
         <CheckBox
             android:id="@+id/cbIsFavourive"
-            style="@style/checkboxStyle"
             android:layout_width="wrap_content"
+            android:padding="15dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_weight="1" />
@@ -71,29 +68,26 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Дата выполнения"
-            android:textAppearance="@style/textDefaultStyle" />
+            android:text="Дата выполнения" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_set_task_completion_date"
-            style="@style/defaultButton"
+            style="@style/Widget.App.Button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="@string/set"
-            android:textSize="12sp" />
+            android:text="@string/set" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_task"
-        style="@style/defaultButton"
-        android:backgroundTint="@color/accentColor"
+        style="@style/Widget.App.Button.Submit"
+        android:backgroundTint="@color/blue"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Создать"
-        android:textSize="12sp" />
+        android:text="Создать" />
 </LinearLayout>

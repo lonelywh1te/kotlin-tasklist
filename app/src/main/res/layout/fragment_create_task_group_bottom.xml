@@ -4,12 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp"
-    android:background="@drawable/shape_bottom_sheet_fragment_background">
+    android:background="@drawable/shape_bottom_sheet_fragment_background"
+    android:padding="15dp">
 
     <EditText
         android:id="@+id/input_task_group_title"
-        android:textAppearance="@style/textDefaultStyle"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:hint="@string/taskTitle"
@@ -19,7 +18,6 @@
 
     <EditText
         android:id="@+id/input_task_group_desc"
-        android:textAppearance="@style/textDefaultStyle"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:paddingTop="20dp"
@@ -29,13 +27,11 @@
         app:counterEnabled="true"
         app:counterMaxLength="24"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btn_create_task_group"
-        style="@style/defaultButton"
-        android:backgroundTint="@color/accentColor"
+        style="@style/Widget.App.Button.Submit"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="@string/create"
-        android:textSize="12sp" />
+        android:text="@string/create"/>
 </LinearLayout>
