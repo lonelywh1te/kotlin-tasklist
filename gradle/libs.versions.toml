@@ -15,7 +15,6 @@ navigation = "2.8.0"
 room = "2.6.1"
 safe-args = "2.8.0"
 recyclerview = "1.3.2"
-recyclerview-swipedecorator = "1.4"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -41,7 +40,6 @@ koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = 
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview"}
-recyclerview-swipedecorator = { group = "it.xabaras.android", name = "recyclerview-swipedecorator", version.ref = "recyclerview-swipedecorator"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp"}

@@ -2,13 +2,18 @@ package ru.lonelywh1te.kotlin_tasklist.presentation.adapter
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.RectF
+import android.util.TypedValue
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.red
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.ItemTouchHelper.DOWN
 import androidx.recyclerview.widget.ItemTouchHelper.LEFT
 import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.RecyclerView
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import com.google.android.material.color.MaterialColors
 import ru.lonelywh1te.kotlin_tasklist.R
 import ru.lonelywh1te.kotlin_tasklist.domain.models.TaskItem
 
@@ -53,14 +58,43 @@ class TaskItemTouchCallback(
         }
     }
 
+    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
+        return 0.5f
+    }
+
     override fun onChildDraw(c: Canvas, rv: RecyclerView, vh: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-        RecyclerViewSwipeDecorator.Builder(c, rv, vh, dX, dY, actionState, isCurrentlyActive)
-            .addBackgroundColor(ContextCompat.getColor(context, R.color.red))
-            .addCornerRadius(1, 10)
-            .addSwipeLeftActionIcon(R.drawable.ic_delete)
-            .addPadding(1, 5f, 0f, 5f)
-            .create()
-            .decorate()
+        if (actionState == ACTION_STATE_SWIPE) {
+            val itemView = vh.itemView
+
+            // background
+            val cornerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics)
+            val rect = RectF(
+                itemView.left.toFloat() + dX,
+                itemView.top.toFloat() + itemView.paddingTop,
+                itemView.right.toFloat(),
+                itemView.bottom.toFloat() - itemView.paddingBottom
+            )
+            val paint = Paint().apply {
+                color = MaterialColors.getColor(context, R.attr.ktErrorColor, color.red)
+                isAntiAlias = true
+            }
+
+            c.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
+
+            // icon
+            val icon = ContextCompat.getDrawable(context, R.drawable.ic_delete)
+            val iconSize = icon?.intrinsicHeight ?: 0
+            val iconRightMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, context.resources.displayMetrics)
+            val iconTop = itemView.top + (itemView.height - iconSize) / 2
+            icon?.setBounds(
+                itemView.right - iconSize - iconRightMargin.toInt(),
+                iconTop,
+                itemView.right - iconRightMargin.toInt(),
+                iconTop + iconSize
+            )
+
+            icon?.draw(c)
+        }
 
         super.onChildDraw(c, rv, vh, dX, dY, actionState, isCurrentlyActive)
     }
